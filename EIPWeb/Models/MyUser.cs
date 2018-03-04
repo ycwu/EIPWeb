@@ -17,7 +17,7 @@ namespace EIPWeb.Models
         public string EmployeeID { get; set; }
         public string Password { get; set; }
         public string SupervisorID { get; set; }
-        //public bool IsManager { get; set; }
+        public bool IsManager { get; set; }
         public DateTimeOffset? CreatedAt { get; set; }
         public DateTimeOffset? UpdatedAt { get; set; }
     }

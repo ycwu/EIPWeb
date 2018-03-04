@@ -9,23 +9,31 @@ namespace EIPWeb.Models
     {
         public MyUser ToMyUsers()
         {
+            //DepartmentRepository repo = RepositoryHelper.GetDepartmentRepository();
+            //private EIPWebEntities db = new EIPWebEntities();
             return new MyUser()
             {
                 //MyUserId = this.MyUserId,
                 DepartmentID = this.DepartmentID,
                 DepartmentName = this.Department.DepartmentName,
                 EmployeeID = this.EmployeeID,
-                //IsManager = this.IsManager,
+                IsManager = true,
                 //ManagerId = this.SupervisorID,
                 Name = this.Name,
                 //Password = this.Password,
             };
         }
+
+        public bool IsManager()
+        {
+            bool bResult = false;            
+            //Employee employee=
+            return bResult;
+        }
     }
     
     public partial class EmployeeMetaData
-    {
-        
+    {        
         [StringLength(10, ErrorMessage="欄位長度不得大於 10 個字元")]
         [Required]
         public string EmployeeID { get; set; }

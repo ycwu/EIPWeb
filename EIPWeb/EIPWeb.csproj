@@ -210,10 +210,12 @@
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
     <Compile Include="Controllers\AccountController.cs" />
+    <Compile Include="Controllers\BaseApiController.cs" />
     <Compile Include="Controllers\BaseController.cs" />
     <Compile Include="Controllers\ChatController.cs" />
     <Compile Include="Controllers\FeatureController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Controllers\LoginController.cs" />
     <Compile Include="Features\Authorization\AuthorizationHub.cs" />
     <Compile Include="Features\Authorization\AuthorizationPersistentConnection.cs" />
     <Compile Include="Features\Authorization\Message.cs" />
@@ -240,10 +242,19 @@
     <Compile Include="Models\Department.Partial.cs">
       <DependentUpon>EFGeneratePartialClass.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\DepartmentRepository.cs">
+      <DependentUpon>IRepository.EF6.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\EFGeneratePartialClass.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>EFGeneratePartialClass.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\EFRepository.cs">
+      <DependentUpon>IRepository.EF6.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\EFUnitOfWork.cs">
+      <DependentUpon>IRepository.EF6.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\EIPDB.Context.cs">
       <AutoGen>True</AutoGen>
@@ -266,7 +277,21 @@
     <Compile Include="Models\Employee.Partial.cs">
       <DependentUpon>EFGeneratePartialClass.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\EmployeeRepository.cs">
+      <DependentUpon>IRepository.EF6.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\IRepository.EF6.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>IRepository.EF6.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\IUnitOfWork.cs">
+      <DependentUpon>IRepository.EF6.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\MyUser.cs" />
+    <Compile Include="Models\RepositoryHelper.cs">
+      <DependentUpon>IRepository.EF6.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\UserLoginModel.cs" />
     <Compile Include="Models\UserLoginResultModel.cs" />
     <Compile Include="Models\ViewModel\AccountViewModel.cs" />
@@ -309,6 +334,10 @@
       <Generator>TextTemplatingFileGenerator</Generator>
       <DependentUpon>EIPDB.edmx</DependentUpon>
       <LastGenOutput>EIPDB.cs</LastGenOutput>
+    </Content>
+    <Content Include="Models\IRepository.EF6.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <LastGenOutput>IRepository.EF6.cs</LastGenOutput>
     </Content>
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
