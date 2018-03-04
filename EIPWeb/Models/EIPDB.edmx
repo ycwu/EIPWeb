@@ -4,7 +4,24 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-    <Schema Namespace="EIPWebModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+    <Schema Namespace="EIPDBModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="Department">
+          <Key>
+            <PropertyRef Name="DepartmentID" />
+          </Key>
+          <Property Name="DepartmentID" Type="nvarchar" MaxLength="5" Nullable="false" />
+          <Property Name="DepartmentName" Type="nvarchar" MaxLength="30" Nullable="false" />
+          <Property Name="DepartmentEngName" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="Leader" Type="varchar" MaxLength="10" />
+          <Property Name="UpDepartmentID" Type="nvarchar" MaxLength="5" />
+          <Property Name="IsCustomerService" Type="bit" />
+          <Property Name="IsSales" Type="bit" />
+          <Property Name="Available" Type="bit" />
+          <Property Name="CustomerID" Type="varchar" MaxLength="10" />
+          <Property Name="DisableDate" Type="datetime" />
+          <Property Name="DepartmentGradeTypeID" Type="varchar" MaxLength="50" />
+          <Property Name="GroupName" Type="nvarchar" MaxLength="50" />
+        </EntityType>
         <EntityType Name="Employee">
           <Key>
             <PropertyRef Name="EmployeeID" />
@@ -73,22 +90,54 @@
           <Property Name="WorkStatusTypeID" Type="varchar" MaxLength="10" />
           <Property Name="CostCenterID" Type="varchar" MaxLength="50" />
         </EntityType>
-        <EntityContainer Name="EIPWebModelStoreContainer">
+        <Association Name="FK_Employee_Department">
+          <End Role="Department" Type="Self.Department" Multiplicity="0..1" />
+          <End Role="Employee" Type="Self.Employee" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Department">
+              <PropertyRef Name="DepartmentID" />
+            </Principal>
+            <Dependent Role="Employee">
+              <PropertyRef Name="DepartmentID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="EIPDBModelStoreContainer">
+          <EntitySet Name="Department" EntityType="Self.Department" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Employee" EntityType="Self.Employee" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK_Employee_Department" Association="Self.FK_Employee_Department">
+            <End Role="Department" EntitySet="Department" />
+            <End Role="Employee" EntitySet="Employee" />
+          </AssociationSet>
         </EntityContainer>
       </Schema></edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
-      <Schema Namespace="EIPWebModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
-        <EntityContainer Name="EIPWebEntities" annotation:LazyLoadingEnabled="true">
-          <EntitySet Name="Employee" EntityType="EIPWebModel.Employee" />
-        </EntityContainer>
+      <Schema Namespace="EIPDBModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="Department">
+          <Key>
+            <PropertyRef Name="DepartmentID" />
+          </Key>
+          <Property Name="DepartmentID" Type="String" MaxLength="5" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="DepartmentName" Type="String" MaxLength="30" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="DepartmentEngName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Leader" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
+          <Property Name="UpDepartmentID" Type="String" MaxLength="5" FixedLength="false" Unicode="true" />
+          <Property Name="IsCustomerService" Type="Boolean" />
+          <Property Name="IsSales" Type="Boolean" />
+          <Property Name="Available" Type="Boolean" />
+          <Property Name="CustomerID" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
+          <Property Name="DisableDate" Type="DateTime" Precision="3" />
+          <Property Name="DepartmentGradeTypeID" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="GroupName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Employee" Relationship="EIPDBModel.FK_Employee_Department" FromRole="Department" ToRole="Employee" />
+        </EntityType>
         <EntityType Name="Employee">
           <Key>
             <PropertyRef Name="EmployeeID" />
           </Key>
-          <Property Name="EmployeeID" Type="String" Nullable="false" MaxLength="10" FixedLength="false" Unicode="false" />
-          <Property Name="Name" Type="String" Nullable="false" MaxLength="15" FixedLength="false" Unicode="true" />
+          <Property Name="EmployeeID" Type="String" MaxLength="10" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Name" Type="String" MaxLength="15" FixedLength="false" Unicode="true" Nullable="false" />
           <Property Name="SimplifiedName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="EnglishName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="PassportEnglishName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
@@ -150,79 +199,118 @@
           <Property Name="EmployeeIdentityTypeNote" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
           <Property Name="WorkStatusTypeID" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
           <Property Name="CostCenterID" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="Department" Relationship="EIPDBModel.FK_Employee_Department" FromRole="Employee" ToRole="Department" />
         </EntityType>
+        <EntityContainer Name="EIPWebEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="Department" EntityType="Self.Department" />
+          <EntitySet Name="Employee" EntityType="Self.Employee" />
+          <AssociationSet Name="FK_Employee_Department" Association="EIPDBModel.FK_Employee_Department">
+            <End Role="Department" EntitySet="Department" />
+            <End Role="Employee" EntitySet="Employee" />
+          </AssociationSet>
+        </EntityContainer>
+        <Association Name="FK_Employee_Department">
+          <End Type="EIPDBModel.Department" Role="Department" Multiplicity="0..1" />
+          <End Type="EIPDBModel.Employee" Role="Employee" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Department">
+              <PropertyRef Name="DepartmentID" />
+            </Principal>
+            <Dependent Role="Employee">
+              <PropertyRef Name="DepartmentID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
     <edmx:Mappings>
       <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
-        <EntityContainerMapping StorageEntityContainer="EIPWebModelStoreContainer" CdmEntityContainer="EIPWebEntities">
-          <EntitySetMapping Name="Employee">
-            <EntityTypeMapping TypeName="EIPWebModel.Employee">
-              <MappingFragment StoreEntitySet="Employee">
-                <ScalarProperty Name="CostCenterID" ColumnName="CostCenterID" />
-                <ScalarProperty Name="WorkStatusTypeID" ColumnName="WorkStatusTypeID" />
-                <ScalarProperty Name="EmployeeIdentityTypeNote" ColumnName="EmployeeIdentityTypeNote" />
-                <ScalarProperty Name="EmployeeIdentityTypeID" ColumnName="EmployeeIdentityTypeID" />
-                <ScalarProperty Name="ShiftID" ColumnName="ShiftID" />
-                <ScalarProperty Name="Note" ColumnName="Note" />
-                <ScalarProperty Name="ModifyIP" ColumnName="ModifyIP" />
-                <ScalarProperty Name="ModifyUserID" ColumnName="ModifyUserID" />
-                <ScalarProperty Name="ModifyTime" ColumnName="ModifyTime" />
-                <ScalarProperty Name="Gender" ColumnName="Gender" />
-                <ScalarProperty Name="CensusRegisterAddress" ColumnName="CensusRegisterAddress" />
-                <ScalarProperty Name="LiveAddress" ColumnName="LiveAddress" />
-                <ScalarProperty Name="ContactNumber" ColumnName="ContactNumber" />
-                <ScalarProperty Name="ID" ColumnName="ID" />
-                <ScalarProperty Name="Available" ColumnName="Available" />
-                <ScalarProperty Name="UseCS" ColumnName="UseCS" />
-                <ScalarProperty Name="UseSS" ColumnName="UseSS" />
-                <ScalarProperty Name="UseConstructionForm" ColumnName="UseConstructionForm" />
-                <ScalarProperty Name="SortingID" ColumnName="SortingID" />
-                <ScalarProperty Name="JobGroupID" ColumnName="JobGroupID" />
-                <ScalarProperty Name="IsAdmin" ColumnName="IsAdmin" />
-                <ScalarProperty Name="RevisedRecord" ColumnName="RevisedRecord" />
-                <ScalarProperty Name="GuarantorAddress" ColumnName="GuarantorAddress" />
-                <ScalarProperty Name="GuarantorCellPhone" ColumnName="GuarantorCellPhone" />
-                <ScalarProperty Name="GuarantorTelNo" ColumnName="GuarantorTelNo" />
-                <ScalarProperty Name="GuarantorTitle" ColumnName="GuarantorTitle" />
-                <ScalarProperty Name="Guarantor" ColumnName="Guarantor" />
-                <ScalarProperty Name="EmergencyContactAddress" ColumnName="EmergencyContactAddress" />
-                <ScalarProperty Name="EmergencyContactCellPhone" ColumnName="EmergencyContactCellPhone" />
-                <ScalarProperty Name="EmergencyContactTelNO" ColumnName="EmergencyContactTelNO" />
-                <ScalarProperty Name="EmergencyContactTitle" ColumnName="EmergencyContactTitle" />
-                <ScalarProperty Name="EmergencyContact" ColumnName="EmergencyContact" />
-                <ScalarProperty Name="ADLoginID" ColumnName="ADLoginID" />
-                <ScalarProperty Name="JobAgentID" ColumnName="JobAgentID" />
-                <ScalarProperty Name="UpSupervisorID" ColumnName="UpSupervisorID" />
-                <ScalarProperty Name="SupervisorID" ColumnName="SupervisorID" />
-                <ScalarProperty Name="ExtensionNO" ColumnName="ExtensionNO" />
+        <EntityContainerMapping StorageEntityContainer="EIPDBModelStoreContainer" CdmEntityContainer="EIPWebEntities">
+          <EntitySetMapping Name="Department">
+            <EntityTypeMapping TypeName="EIPDBModel.Department">
+              <MappingFragment StoreEntitySet="Department">
                 <ScalarProperty Name="DepartmentID" ColumnName="DepartmentID" />
-                <ScalarProperty Name="ResignDate" ColumnName="ResignDate" />
-                <ScalarProperty Name="HireDate" ColumnName="HireDate" />
-                <ScalarProperty Name="MarriageStatus" ColumnName="MarriageStatus" />
-                <ScalarProperty Name="BloodType" ColumnName="BloodType" />
-                <ScalarProperty Name="Birthplace" ColumnName="Birthplace" />
-                <ScalarProperty Name="HighestDegree" ColumnName="HighestDegree" />
-                <ScalarProperty Name="GraduatedDepartment" ColumnName="GraduatedDepartment" />
-                <ScalarProperty Name="GraduatedSchool" ColumnName="GraduatedSchool" />
-                <ScalarProperty Name="HobbyNote" ColumnName="HobbyNote" />
-                <ScalarProperty Name="SkillNote" ColumnName="SkillNote" />
-                <ScalarProperty Name="ResidenceAddress" ColumnName="ResidenceAddress" />
-                <ScalarProperty Name="MailingAddress" ColumnName="MailingAddress" />
-                <ScalarProperty Name="CellPhone" ColumnName="CellPhone" />
-                <ScalarProperty Name="TelNO" ColumnName="TelNO" />
-                <ScalarProperty Name="PhotoType" ColumnName="PhotoType" />
-                <ScalarProperty Name="Photo" ColumnName="Photo" />
-                <ScalarProperty Name="EMail" ColumnName="EMail" />
-                <ScalarProperty Name="Birthday" ColumnName="Birthday" />
-                <ScalarProperty Name="TitleID" ColumnName="TitleID" />
-                <ScalarProperty Name="IdentityCardID" ColumnName="IdentityCardID" />
-                <ScalarProperty Name="PassportEnglishName" ColumnName="PassportEnglishName" />
-                <ScalarProperty Name="EnglishName" ColumnName="EnglishName" />
-                <ScalarProperty Name="SimplifiedName" ColumnName="SimplifiedName" />
-                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="DepartmentName" ColumnName="DepartmentName" />
+                <ScalarProperty Name="DepartmentEngName" ColumnName="DepartmentEngName" />
+                <ScalarProperty Name="Leader" ColumnName="Leader" />
+                <ScalarProperty Name="UpDepartmentID" ColumnName="UpDepartmentID" />
+                <ScalarProperty Name="IsCustomerService" ColumnName="IsCustomerService" />
+                <ScalarProperty Name="IsSales" ColumnName="IsSales" />
+                <ScalarProperty Name="Available" ColumnName="Available" />
+                <ScalarProperty Name="CustomerID" ColumnName="CustomerID" />
+                <ScalarProperty Name="DisableDate" ColumnName="DisableDate" />
+                <ScalarProperty Name="DepartmentGradeTypeID" ColumnName="DepartmentGradeTypeID" />
+                <ScalarProperty Name="GroupName" ColumnName="GroupName" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Employee">
+            <EntityTypeMapping TypeName="EIPDBModel.Employee">
+              <MappingFragment StoreEntitySet="Employee">
                 <ScalarProperty Name="EmployeeID" ColumnName="EmployeeID" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="SimplifiedName" ColumnName="SimplifiedName" />
+                <ScalarProperty Name="EnglishName" ColumnName="EnglishName" />
+                <ScalarProperty Name="PassportEnglishName" ColumnName="PassportEnglishName" />
+                <ScalarProperty Name="IdentityCardID" ColumnName="IdentityCardID" />
+                <ScalarProperty Name="TitleID" ColumnName="TitleID" />
+                <ScalarProperty Name="Birthday" ColumnName="Birthday" />
+                <ScalarProperty Name="EMail" ColumnName="EMail" />
+                <ScalarProperty Name="Photo" ColumnName="Photo" />
+                <ScalarProperty Name="PhotoType" ColumnName="PhotoType" />
+                <ScalarProperty Name="TelNO" ColumnName="TelNO" />
+                <ScalarProperty Name="CellPhone" ColumnName="CellPhone" />
+                <ScalarProperty Name="MailingAddress" ColumnName="MailingAddress" />
+                <ScalarProperty Name="ResidenceAddress" ColumnName="ResidenceAddress" />
+                <ScalarProperty Name="SkillNote" ColumnName="SkillNote" />
+                <ScalarProperty Name="HobbyNote" ColumnName="HobbyNote" />
+                <ScalarProperty Name="GraduatedSchool" ColumnName="GraduatedSchool" />
+                <ScalarProperty Name="GraduatedDepartment" ColumnName="GraduatedDepartment" />
+                <ScalarProperty Name="HighestDegree" ColumnName="HighestDegree" />
+                <ScalarProperty Name="Birthplace" ColumnName="Birthplace" />
+                <ScalarProperty Name="BloodType" ColumnName="BloodType" />
+                <ScalarProperty Name="MarriageStatus" ColumnName="MarriageStatus" />
+                <ScalarProperty Name="HireDate" ColumnName="HireDate" />
+                <ScalarProperty Name="ResignDate" ColumnName="ResignDate" />
+                <ScalarProperty Name="DepartmentID" ColumnName="DepartmentID" />
+                <ScalarProperty Name="ExtensionNO" ColumnName="ExtensionNO" />
+                <ScalarProperty Name="SupervisorID" ColumnName="SupervisorID" />
+                <ScalarProperty Name="UpSupervisorID" ColumnName="UpSupervisorID" />
+                <ScalarProperty Name="JobAgentID" ColumnName="JobAgentID" />
+                <ScalarProperty Name="ADLoginID" ColumnName="ADLoginID" />
+                <ScalarProperty Name="EmergencyContact" ColumnName="EmergencyContact" />
+                <ScalarProperty Name="EmergencyContactTitle" ColumnName="EmergencyContactTitle" />
+                <ScalarProperty Name="EmergencyContactTelNO" ColumnName="EmergencyContactTelNO" />
+                <ScalarProperty Name="EmergencyContactCellPhone" ColumnName="EmergencyContactCellPhone" />
+                <ScalarProperty Name="EmergencyContactAddress" ColumnName="EmergencyContactAddress" />
+                <ScalarProperty Name="Guarantor" ColumnName="Guarantor" />
+                <ScalarProperty Name="GuarantorTitle" ColumnName="GuarantorTitle" />
+                <ScalarProperty Name="GuarantorTelNo" ColumnName="GuarantorTelNo" />
+                <ScalarProperty Name="GuarantorCellPhone" ColumnName="GuarantorCellPhone" />
+                <ScalarProperty Name="GuarantorAddress" ColumnName="GuarantorAddress" />
+                <ScalarProperty Name="RevisedRecord" ColumnName="RevisedRecord" />
+                <ScalarProperty Name="IsAdmin" ColumnName="IsAdmin" />
+                <ScalarProperty Name="JobGroupID" ColumnName="JobGroupID" />
+                <ScalarProperty Name="SortingID" ColumnName="SortingID" />
+                <ScalarProperty Name="UseConstructionForm" ColumnName="UseConstructionForm" />
+                <ScalarProperty Name="UseSS" ColumnName="UseSS" />
+                <ScalarProperty Name="UseCS" ColumnName="UseCS" />
+                <ScalarProperty Name="Available" ColumnName="Available" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="ContactNumber" ColumnName="ContactNumber" />
+                <ScalarProperty Name="LiveAddress" ColumnName="LiveAddress" />
+                <ScalarProperty Name="CensusRegisterAddress" ColumnName="CensusRegisterAddress" />
+                <ScalarProperty Name="Gender" ColumnName="Gender" />
+                <ScalarProperty Name="ModifyTime" ColumnName="ModifyTime" />
+                <ScalarProperty Name="ModifyUserID" ColumnName="ModifyUserID" />
+                <ScalarProperty Name="ModifyIP" ColumnName="ModifyIP" />
+                <ScalarProperty Name="Note" ColumnName="Note" />
+                <ScalarProperty Name="ShiftID" ColumnName="ShiftID" />
+                <ScalarProperty Name="EmployeeIdentityTypeID" ColumnName="EmployeeIdentityTypeID" />
+                <ScalarProperty Name="EmployeeIdentityTypeNote" ColumnName="EmployeeIdentityTypeNote" />
+                <ScalarProperty Name="WorkStatusTypeID" ColumnName="WorkStatusTypeID" />
+                <ScalarProperty Name="CostCenterID" ColumnName="CostCenterID" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

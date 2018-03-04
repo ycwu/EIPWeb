@@ -77,5 +77,7 @@ namespace EIPWeb.Models
         public string EmployeeIdentityTypeNote { get; set; }
         public string WorkStatusTypeID { get; set; }
         public string CostCenterID { get; set; }
+    
+        public virtual Department Department { get; set; }
     }
 }
