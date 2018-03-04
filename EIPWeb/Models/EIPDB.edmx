@@ -14,81 +14,32 @@
           <Property Name="DepartmentEngName" Type="nvarchar" MaxLength="50" Nullable="false" />
           <Property Name="Leader" Type="varchar" MaxLength="10" />
           <Property Name="UpDepartmentID" Type="nvarchar" MaxLength="5" />
-          <Property Name="IsCustomerService" Type="bit" />
-          <Property Name="IsSales" Type="bit" />
           <Property Name="Available" Type="bit" />
-          <Property Name="CustomerID" Type="varchar" MaxLength="10" />
-          <Property Name="DisableDate" Type="datetime" />
-          <Property Name="DepartmentGradeTypeID" Type="varchar" MaxLength="50" />
-          <Property Name="GroupName" Type="nvarchar" MaxLength="50" />
         </EntityType>
         <EntityType Name="Employee">
           <Key>
             <PropertyRef Name="EmployeeID" />
           </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="EmployeeID" Type="varchar" MaxLength="10" Nullable="false" />
           <Property Name="Name" Type="nvarchar" MaxLength="15" Nullable="false" />
           <Property Name="SimplifiedName" Type="nvarchar" MaxLength="50" />
           <Property Name="EnglishName" Type="nvarchar" MaxLength="50" />
-          <Property Name="PassportEnglishName" Type="nvarchar" MaxLength="50" />
-          <Property Name="IdentityCardID" Type="varchar" MaxLength="20" />
           <Property Name="TitleID" Type="int" />
           <Property Name="Birthday" Type="datetime" />
           <Property Name="EMail" Type="varchar" MaxLength="100" />
-          <Property Name="Photo" Type="image" />
-          <Property Name="PhotoType" Type="varchar" MaxLength="50" />
           <Property Name="TelNO" Type="varchar" MaxLength="50" />
           <Property Name="CellPhone" Type="varchar" MaxLength="50" />
-          <Property Name="MailingAddress" Type="nvarchar" MaxLength="250" />
-          <Property Name="ResidenceAddress" Type="nvarchar" MaxLength="250" />
-          <Property Name="SkillNote" Type="nvarchar" MaxLength="500" />
-          <Property Name="HobbyNote" Type="nvarchar" MaxLength="500" />
-          <Property Name="GraduatedSchool" Type="nvarchar" MaxLength="50" />
-          <Property Name="GraduatedDepartment" Type="nvarchar" MaxLength="50" />
-          <Property Name="HighestDegree" Type="nvarchar" MaxLength="50" />
-          <Property Name="Birthplace" Type="nvarchar" MaxLength="50" />
-          <Property Name="BloodType" Type="varchar" MaxLength="10" />
-          <Property Name="MarriageStatus" Type="nvarchar" MaxLength="50" />
-          <Property Name="HireDate" Type="datetime" />
           <Property Name="ResignDate" Type="datetime" />
           <Property Name="DepartmentID" Type="nvarchar" MaxLength="5" />
           <Property Name="ExtensionNO" Type="varchar" MaxLength="20" />
           <Property Name="SupervisorID" Type="varchar" MaxLength="10" />
-          <Property Name="UpSupervisorID" Type="varchar" MaxLength="10" />
-          <Property Name="JobAgentID" Type="varchar" MaxLength="10" />
           <Property Name="ADLoginID" Type="varchar" MaxLength="50" />
-          <Property Name="EmergencyContact" Type="nvarchar" MaxLength="50" />
-          <Property Name="EmergencyContactTitle" Type="nvarchar" MaxLength="50" />
-          <Property Name="EmergencyContactTelNO" Type="nvarchar" MaxLength="50" />
-          <Property Name="EmergencyContactCellPhone" Type="nvarchar" MaxLength="50" />
-          <Property Name="EmergencyContactAddress" Type="nvarchar" MaxLength="500" />
-          <Property Name="Guarantor" Type="nvarchar" MaxLength="50" />
-          <Property Name="GuarantorTitle" Type="nvarchar" MaxLength="50" />
-          <Property Name="GuarantorTelNo" Type="nvarchar" MaxLength="50" />
-          <Property Name="GuarantorCellPhone" Type="nvarchar" MaxLength="50" />
-          <Property Name="GuarantorAddress" Type="nvarchar" MaxLength="500" />
-          <Property Name="RevisedRecord" Type="nvarchar" MaxLength="2000" />
           <Property Name="IsAdmin" Type="bit" />
-          <Property Name="JobGroupID" Type="nvarchar" MaxLength="10" />
-          <Property Name="SortingID" Type="int" />
-          <Property Name="UseConstructionForm" Type="bit" />
-          <Property Name="UseSS" Type="bit" />
-          <Property Name="UseCS" Type="bit" />
           <Property Name="Available" Type="bit" />
-          <Property Name="ID" Type="varchar" MaxLength="15" />
-          <Property Name="ContactNumber" Type="varchar" MaxLength="20" />
-          <Property Name="LiveAddress" Type="nvarchar" MaxLength="200" />
-          <Property Name="CensusRegisterAddress" Type="nvarchar" MaxLength="200" />
           <Property Name="Gender" Type="nvarchar" MaxLength="10" />
           <Property Name="ModifyTime" Type="datetime" />
           <Property Name="ModifyUserID" Type="varchar" MaxLength="10" />
-          <Property Name="ModifyIP" Type="nvarchar" MaxLength="50" />
-          <Property Name="Note" Type="nvarchar" MaxLength="4000" />
-          <Property Name="ShiftID" Type="varchar" MaxLength="50" />
-          <Property Name="EmployeeIdentityTypeID" Type="varchar" MaxLength="10" />
-          <Property Name="EmployeeIdentityTypeNote" Type="nvarchar" MaxLength="500" />
-          <Property Name="WorkStatusTypeID" Type="varchar" MaxLength="10" />
-          <Property Name="CostCenterID" Type="varchar" MaxLength="50" />
         </EntityType>
         <Association Name="FK_Employee_Department">
           <End Role="Department" Type="Self.Department" Multiplicity="0..1" />
@@ -114,101 +65,52 @@
     <!-- CSDL content -->
     <edmx:ConceptualModels>
       <Schema Namespace="EIPDBModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityContainer Name="EIPWebEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="Department" EntityType="EIPDBModel.Department" />
+          <EntitySet Name="Employee" EntityType="EIPDBModel.Employee" />
+          <AssociationSet Name="FK_Employee_Department" Association="EIPDBModel.FK_Employee_Department">
+            <End Role="Department" EntitySet="Department" />
+            <End Role="Employee" EntitySet="Employee" />
+          </AssociationSet>
+        </EntityContainer>
         <EntityType Name="Department">
           <Key>
             <PropertyRef Name="DepartmentID" />
           </Key>
-          <Property Name="DepartmentID" Type="String" MaxLength="5" FixedLength="false" Unicode="true" Nullable="false" />
-          <Property Name="DepartmentName" Type="String" MaxLength="30" FixedLength="false" Unicode="true" Nullable="false" />
-          <Property Name="DepartmentEngName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="DepartmentID" Type="String" Nullable="false" MaxLength="5" FixedLength="false" Unicode="true" />
+          <Property Name="DepartmentName" Type="String" Nullable="false" MaxLength="30" FixedLength="false" Unicode="true" />
+          <Property Name="DepartmentEngName" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="Leader" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
           <Property Name="UpDepartmentID" Type="String" MaxLength="5" FixedLength="false" Unicode="true" />
-          <Property Name="IsCustomerService" Type="Boolean" />
-          <Property Name="IsSales" Type="Boolean" />
           <Property Name="Available" Type="Boolean" />
-          <Property Name="CustomerID" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
-          <Property Name="DisableDate" Type="DateTime" Precision="3" />
-          <Property Name="DepartmentGradeTypeID" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Name="GroupName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
           <NavigationProperty Name="Employee" Relationship="EIPDBModel.FK_Employee_Department" FromRole="Department" ToRole="Employee" />
         </EntityType>
         <EntityType Name="Employee">
           <Key>
             <PropertyRef Name="EmployeeID" />
           </Key>
-          <Property Name="EmployeeID" Type="String" MaxLength="10" FixedLength="false" Unicode="false" Nullable="false" />
-          <Property Name="Name" Type="String" MaxLength="15" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="EmployeeID" Type="String" Nullable="false" MaxLength="10" FixedLength="false" Unicode="false" />
+          <Property Name="Name" Type="String" Nullable="false" MaxLength="15" FixedLength="false" Unicode="true" />
           <Property Name="SimplifiedName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="EnglishName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="PassportEnglishName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="IdentityCardID" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
           <Property Name="TitleID" Type="Int32" />
           <Property Name="Birthday" Type="DateTime" Precision="3" />
           <Property Name="EMail" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
-          <Property Name="Photo" Type="Binary" MaxLength="Max" FixedLength="false" />
-          <Property Name="PhotoType" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
           <Property Name="TelNO" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
           <Property Name="CellPhone" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Name="MailingAddress" Type="String" MaxLength="250" FixedLength="false" Unicode="true" />
-          <Property Name="ResidenceAddress" Type="String" MaxLength="250" FixedLength="false" Unicode="true" />
-          <Property Name="SkillNote" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
-          <Property Name="HobbyNote" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
-          <Property Name="GraduatedSchool" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="GraduatedDepartment" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="HighestDegree" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="Birthplace" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="BloodType" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
-          <Property Name="MarriageStatus" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="HireDate" Type="DateTime" Precision="3" />
           <Property Name="ResignDate" Type="DateTime" Precision="3" />
           <Property Name="DepartmentID" Type="String" MaxLength="5" FixedLength="false" Unicode="true" />
           <Property Name="ExtensionNO" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
           <Property Name="SupervisorID" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
-          <Property Name="UpSupervisorID" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
-          <Property Name="JobAgentID" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
           <Property Name="ADLoginID" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Name="EmergencyContact" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="EmergencyContactTitle" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="EmergencyContactTelNO" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="EmergencyContactCellPhone" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="EmergencyContactAddress" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
-          <Property Name="Guarantor" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="GuarantorTitle" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="GuarantorTelNo" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="GuarantorCellPhone" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="GuarantorAddress" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
-          <Property Name="RevisedRecord" Type="String" MaxLength="2000" FixedLength="false" Unicode="true" />
           <Property Name="IsAdmin" Type="Boolean" />
-          <Property Name="JobGroupID" Type="String" MaxLength="10" FixedLength="false" Unicode="true" />
-          <Property Name="SortingID" Type="Int32" />
-          <Property Name="UseConstructionForm" Type="Boolean" />
-          <Property Name="UseSS" Type="Boolean" />
-          <Property Name="UseCS" Type="Boolean" />
           <Property Name="Available" Type="Boolean" />
-          <Property Name="ID" Type="String" MaxLength="15" FixedLength="false" Unicode="false" />
-          <Property Name="ContactNumber" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
-          <Property Name="LiveAddress" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
-          <Property Name="CensusRegisterAddress" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
           <Property Name="Gender" Type="String" MaxLength="10" FixedLength="false" Unicode="true" />
           <Property Name="ModifyTime" Type="DateTime" Precision="3" />
           <Property Name="ModifyUserID" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
-          <Property Name="ModifyIP" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="Note" Type="String" MaxLength="4000" FixedLength="false" Unicode="true" />
-          <Property Name="ShiftID" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Name="EmployeeIdentityTypeID" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
-          <Property Name="EmployeeIdentityTypeNote" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
-          <Property Name="WorkStatusTypeID" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
-          <Property Name="CostCenterID" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
           <NavigationProperty Name="Department" Relationship="EIPDBModel.FK_Employee_Department" FromRole="Employee" ToRole="Department" />
         </EntityType>
-        <EntityContainer Name="EIPWebEntities" annotation:LazyLoadingEnabled="true">
-          <EntitySet Name="Department" EntityType="Self.Department" />
-          <EntitySet Name="Employee" EntityType="Self.Employee" />
-          <AssociationSet Name="FK_Employee_Department" Association="EIPDBModel.FK_Employee_Department">
-            <End Role="Department" EntitySet="Department" />
-            <End Role="Employee" EntitySet="Employee" />
-          </AssociationSet>
-        </EntityContainer>
         <Association Name="FK_Employee_Department">
           <End Type="EIPDBModel.Department" Role="Department" Multiplicity="0..1" />
           <End Type="EIPDBModel.Employee" Role="Employee" Multiplicity="*" />
@@ -230,87 +132,38 @@
           <EntitySetMapping Name="Department">
             <EntityTypeMapping TypeName="EIPDBModel.Department">
               <MappingFragment StoreEntitySet="Department">
-                <ScalarProperty Name="DepartmentID" ColumnName="DepartmentID" />
-                <ScalarProperty Name="DepartmentName" ColumnName="DepartmentName" />
-                <ScalarProperty Name="DepartmentEngName" ColumnName="DepartmentEngName" />
-                <ScalarProperty Name="Leader" ColumnName="Leader" />
-                <ScalarProperty Name="UpDepartmentID" ColumnName="UpDepartmentID" />
-                <ScalarProperty Name="IsCustomerService" ColumnName="IsCustomerService" />
-                <ScalarProperty Name="IsSales" ColumnName="IsSales" />
                 <ScalarProperty Name="Available" ColumnName="Available" />
-                <ScalarProperty Name="CustomerID" ColumnName="CustomerID" />
-                <ScalarProperty Name="DisableDate" ColumnName="DisableDate" />
-                <ScalarProperty Name="DepartmentGradeTypeID" ColumnName="DepartmentGradeTypeID" />
-                <ScalarProperty Name="GroupName" ColumnName="GroupName" />
+                <ScalarProperty Name="UpDepartmentID" ColumnName="UpDepartmentID" />
+                <ScalarProperty Name="Leader" ColumnName="Leader" />
+                <ScalarProperty Name="DepartmentEngName" ColumnName="DepartmentEngName" />
+                <ScalarProperty Name="DepartmentName" ColumnName="DepartmentName" />
+                <ScalarProperty Name="DepartmentID" ColumnName="DepartmentID" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="Employee">
             <EntityTypeMapping TypeName="EIPDBModel.Employee">
               <MappingFragment StoreEntitySet="Employee">
-                <ScalarProperty Name="EmployeeID" ColumnName="EmployeeID" />
-                <ScalarProperty Name="Name" ColumnName="Name" />
-                <ScalarProperty Name="SimplifiedName" ColumnName="SimplifiedName" />
-                <ScalarProperty Name="EnglishName" ColumnName="EnglishName" />
-                <ScalarProperty Name="PassportEnglishName" ColumnName="PassportEnglishName" />
-                <ScalarProperty Name="IdentityCardID" ColumnName="IdentityCardID" />
-                <ScalarProperty Name="TitleID" ColumnName="TitleID" />
-                <ScalarProperty Name="Birthday" ColumnName="Birthday" />
-                <ScalarProperty Name="EMail" ColumnName="EMail" />
-                <ScalarProperty Name="Photo" ColumnName="Photo" />
-                <ScalarProperty Name="PhotoType" ColumnName="PhotoType" />
-                <ScalarProperty Name="TelNO" ColumnName="TelNO" />
-                <ScalarProperty Name="CellPhone" ColumnName="CellPhone" />
-                <ScalarProperty Name="MailingAddress" ColumnName="MailingAddress" />
-                <ScalarProperty Name="ResidenceAddress" ColumnName="ResidenceAddress" />
-                <ScalarProperty Name="SkillNote" ColumnName="SkillNote" />
-                <ScalarProperty Name="HobbyNote" ColumnName="HobbyNote" />
-                <ScalarProperty Name="GraduatedSchool" ColumnName="GraduatedSchool" />
-                <ScalarProperty Name="GraduatedDepartment" ColumnName="GraduatedDepartment" />
-                <ScalarProperty Name="HighestDegree" ColumnName="HighestDegree" />
-                <ScalarProperty Name="Birthplace" ColumnName="Birthplace" />
-                <ScalarProperty Name="BloodType" ColumnName="BloodType" />
-                <ScalarProperty Name="MarriageStatus" ColumnName="MarriageStatus" />
-                <ScalarProperty Name="HireDate" ColumnName="HireDate" />
-                <ScalarProperty Name="ResignDate" ColumnName="ResignDate" />
-                <ScalarProperty Name="DepartmentID" ColumnName="DepartmentID" />
-                <ScalarProperty Name="ExtensionNO" ColumnName="ExtensionNO" />
-                <ScalarProperty Name="SupervisorID" ColumnName="SupervisorID" />
-                <ScalarProperty Name="UpSupervisorID" ColumnName="UpSupervisorID" />
-                <ScalarProperty Name="JobAgentID" ColumnName="JobAgentID" />
-                <ScalarProperty Name="ADLoginID" ColumnName="ADLoginID" />
-                <ScalarProperty Name="EmergencyContact" ColumnName="EmergencyContact" />
-                <ScalarProperty Name="EmergencyContactTitle" ColumnName="EmergencyContactTitle" />
-                <ScalarProperty Name="EmergencyContactTelNO" ColumnName="EmergencyContactTelNO" />
-                <ScalarProperty Name="EmergencyContactCellPhone" ColumnName="EmergencyContactCellPhone" />
-                <ScalarProperty Name="EmergencyContactAddress" ColumnName="EmergencyContactAddress" />
-                <ScalarProperty Name="Guarantor" ColumnName="Guarantor" />
-                <ScalarProperty Name="GuarantorTitle" ColumnName="GuarantorTitle" />
-                <ScalarProperty Name="GuarantorTelNo" ColumnName="GuarantorTelNo" />
-                <ScalarProperty Name="GuarantorCellPhone" ColumnName="GuarantorCellPhone" />
-                <ScalarProperty Name="GuarantorAddress" ColumnName="GuarantorAddress" />
-                <ScalarProperty Name="RevisedRecord" ColumnName="RevisedRecord" />
-                <ScalarProperty Name="IsAdmin" ColumnName="IsAdmin" />
-                <ScalarProperty Name="JobGroupID" ColumnName="JobGroupID" />
-                <ScalarProperty Name="SortingID" ColumnName="SortingID" />
-                <ScalarProperty Name="UseConstructionForm" ColumnName="UseConstructionForm" />
-                <ScalarProperty Name="UseSS" ColumnName="UseSS" />
-                <ScalarProperty Name="UseCS" ColumnName="UseCS" />
-                <ScalarProperty Name="Available" ColumnName="Available" />
-                <ScalarProperty Name="ID" ColumnName="ID" />
-                <ScalarProperty Name="ContactNumber" ColumnName="ContactNumber" />
-                <ScalarProperty Name="LiveAddress" ColumnName="LiveAddress" />
-                <ScalarProperty Name="CensusRegisterAddress" ColumnName="CensusRegisterAddress" />
-                <ScalarProperty Name="Gender" ColumnName="Gender" />
-                <ScalarProperty Name="ModifyTime" ColumnName="ModifyTime" />
                 <ScalarProperty Name="ModifyUserID" ColumnName="ModifyUserID" />
-                <ScalarProperty Name="ModifyIP" ColumnName="ModifyIP" />
-                <ScalarProperty Name="Note" ColumnName="Note" />
-                <ScalarProperty Name="ShiftID" ColumnName="ShiftID" />
-                <ScalarProperty Name="EmployeeIdentityTypeID" ColumnName="EmployeeIdentityTypeID" />
-                <ScalarProperty Name="EmployeeIdentityTypeNote" ColumnName="EmployeeIdentityTypeNote" />
-                <ScalarProperty Name="WorkStatusTypeID" ColumnName="WorkStatusTypeID" />
-                <ScalarProperty Name="CostCenterID" ColumnName="CostCenterID" />
+                <ScalarProperty Name="ModifyTime" ColumnName="ModifyTime" />
+                <ScalarProperty Name="Gender" ColumnName="Gender" />
+                <ScalarProperty Name="Available" ColumnName="Available" />
+                <ScalarProperty Name="IsAdmin" ColumnName="IsAdmin" />
+                <ScalarProperty Name="ADLoginID" ColumnName="ADLoginID" />
+                <ScalarProperty Name="SupervisorID" ColumnName="SupervisorID" />
+                <ScalarProperty Name="ExtensionNO" ColumnName="ExtensionNO" />
+                <ScalarProperty Name="DepartmentID" ColumnName="DepartmentID" />
+                <ScalarProperty Name="ResignDate" ColumnName="ResignDate" />
+                <ScalarProperty Name="CellPhone" ColumnName="CellPhone" />
+                <ScalarProperty Name="TelNO" ColumnName="TelNO" />
+                <ScalarProperty Name="EMail" ColumnName="EMail" />
+                <ScalarProperty Name="Birthday" ColumnName="Birthday" />
+                <ScalarProperty Name="TitleID" ColumnName="TitleID" />
+                <ScalarProperty Name="EnglishName" ColumnName="EnglishName" />
+                <ScalarProperty Name="SimplifiedName" ColumnName="SimplifiedName" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="EmployeeID" ColumnName="EmployeeID" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

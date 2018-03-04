@@ -25,13 +25,7 @@ namespace EIPWeb.Models
         public string DepartmentEngName { get; set; }
         public string Leader { get; set; }
         public string UpDepartmentID { get; set; }
-        public Nullable<bool> IsCustomerService { get; set; }
-        public Nullable<bool> IsSales { get; set; }
         public Nullable<bool> Available { get; set; }
-        public string CustomerID { get; set; }
-        public Nullable<System.DateTime> DisableDate { get; set; }
-        public string DepartmentGradeTypeID { get; set; }
-        public string GroupName { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Employee> Employee { get; set; }
