@@ -21,7 +21,7 @@ namespace EIPApp.Droid
             #region 第三方套件／插件的初始化
 
             #region 進行 UserDialogs 套件的初始化
-            //Acr.UserDialogs.UserDialogs.Init(this);
+            Acr.UserDialogs.UserDialogs.Init(this);
             #endregion
 
             #endregion
