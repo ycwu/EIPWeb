@@ -17,6 +17,15 @@ namespace EIPApp.Droid
             base.OnCreate(bundle);
 
             global::Xamarin.Forms.Forms.Init(this, bundle);
+
+            #region 第三方套件／插件的初始化
+
+            #region 進行 UserDialogs 套件的初始化
+            //Acr.UserDialogs.UserDialogs.Init(this);
+            #endregion
+
+            #endregion
+
             LoadApplication(new App(new AndroidInitializer()));
         }
     }
