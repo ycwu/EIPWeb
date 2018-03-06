@@ -1,0 +1,39 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage
+    x:Class="EIPApp.Views.SplashPage"
+    xmlns="http://xamarin.com/schemas/2014/forms"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:prism="clr-namespace:Prism.Mvvm;assembly=Prism.Forms"
+    prism:ViewModelLocator.AutowireViewModel="True">
+
+    <Grid ColumnSpacing="0" RowSpacing="0">
+        <BoxView Color="#FCB515" />
+        <Image Aspect="AspectFit">
+            <!--  因為每個平台放置圖片的路徑不同，因此，使用 OnPlatform 來設定不同平台下的不同屬性值  -->
+            <Image.Source>
+                <OnPlatform
+                    x:TypeArguments="ImageSource"
+                    Android="splashscreen.png"
+                    WinPhone="Assets/Images/splashscreen.png"
+                    iOS="splashscreen.png" />
+            </Image.Source>
+        </Image>
+
+        <Grid
+            Margin="0,0,0,0"
+            HorizontalOptions="Fill"
+            VerticalOptions="End">
+            <BoxView
+                HeightRequest="50"
+                Opacity="0.7"
+                Color="Black" />
+            <Label
+                Margin="20,0"
+                FontSize="24"
+                HorizontalOptions="Center"
+                Text="{Binding LoadingMessage}"
+                TextColor="White"
+                VerticalOptions="Center" />
+        </Grid>
+    </Grid>
+</ContentPage>

@@ -31,6 +31,9 @@ namespace EIPApp
         {
             containerRegistry.RegisterForNavigation<NavigationPage>();
             containerRegistry.RegisterForNavigation<MainPage>();
+            containerRegistry.RegisterForNavigation<NaviPage>();
+            containerRegistry.RegisterForNavigation<MDPage>();
+            containerRegistry.RegisterForNavigation<SplashPage>();
         }
     }
 }
