@@ -13,7 +13,7 @@ namespace EIPApp.Helpers
     [ContentProperty("Text")]
     public class TranslateExtension : IMarkupExtension
     {
-        const string ResourceId = "XFMultiLangual.Resources.AppResources";
+        const string ResourceId = "EIPApp.Resources.AppResources";
 
         static readonly Lazy<ResourceManager> resmgr = new Lazy<ResourceManager>(() => new ResourceManager(ResourceId, typeof(TranslateExtension).GetTypeInfo().Assembly));
 
@@ -40,5 +40,4 @@ namespace EIPApp.Helpers
             }
             return translation;
         }
-    }
-}
+    }}

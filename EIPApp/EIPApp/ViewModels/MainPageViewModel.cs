@@ -14,6 +14,8 @@ namespace EIPApp.ViewModels
             : base (navigationService)
         {
             Title = "Main Page";
+
+            //Title = Resources.AppResource.Account;
         }
     }
 }
