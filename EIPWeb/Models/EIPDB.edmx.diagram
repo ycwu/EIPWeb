@@ -5,9 +5,8 @@
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
       <Diagram DiagramId="be7de52ceec3437a984148114b41be4f" Name="Diagram1">
-        <EntityTypeShape EntityType="EIPDBModel.Department" Width="1.5" PointX="0.75" PointY="2.375" />
-        <EntityTypeShape EntityType="EIPDBModel.Employee" Width="1.5" PointX="3" PointY="1.125" />
-        <AssociationConnector Association="EIPDBModel.FK_Employee_Department" />
+        <EntityTypeShape EntityType="EIPDBModel.Department" Width="1.5" PointX="0.75" PointY="0.75" />
+        <EntityTypeShape EntityType="EIPDBModel.Employee" Width="1.5" PointX="2.75" PointY="0.75" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

@@ -45,7 +45,7 @@ namespace WebApplication.Features.SamplePersistentConnection
                     break;
                 case "throw":
                     throw new InvalidOperationException("Client does not receive this error");
-                    break;
+                    //break;
             }
 
             return base.OnReceived(request, connectionId, data);

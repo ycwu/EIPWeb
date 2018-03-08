@@ -24,7 +24,8 @@ namespace EIPApp
         {
             InitializeComponent();
 
-            await NavigationService.NavigateAsync("NavigationPage/MainPage");
+            //await NavigationService.NavigateAsync("NavigationPage/MainPage");
+            await NavigationService.NavigateAsync("SplashPage");
         }
 
         protected override void RegisterTypes(IContainerRegistry containerRegistry)
@@ -34,6 +35,8 @@ namespace EIPApp
             containerRegistry.RegisterForNavigation<NaviPage>();
             containerRegistry.RegisterForNavigation<MDPage>();
             containerRegistry.RegisterForNavigation<SplashPage>();
+            containerRegistry.RegisterForNavigation<LoginPage>();
+            containerRegistry.RegisterForNavigation<AboutPage>();
         }
     }
 }

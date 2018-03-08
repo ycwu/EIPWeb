@@ -19,7 +19,7 @@ namespace EIPWeb.Models
             {
                 MyUserId = this.ID,
                 DepartmentID = this.DepartmentID,
-                DepartmentName = this.Department.DepartmentName,
+                DepartmentName = repoDepartment.GetDepartmentName(this.DepartmentID),
                 EmployeeID = this.EmployeeID,
                 IsManager = IsManager(),
                 Name = this.Name,

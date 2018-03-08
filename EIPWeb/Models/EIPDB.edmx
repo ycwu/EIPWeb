@@ -41,25 +41,9 @@
           <Property Name="ModifyTime" Type="datetime" />
           <Property Name="ModifyUserID" Type="varchar" MaxLength="10" />
         </EntityType>
-        <Association Name="FK_Employee_Department">
-          <End Role="Department" Type="Self.Department" Multiplicity="0..1" />
-          <End Role="Employee" Type="Self.Employee" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Department">
-              <PropertyRef Name="DepartmentID" />
-            </Principal>
-            <Dependent Role="Employee">
-              <PropertyRef Name="DepartmentID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <EntityContainer Name="EIPDBModelStoreContainer">
           <EntitySet Name="Department" EntityType="Self.Department" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Employee" EntityType="Self.Employee" Schema="dbo" store:Type="Tables" />
-          <AssociationSet Name="FK_Employee_Department" Association="Self.FK_Employee_Department">
-            <End Role="Department" EntitySet="Department" />
-            <End Role="Employee" EntitySet="Employee" />
-          </AssociationSet>
         </EntityContainer>
       </Schema></edmx:StorageModels>
     <!-- CSDL content -->
@@ -68,10 +52,6 @@
         <EntityContainer Name="EIPWebEntities" annotation:LazyLoadingEnabled="true">
           <EntitySet Name="Department" EntityType="EIPDBModel.Department" />
           <EntitySet Name="Employee" EntityType="EIPDBModel.Employee" />
-          <AssociationSet Name="FK_Employee_Department" Association="EIPDBModel.FK_Employee_Department">
-            <End Role="Department" EntitySet="Department" />
-            <End Role="Employee" EntitySet="Employee" />
-          </AssociationSet>
         </EntityContainer>
         <EntityType Name="Department">
           <Key>
@@ -83,7 +63,6 @@
           <Property Name="Leader" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
           <Property Name="UpDepartmentID" Type="String" MaxLength="5" FixedLength="false" Unicode="true" />
           <Property Name="Available" Type="Boolean" />
-          <NavigationProperty Name="Employee" Relationship="EIPDBModel.FK_Employee_Department" FromRole="Department" ToRole="Employee" />
         </EntityType>
         <EntityType Name="Employee">
           <Key>
@@ -109,20 +88,7 @@
           <Property Name="Gender" Type="String" MaxLength="10" FixedLength="false" Unicode="true" />
           <Property Name="ModifyTime" Type="DateTime" Precision="3" />
           <Property Name="ModifyUserID" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
-          <NavigationProperty Name="Department" Relationship="EIPDBModel.FK_Employee_Department" FromRole="Employee" ToRole="Department" />
         </EntityType>
-        <Association Name="FK_Employee_Department">
-          <End Type="EIPDBModel.Department" Role="Department" Multiplicity="0..1" />
-          <End Type="EIPDBModel.Employee" Role="Employee" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Department">
-              <PropertyRef Name="DepartmentID" />
-            </Principal>
-            <Dependent Role="Employee">
-              <PropertyRef Name="DepartmentID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->

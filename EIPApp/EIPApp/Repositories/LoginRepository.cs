@@ -45,13 +45,11 @@ namespace EIPApp.Repositories
                         client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
 
                         // 這裡是要存取 Azure Mobile 服務必須要指定的 Header
-                        client.DefaultRequestHeaders.Add("ZUMO-API-VERSION", "2.0.0");
+                        //client.DefaultRequestHeaders.Add("ZUMO-API-VERSION", "2.0.0");
 
                         #region 將帳號與密碼進行編碼
                         var byteArray = Encoding.ASCII.GetBytes($"{account}:{password}");
-                        client.DefaultRequestHeaders.Authorization =
-                            new System.Net.Http.Headers.AuthenticationHeaderValue("Basic",
-                            Convert.ToBase64String(byteArray));
+                        client.DefaultRequestHeaders.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("Basic", Convert.ToBase64String(byteArray));
                         #endregion
 
                         #region  設定相關網址內容

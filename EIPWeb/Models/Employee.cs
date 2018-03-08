@@ -34,7 +34,5 @@ namespace EIPWeb.Models
         public string Gender { get; set; }
         public Nullable<System.DateTime> ModifyTime { get; set; }
         public string ModifyUserID { get; set; }
-    
-        public virtual Department Department { get; set; }
     }
 }

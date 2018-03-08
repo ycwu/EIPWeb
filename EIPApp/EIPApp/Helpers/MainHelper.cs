@@ -11,7 +11,8 @@ namespace EIPApp.Helpers
     {
         #region 常用的變數字串
         #region 向 Azure Mobile App 服務的主要網址
-        public const string MainURL = "http://xamarinlobform.azurewebsites.net/";
+        //public const string MainURL = "http://xamarinlobform.azurewebsites.net/";
+        public const string MainURL = "http://169.254.80.80/EIPWeb/";
         #endregion
 
         #region 呼叫 API 的最上層名稱
@@ -23,37 +24,45 @@ namespace EIPApp.Helpers
         public static string UserLoginAPIUrl = $"{BaseAPIUrl}{UserLoginAPIName}";
         #endregion
 
-        #region 專案清單所有紀錄的 API 名稱
-        public static string ProjectAPIName = $"Project";
-        public static string ProjectAPIUrl = $"{BaseAPIUrl}{ProjectAPIName}";
+        #region 員工檔的API名稱
+        public static string EmployeeAPIName = $"Employee";
+        public static string EmployeeAPIUrl = $"{BaseAPIUrl}{EmployeeAPIName}";
         #endregion
 
-        #region 請假類別清單所有紀錄的 API 名稱
-        public static string LeaveCategoryAPIName = $"LeaveCategory";
-        public static string LeaveCategoryAPIUrl = $"{BaseAPIUrl}{LeaveCategoryAPIName}";
+        #region 部門檔的API名稱
+        public static string DepartmentAPIName = $"Department";
+        public static string DepartmentAPIUrl = $"{BaseAPIUrl}{DepartmentAPIName}";
         #endregion
+        //#region 專案清單所有紀錄的 API 名稱
+        //public static string ProjectAPIName = $"Project";
+        //public static string ProjectAPIUrl = $"{BaseAPIUrl}{ProjectAPIName}";
+        //#endregion
 
-        #region On-Call清單所有紀錄的 API 名稱
-        public static string OnCallPhoneAPIName = $"OnCallPhone";
-        public static string OnCallPhoneAPIUrl = $"{BaseAPIUrl}{OnCallPhoneAPIName}";
-        #endregion
+        //#region 請假類別清單所有紀錄的 API 名稱
+        //public static string LeaveCategoryAPIName = $"LeaveCategory";
+        //public static string LeaveCategoryAPIUrl = $"{BaseAPIUrl}{LeaveCategoryAPIName}";
+        //#endregion
 
-        #region 工作日誌清單所有紀錄的 API 名稱
-        public static string WorkingLogByUserIDAPIName = $"WorkingLog/ByUserID";
-        public static string WorkingLogAPIName = $"WorkingLog";
-        public static string WorkingLogByUserIDAPIUrl = $"{BaseAPIUrl}{WorkingLogByUserIDAPIName}";
-        public static string WorkingLogAPIUrl = $"{BaseAPIUrl}{WorkingLogAPIName}";
-        #endregion
+        //#region On-Call清單所有紀錄的 API 名稱
+        //public static string OnCallPhoneAPIName = $"OnCallPhone";
+        //public static string OnCallPhoneAPIUrl = $"{BaseAPIUrl}{OnCallPhoneAPIName}";
+        //#endregion
 
-        #region 請假類清單所有紀錄的 API 名稱
-        public static string LeaveAppFormManagerMode = $"manager";
-        public static string LeaveAppFormUserMode = $"user";
-        public static string LeaveAppFormByUserIDAPIName = $"LeaveAppFormByUser";
-        public static string LeaveAppFormAPIName = $"LeaveAppForm";
-        public static string LeaveAppFormByUserIDAPIUrl = $"{BaseAPIUrl}{LeaveAppFormByUserIDAPIName}";
-        public static string LeaveAppFormAPIUrl = $"{BaseAPIUrl}{LeaveAppFormAPIName}";
+        //#region 工作日誌清單所有紀錄的 API 名稱
+        //public static string WorkingLogByUserIDAPIName = $"WorkingLog/ByUserID";
+        //public static string WorkingLogAPIName = $"WorkingLog";
+        //public static string WorkingLogByUserIDAPIUrl = $"{BaseAPIUrl}{WorkingLogByUserIDAPIName}";
+        //public static string WorkingLogAPIUrl = $"{BaseAPIUrl}{WorkingLogAPIName}";
+        //#endregion
 
-        #endregion
+        //#region 請假類清單所有紀錄的 API 名稱
+        //public static string LeaveAppFormManagerMode = $"manager";
+        //public static string LeaveAppFormUserMode = $"user";
+        //public static string LeaveAppFormByUserIDAPIName = $"LeaveAppFormByUser";
+        //public static string LeaveAppFormAPIName = $"LeaveAppForm";
+        //public static string LeaveAppFormByUserIDAPIUrl = $"{BaseAPIUrl}{LeaveAppFormByUserIDAPIName}";
+        //public static string LeaveAppFormAPIUrl = $"{BaseAPIUrl}{LeaveAppFormAPIName}";
+        //#endregion
 
         #region 系統運作狀態的存取檔案名稱
         public static string SystemStatusFileName = $"SystemStatus";

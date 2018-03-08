@@ -1,0 +1,125 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage
+    x:Class="EIPApp.Views.LoginPage"
+    xmlns="http://xamarin.com/schemas/2014/forms"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:prism="clr-namespace:Prism.Mvvm;assembly=Prism.Forms"
+    prism:ViewModelLocator.AutowireViewModel="True"
+    BackgroundColor="#FCB515">
+
+    <Grid ColumnSpacing="0" RowSpacing="0">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="1*" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="50" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="*" />
+        </Grid.RowDefinitions>
+
+        <!--  輸入帳號與密碼的 UI  -->
+        <Grid
+            Grid.Row="1"
+            Margin="20,0,20,0"
+            ColumnSpacing="0"
+            RowSpacing="0">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="70" />
+                <RowDefinition Height="*" />
+                <RowDefinition Height="*" />
+                <RowDefinition Height="30" />
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="60" />
+                <ColumnDefinition Width="*" />
+            </Grid.ColumnDefinitions>
+
+            <BoxView
+                Grid.Row="0"
+                Grid.RowSpan="4"
+                Grid.Column="0"
+                Grid.ColumnSpan="2"
+                Opacity="0.2"
+                Color="White" />
+
+            <!--  輸入帳號與密碼的標題  -->
+            <!--<BoxView
+                Grid.Row="0" Grid.Column="0"
+                Grid.ColumnSpan="2"
+                Color="LightBlue"
+                Opacity="0.6"/>-->
+            <Label
+                Grid.ColumnSpan="2"
+                FontSize="28"
+                HorizontalOptions="Center"
+                Text="請輸入帳號與密碼"
+                TextColor="ForestGreen"
+                VerticalOptions="Center" />
+
+            <!--  帳號UI  -->
+            <Label
+                Grid.Row="1"
+                Grid.Column="0"
+                FontSize="20"
+                HorizontalOptions="End"
+                Text="帳號"
+                VerticalOptions="Center" />
+            <Entry
+                Grid.Row="1"
+                Grid.Column="1"
+                Margin="10,0"
+                HorizontalOptions="Fill"
+                Placeholder="請輸入員工代號"
+                Text="{Binding Account}"
+                VerticalOptions="Center" />
+
+            <!--  密碼UI  -->
+            <Label
+                Grid.Row="2"
+                Grid.Column="0"
+                FontSize="20"
+                HorizontalOptions="End"
+                Text="密碼"
+                VerticalOptions="Center" />
+            <Entry
+                Grid.Row="2"
+                Grid.Column="1"
+                Margin="10,0"
+                HorizontalOptions="Fill"
+                IsPassword="True"
+                Placeholder="請輸入密碼"
+                Text="{Binding Password}"
+                VerticalOptions="Center" />
+
+        </Grid>
+
+        <!--  按鈕與選項 UI  -->
+        <Grid
+            Grid.Row="3"
+            ColumnSpacing="0"
+            RowSpacing="0">
+            <StackLayout
+                Margin="40,0"
+                Orientation="Vertical"
+                Spacing="0">
+
+                <Grid ColumnSpacing="0" RowSpacing="0">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*" />
+                        <ColumnDefinition Width="Auto" />
+                    </Grid.ColumnDefinitions>
+                    <Label
+                        Grid.Column="0"
+                        HorizontalOptions="Start"
+                        Text="使用 Get 方式進行身分驗證"
+                        VerticalOptions="Center" />
+                    <Switch Grid.Column="1" IsToggled="{Binding UsingHttpGet}" />
+                </Grid>
+
+                <Button
+                    Margin="0,40,0,0"
+                    Command="{Binding LoginCommand}"
+                    Text="登入" />
+            </StackLayout>
+        </Grid>
+    </Grid>
+</ContentPage>

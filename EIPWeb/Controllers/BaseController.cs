@@ -30,7 +30,7 @@ namespace EIPWeb.Controllers
                     bResult = true;            
 #endif
             }
-            catch (Exception ex)
+            catch //(Exception ex)
             {
                 bResult = false;
             }

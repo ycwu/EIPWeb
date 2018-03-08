@@ -68,11 +68,11 @@ namespace EIPApp.ViewModels
                 await fooSystemStatusRepository.ReadAsync();
                 if (string.IsNullOrEmpty(fooSystemStatusRepository.Item.AccessToken))
                 {
-                    //await _navigationService.NavigateAsync("xf:///LoginPage");
+                    await _navigationService.NavigateAsync("xf:///LoginPage");
                 }
                 else
                 {
-                    //await _navigationService.NavigateAsync("xf:///MDPage/NaviPage/AboutPage");
+                    await _navigationService.NavigateAsync("xf:///MDPage/NaviPage/AboutPage");
                 }
             }
             else

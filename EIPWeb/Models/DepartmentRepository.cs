@@ -14,6 +14,16 @@ namespace EIPWeb.Models
                 bResult = true;
             return bResult;
         }
+
+        public string GetDepartmentName(string departmentID)
+        {
+            string result = "";
+            Department department= base.All().FirstOrDefault(m => m.DepartmentID == departmentID);
+            if (department != null)
+                result = department.DepartmentName;
+            return result;
+        }
+
     }
 
 	public  interface IDepartmentRepository : IRepository<Department>

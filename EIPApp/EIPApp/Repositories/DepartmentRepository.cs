@@ -37,7 +37,7 @@ namespace EIPApp.Repositories
                     try
                     {
                         #region 呼叫遠端 Web API
-                        string FooAPIUrl = $"{MainHelper.LeaveCategoryAPIUrl}";
+                        string FooAPIUrl = $"{MainHelper.DepartmentAPIUrl}";
                         HttpResponseMessage response = null;
 
                         // Accept 用於宣告客戶端要求服務端回應的文件型態 (底下兩種方法皆可任選其一來使用)
@@ -154,7 +154,7 @@ namespace EIPApp.Repositories
         public async Task SaveAsync()
         {
             string data = JsonConvert.SerializeObject(Items);
-            await StorageUtility.WriteToDataFileAsync("", MainHelper.資料主目錄, MainHelper.LeaveCategoryAPIName, data);
+            await StorageUtility.WriteToDataFileAsync("", MainHelper.資料主目錄, MainHelper.DepartmentAPIName, data);
         }
 
         /// <summary>
@@ -164,7 +164,7 @@ namespace EIPApp.Repositories
         public async Task<List<Department>> ReadAsync()
         {
             string data = "";
-            data = await StorageUtility.ReadFromDataFileAsync("", MainHelper.資料主目錄, MainHelper.LeaveCategoryAPIName);
+            data = await StorageUtility.ReadFromDataFileAsync("", MainHelper.資料主目錄, MainHelper.DepartmentAPIName);
             Items = JsonConvert.DeserializeObject<List<Department>>(data);
             if (Items == null)
             {

@@ -85,11 +85,11 @@ namespace WebApplication.Features.SampleHub
             throw new HubException("ThrowHubException", new { Detail = "I can provide additional error information here!" });
         }
 
-        public void StartBackgroundThread()
+        public async void StartBackgroundThread()
         {
             BackgroundThread.Enabled = true;
-            BackgroundThread.SendOnPersistentConnection();
-            BackgroundThread.SendOnHub();
+            await BackgroundThread.SendOnPersistentConnection();
+            await BackgroundThread.SendOnHub();
         }
 
         public void StopBackgroundThread()
