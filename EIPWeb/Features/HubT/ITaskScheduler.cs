@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace WebApplication.Features.HubT
+namespace EIPWeb.Features.HubT
 {
     public interface ITaskScheduler
     {

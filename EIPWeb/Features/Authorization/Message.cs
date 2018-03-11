@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
-namespace WebApplication.Features.Authorization
+namespace EIPWeb.Features.Authorization
 {
     public class Message
     {

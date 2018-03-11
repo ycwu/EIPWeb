@@ -37,6 +37,7 @@ namespace EIPApp
             containerRegistry.RegisterForNavigation<SplashPage>();
             containerRegistry.RegisterForNavigation<LoginPage>();
             containerRegistry.RegisterForNavigation<AboutPage>();
+            containerRegistry.RegisterForNavigation<ChatPage>();
         }
     }
 }

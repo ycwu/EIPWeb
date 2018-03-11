@@ -1,9 +1,11 @@
 ﻿using System;
 using System.Threading.Tasks;
+using EIPWeb.Features.Authorization;
 using Microsoft.AspNet.SignalR;
 using Newtonsoft.Json;
+using WebApplication.Features.Authorization;
 
-namespace WebApplication.Features.SamplePersistentConnection
+namespace EIPWeb.Features.SamplePersistentConnection
 {
     public class DemoPersistentConnection : PersistentConnection
     {       

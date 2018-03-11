@@ -7,6 +7,6 @@ namespace EIPApp.Models
     public class UserLoginResultModel
     {
         public string AccessToken { get; set; } = "";
-        public MyUser MyUser { get; set; } = new MyUser();
+        public Users MyUser { get; set; } = new Users();
     }
 }

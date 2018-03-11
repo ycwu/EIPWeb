@@ -1,8 +1,48 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
-<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
-             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             xmlns:prism="clr-namespace:Prism.Mvvm;assembly=Prism.Forms"
-             prism:ViewModelLocator.AutowireViewModel="True"
-             x:Class="EIPApp.Views.AboutPage">
-  
+<ContentPage
+    x:Class="EIPApp.Views.AboutPage"
+    xmlns="http://xamarin.com/schemas/2014/forms"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:prism="clr-namespace:Prism.Mvvm;assembly=Prism.Forms"
+    Title="關於"
+    prism:ViewModelLocator.AutowireViewModel="True"
+    BackgroundColor="#FFA861">
+
+    <Grid ColumnSpacing="0" RowSpacing="0">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="150" />
+            <RowDefinition Height="*" />
+        </Grid.RowDefinitions>
+
+        <Image
+            Aspect="Fill"
+            HeightRequest="130"
+            HorizontalOptions="Center"
+            VerticalOptions="Center"
+            WidthRequest="130">
+            <!--  因為每個平台放置圖片的路徑不同，因此，使用 OnPlatform 來設定不同平台下的不同屬性值  -->
+            <Image.Source>
+                <OnPlatform
+                    x:TypeArguments="ImageSource"
+                    Android="Logo.png"
+                    WinPhone="Assets/Images/Logo.png"
+                    iOS="Logo.png" />
+            </Image.Source>
+        </Image>
+
+        <Grid
+            Grid.Row="1"
+            ColumnSpacing="0"
+            RowSpacing="0">
+            <Label
+                Margin="20,0"
+                FontSize="48"
+                HorizontalOptions="Center"
+                HorizontalTextAlignment="Center"
+                Opacity="0.5"
+                Text="Xamarin.Forms 跨平台行動開發一日實戰營"
+                TextColor="White"
+                VerticalOptions="Center" />
+        </Grid>
+    </Grid>
 </ContentPage>

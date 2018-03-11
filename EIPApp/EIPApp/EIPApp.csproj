@@ -6,6 +6,7 @@
   </PropertyGroup>
   <ItemGroup>
     <PackageReference Include="Acr.UserDialogs" Version="7.0.1" />
+    <PackageReference Include="Microsoft.AspNet.SignalR.Client" Version="2.2.2" />
     <PackageReference Include="Newtonsoft.Json" Version="11.0.1" />
     <PackageReference Include="PCLStorage" Version="1.0.2" />
     <PackageReference Include="Plugin.Multilingual" Version="1.0.2" />
@@ -17,6 +18,9 @@
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Update="Views\AboutPage.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Views\ChatPage.xaml">
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
     </EmbeddedResource>
     <EmbeddedResource Update="Views\LoginPage.xaml">

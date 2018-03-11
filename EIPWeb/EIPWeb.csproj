@@ -235,8 +235,14 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Helpers\JsonHelper.cs" />
     <Compile Include="Helpers\MainHelper.cs" />
+    <Compile Include="Hubs\GroupsHub.cs" />
     <Compile Include="Models\APIResult.cs" />
+    <Compile Include="Models\Chat\ChatContext.cs" />
+    <Compile Include="Models\Chat\ChatRoom.cs" />
+    <Compile Include="Models\Chat\Connection.cs" />
+    <Compile Include="Models\Chat\User.cs" />
     <Compile Include="Models\Department.cs">
       <DependentUpon>EIPDB.tt</DependentUpon>
     </Compile>
@@ -340,6 +346,24 @@
       <Generator>TextTemplatingFileGenerator</Generator>
       <LastGenOutput>IRepository.EF6.cs</LastGenOutput>
     </Content>
+    <None Include="Scripts1\jquery-2.2.2.intellisense.js" />
+    <Content Include="Scripts1\jquery-2.2.2.js" />
+    <Content Include="Scripts1\jquery-2.2.2.min.js" />
+    <Content Include="Scripts1\jquery.signalR-2.2.0.js" />
+    <Content Include="Scripts1\jquery.signalR-2.2.0.min.js" />
+    <Content Include="Scripts1\layer\extend\layer.ext.dev.js" />
+    <Content Include="Scripts1\layer\extend\layer.ext.js" />
+    <Content Include="Scripts1\layer\layer.min.js" />
+    <Content Include="Scripts1\layer\skin\default\icon_ext.png" />
+    <Content Include="Scripts1\layer\skin\default\textbg.png" />
+    <Content Include="Scripts1\layer\skin\default\xubox_ico0.png" />
+    <Content Include="Scripts1\layer\skin\default\xubox_loading0.gif" />
+    <Content Include="Scripts1\layer\skin\default\xubox_loading1.gif" />
+    <Content Include="Scripts1\layer\skin\default\xubox_loading2.gif" />
+    <Content Include="Scripts1\layer\skin\default\xubox_loading3.gif" />
+    <Content Include="Scripts1\layer\skin\default\xubox_title0.png" />
+    <Content Include="Scripts1\layer\skin\layer.css" />
+    <Content Include="Scripts1\layer\skin\layer.ext.css" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
     <Content Include="ApplicationInsights.config">
@@ -358,6 +382,7 @@
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
     </None>
+    <Content Include="Scripts1\jquery-2.2.2.min.map" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <Content Include="Scripts\jquery-1.10.2.js" />
     <Content Include="Scripts\jquery-1.10.2.min.js" />
@@ -403,6 +428,7 @@
     <Content Include="Views\Feature\Progress.cshtml" />
     <Content Include="Views\Feature\SendToUser.cshtml" />
     <Content Include="Views\Feature\SendToUsers.cshtml" />
+    <Content Include="Views\Chat\IndexTest.cshtml" />
     <Content Include="Views\Chat\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>

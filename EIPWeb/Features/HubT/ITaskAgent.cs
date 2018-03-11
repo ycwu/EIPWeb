@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Threading.Tasks;
 
-namespace WebApplication.Features.HubT
+namespace EIPWeb.Features.HubT
 {
     public interface ITaskAgent
     {

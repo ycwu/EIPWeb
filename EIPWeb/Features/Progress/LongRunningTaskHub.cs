@@ -2,7 +2,7 @@
 using System.Threading.Tasks;
 using Microsoft.AspNet.SignalR;
 
-namespace WebApplication.Features.HubT
+namespace EIPWeb.Features.HubT
 {
     public class LongRunningTaskHub : Hub
     {

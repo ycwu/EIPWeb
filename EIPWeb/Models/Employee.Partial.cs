@@ -17,12 +17,13 @@ namespace EIPWeb.Models
             //Department department = db.Department.Find(this.DepartmentID);
             return new MyUser()
             {
-                MyUserId = this.ID,
+                //MyUserId = this.ID,
+                UserID = this.ADLoginID,
+                UserName = this.Name,
                 DepartmentID = this.DepartmentID,
                 DepartmentName = repoDepartment.GetDepartmentName(this.DepartmentID),
                 EmployeeID = this.EmployeeID,
                 IsManager = IsManager(),
-                Name = this.Name,
             };
         }
 

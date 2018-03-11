@@ -2,7 +2,7 @@
 using System.Threading.Tasks;
 using Microsoft.AspNet.SignalR;
 
-namespace WebApplication.Features.SampleHub
+namespace EIPWeb.Features.SampleHub
 {
     public class DemoHub : Hub
     {

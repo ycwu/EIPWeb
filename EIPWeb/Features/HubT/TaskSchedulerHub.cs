@@ -1,7 +1,7 @@
 ﻿using System;
 using Microsoft.AspNet.SignalR;
 
-namespace WebApplication.Features.HubT
+namespace EIPWeb.Features.HubT
 {
     public class TaskSchedulerHub : Hub<ITaskAgent>, ITaskScheduler
     {

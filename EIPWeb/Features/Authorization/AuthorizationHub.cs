@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 using System.Web;
 using Microsoft.AspNet.SignalR;
 
-namespace WebApplication.Features.Authorization
+namespace EIPWeb.Features.Authorization
 {
     [Authorize]
     public class AuthorizationHub : Hub

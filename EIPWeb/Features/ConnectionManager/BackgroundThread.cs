@@ -3,10 +3,11 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Web;
+using EIPWeb.Features.SamplePersistentConnection;
 using Microsoft.AspNet.SignalR;
 using WebApplication.Features.SamplePersistentConnection;
 
-namespace WebApplication.Features.SampleHub
+namespace EIPWeb.Features.SampleHub
 {
     public class BackgroundThread
     {

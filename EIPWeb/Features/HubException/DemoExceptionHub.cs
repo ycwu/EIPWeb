@@ -2,7 +2,7 @@
 using System.Threading.Tasks;
 using Microsoft.AspNet.SignalR;
 
-namespace WebApplication.Features.SampleHubException
+namespace EIPWeb.Features.SampleHubException
 {
     public class DemoExceptionHub : Hub
     {

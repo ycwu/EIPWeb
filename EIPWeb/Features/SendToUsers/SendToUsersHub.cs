@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using Microsoft.AspNet.SignalR;
 
-namespace WebApplication.Features.SendToUsers
+namespace EIPWeb.Features.SendToUsers
 {
     public class SendToUsersHub : Hub
     {

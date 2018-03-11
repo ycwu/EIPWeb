@@ -1,6 +1,6 @@
 ﻿using Microsoft.AspNet.SignalR;
 
-namespace WebApplication.Features.SendToUser
+namespace EIPWeb.Features.SendToUser
 {
     public class SendToUserHub : Hub
     {

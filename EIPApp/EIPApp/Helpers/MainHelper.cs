@@ -1,6 +1,11 @@
-﻿using System;
+﻿using Acr.UserDialogs;
+using EIPApp.Models;
+using EIPApp.Repositories;
+using System;
 using System.Collections.Generic;
 using System.Text;
+using System.Threading;
+using System.Threading.Tasks;
 
 namespace EIPApp.Helpers
 {
@@ -10,6 +15,11 @@ namespace EIPApp.Helpers
     public class MainHelper
     {
         #region 常用的變數字串
+
+        #region XX
+        public static string SignalRURL = "http://59.120.185.68:8080/XamarinSignalRExample/";
+        #endregion
+
         #region 向 Azure Mobile App 服務的主要網址
         //public const string MainURL = "http://xamarinlobform.azurewebsites.net/";
         public const string MainURL = "http://169.254.80.80/EIPWeb/";
@@ -85,7 +95,67 @@ namespace EIPApp.Helpers
         #endregion
 
         #region Repository (此處為方便開發，所以，所有的 Repository 皆為全域靜態可存取)
+        public static LoginRepository UserLoginService = new LoginRepository();
         #endregion
 
+        /// <summary>
+        /// 要進行登出，所以，清空本機快取資料
+        /// </summary>
+        /// <returns></returns>
+        public static async Task CleanRepositories()
+        {
+            #region 要進行登出，所以，清空本機快取資料
+            var fooSystemStatusRepository = new SystemStatusRepository();
+            await fooSystemStatusRepository.ReadAsync();
+            fooSystemStatusRepository.Item.AccessToken = "";
+            await fooSystemStatusRepository.SaveAsync();
+
+            var fooLoginRepository = new LoginRepository();
+            fooLoginRepository.Item = new Models.UserLoginResultModel();
+            await fooLoginRepository.SaveAsync();
+
+            //var fooWorkingLogRepository = new WorkingLogRepository();
+            //fooWorkingLogRepository.Items = new List<Models.WorkingLog>();
+            //await fooWorkingLogRepository.SaveAsync();
+
+            //var fooLeaveAppFormRepository = new LeaveAppFormRepository();
+            //fooLeaveAppFormRepository.Items = new List<Models.LeaveAppForm>();
+            //await fooLeaveAppFormRepository.SaveAsync(MainHelper.LeaveAppFormUserMode);
+            //await fooLeaveAppFormRepository.SaveAsync(MainHelper.LeaveAppFormManagerMode);
+            #endregion
+
+        }
+
+        /// <summary>
+        /// 若存取權杖 Access Token 發生了問題，需要進行的檢查與處理動作
+        /// </summary>
+        /// <param name="apiResult"></param>
+        /// <returns></returns>
+        public static async Task<bool> CheckAccessToken(APIResult apiResult)
+        {
+            bool IsValid = true;
+            #region 若存取權杖 Access Token 發生了問題，需要進行的檢查與處理動作
+            if (apiResult.TokenFail == true)
+            {
+                try
+                {
+                    var fooAlertConfig = new AlertConfig()
+                    {
+                        Title = "錯誤通知",
+                        Message = $"存取權杖異常，請登出後，進行重新登入驗證作業",
+                        OkText = "確定"
+                    };
+                    CancellationTokenSource fooCancelSrc = new CancellationTokenSource(10000);
+                    await Acr.UserDialogs.UserDialogs.Instance.AlertAsync(fooAlertConfig, fooCancelSrc.Token);
+                }
+                catch (OperationCanceledException)
+                {
+                }
+
+                IsValid = false;
+            }
+            #endregion
+            return IsValid;
+        }
     }
 }

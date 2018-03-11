@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using EIPWeb.Features.Authorization;
 using Microsoft.AspNet.SignalR;
 using Newtonsoft.Json;
 
