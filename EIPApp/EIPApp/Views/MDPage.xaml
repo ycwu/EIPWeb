@@ -82,6 +82,19 @@
                                 FontSize="24"
                                 HorizontalOptions="Start"
                                 Opacity="0.7"
+                                Text="通訊錄"
+                                TextColor="Black"
+                                VerticalOptions="Center">
+                                <Label.GestureRecognizers>
+                                    <TapGestureRecognizer Command="{Binding MenuCommand}" CommandParameter="通訊錄" />
+                                </Label.GestureRecognizers>
+                            </Label>
+
+                            <Label
+                                Margin="20,20"
+                                FontSize="24"
+                                HorizontalOptions="Start"
+                                Opacity="0.7"
                                 Text="工作日誌"
                                 TextColor="Black"
                                 VerticalOptions="Center">

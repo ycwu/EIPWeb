@@ -9,7 +9,13 @@ namespace EIPWeb.Controllers
     public class ChatController : Controller
     {
         // GET: Chat
-        public ActionResult Index()
+        public ActionResult Simple()
+        {
+            return View();
+        }
+
+        // GET: Chat
+        public ActionResult Group()
         {
             return View();
         }

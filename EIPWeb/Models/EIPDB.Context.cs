@@ -27,5 +27,8 @@ namespace EIPWeb.Models
     
         public virtual DbSet<Department> Department { get; set; }
         public virtual DbSet<Employee> Employee { get; set; }
+        public virtual DbSet<ChatMessage> ChatMessage { get; set; }
+        public virtual DbSet<Chatroom> Chatroom { get; set; }
+        public virtual DbSet<ChatroomDetail> ChatroomDetail { get; set; }
     }
 }

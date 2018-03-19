@@ -17,7 +17,8 @@ namespace EIPApp.Helpers
         #region 常用的變數字串
 
         #region XX
-        public static string SignalRURL = "http://59.120.185.68:8080/XamarinSignalRExample/";
+        //public static string SignalRURL = "http://59.120.185.68:8080/XamarinSignalRExample/";
+        public static string SignalRURL = "http://169.254.80.80/EIPWeb/";
         #endregion
 
         #region 向 Azure Mobile App 服務的主要網址

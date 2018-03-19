@@ -8,12 +8,12 @@ using System.Web.Http;
 
 namespace EIPWeb.Controllers
 {
-    public class EmployeeController : ApiController
+    public class DepartmentController : ApiController
     {
         private EIPWebEntities db = new EIPWebEntities();
         APIResult fooResult = new APIResult();
 
-        public EmployeeController()
+        public DepartmentController()
         {
             db.Configuration.LazyLoadingEnabled = false;
         }
@@ -55,7 +55,7 @@ namespace EIPWeb.Controllers
             fooResult.Success = true;
             fooResult.Message = $"";
             fooResult.TokenFail = false;
-            fooResult.Payload = db.Employee.Where(m => m.ResignDate == null).ToList();
+            fooResult.Payload = db.Department.Where(m => m.Available == true).ToList();
             return fooResult;
         }
 
@@ -89,4 +89,5 @@ namespace EIPWeb.Controllers
             base.Dispose(disposing);
         }
     }
+
 }

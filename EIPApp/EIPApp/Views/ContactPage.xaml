@@ -1,0 +1,26 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage
+    x:Class="EIPApp.Views.ContactPage"
+    xmlns="http://xamarin.com/schemas/2014/forms"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:behavior="clr-namespace:Prism.Behaviors;assembly=Prism.Forms"
+    xmlns:prism="clr-namespace:Prism.Mvvm;assembly=Prism.Forms"
+    prism:ViewModelLocator.AutowireViewModel="True">
+    <StackLayout HorizontalOptions="Center" VerticalOptions="Center">
+        <Label Text="{Binding Title}" />
+        <Label Text="Department" />
+        <Picker
+            ItemsSource="{Binding DepartmentSource}"
+            SelectedItem="{Binding DepartmentSelectedItem}"
+            WidthRequest="150">
+            <Picker.Behaviors>
+                <behavior:EventToCommandBehavior Command="{Binding DepartmentSelectedCommand}" EventName="SelectedIndexChanged" />
+            </Picker.Behaviors>
+        </Picker>
+        <Picker ItemsSource="{Binding EmployeeSource}" SelectedItem="{Binding EmployeeSelectedItem}">
+            <Picker.Behaviors>
+                <behavior:EventToCommandBehavior Command="{Binding EmployeeSelectedCommand}" EventName="SelectedIndexChanged" />
+            </Picker.Behaviors>
+        </Picker>
+    </StackLayout>
+</ContentPage>

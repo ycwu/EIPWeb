@@ -60,7 +60,7 @@ namespace EIPWeb.Controllers
             if (emp != null)
             {
                 userData = emp.DepartmentID;//可放使用者自訂的內容
-                mAccountID = emp.Name;
+                mAccountID = user.UserID;
             }
             else
             {

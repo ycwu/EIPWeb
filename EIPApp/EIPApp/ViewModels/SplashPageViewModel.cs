@@ -45,19 +45,28 @@ namespace EIPApp.ViewModels
             else
             {
                 LoadingMessage = "正在更新 員工檔/部門檔清單 中";
-                var repoEmployee = new EmployeeRepository();
-                APIResult = await repoEmployee.GetAsync();
+                var repoDepartment = new DepartmentRepository();
+                APIResult = await repoDepartment.GetAsync();
                 if (APIResult.Success == false)
                 {
-                    using (Acr.UserDialogs.UserDialogs.Instance.Toast(
-                        $"無法進行 更新 員工檔/部門檔清單 中 ({APIResult.Message})", TimeSpan.FromMilliseconds(1500)))
+                    using (Acr.UserDialogs.UserDialogs.Instance.Toast($"無法進行更新[部門檔]清單 中 ({APIResult.Message})", TimeSpan.FromMilliseconds(1500)))
                     {
                         await Task.Delay(2000);
                     }
                     fooAllSuccess = false;
                 }
                 else
-                {                    
+                {
+                    var repoEmployee = new EmployeeRepository();
+                    APIResult = await repoEmployee.GetAsync();
+                    if (APIResult.Success == false)
+                    {
+                        using (Acr.UserDialogs.UserDialogs.Instance.Toast($"無法進行更新[員工檔]清單 中 ({APIResult.Message})", TimeSpan.FromMilliseconds(1500)))
+                        {
+                            await Task.Delay(2000);
+                        }
+                        fooAllSuccess = false;
+                    }                    
                 }
             }
 

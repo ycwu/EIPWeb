@@ -32,6 +32,9 @@ namespace EIPApp.ViewModels
                     case "即時訊息":
                         await _navigationService.NavigateAsync("xf:///MDPage/NaviPage/ChatPage");
                         break;
+                    case "通訊錄":
+                        await _navigationService.NavigateAsync("xf:///MDPage/NaviPage/ContactPage");
+                        break;
                     case "工作日誌":
                         await _navigationService.NavigateAsync("xf:///MDPage/NaviPage/WorkingLogPage");
                         break;
