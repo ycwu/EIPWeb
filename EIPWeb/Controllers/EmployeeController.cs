@@ -80,6 +80,16 @@ namespace EIPWeb.Controllers
             return fooResult;
         }
 
+        [Route("api/Employee/{departmentID}/Department")]
+        public APIResult GetByDepartmentID(string departmentID)
+        {
+            fooResult.Success = true;
+            fooResult.Message = $"";
+            fooResult.TokenFail = false;
+            fooResult.Payload = db.Employee.Where(m => m.DepartmentID == departmentID).ToList();
+            return fooResult;
+        }
+
         protected override void Dispose(bool disposing)
         {
             if (disposing)

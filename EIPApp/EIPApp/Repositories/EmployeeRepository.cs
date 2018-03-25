@@ -23,7 +23,7 @@ namespace EIPApp.Repositories
 
 
         /// <summary>
-        /// 員工檔-全部
+        /// 員工檔
         /// </summary>
         /// <param name="account"></param>
         /// <param name="password"></param>
@@ -148,12 +148,11 @@ namespace EIPApp.Repositories
         }
 
         /// <summary>
-        /// 員工檔-全部
+        /// 依部門代號取得員工檔
         /// </summary>
-        /// <param name="account"></param>
-        /// <param name="password"></param>
-        /// <returns></returns>
-        public async Task<APIResult> GetByDepartmentIDAsync(string departmentID)
+        /// <param name="departmentID"></param>
+        /// <returns></returns>        
+        public async Task<APIResult> GetAsync(Department department)
         {
             using (HttpClientHandler handler = new HttpClientHandler())
             {
@@ -162,7 +161,7 @@ namespace EIPApp.Repositories
                     try
                     {
                         #region 呼叫遠端 Web API
-                        string FooAPIUrl = $"{MainHelper.EmployeeAPIUrl}?DepartmentID={departmentID}";
+                        string FooAPIUrl = $"{MainHelper.EmployeeAPIUrl}";
                         HttpResponseMessage response = null;
 
                         // Accept 用於宣告客戶端要求服務端回應的文件型態 (底下兩種方法皆可任選其一來使用)
@@ -170,7 +169,7 @@ namespace EIPApp.Repositories
                         client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
 
                         // 這裡是要存取 Azure Mobile 服務必須要指定的 Header
-                        client.DefaultRequestHeaders.Add("ZUMO-API-VERSION", "2.0.0");
+                        //client.DefaultRequestHeaders.Add("ZUMO-API-VERSION", "2.0.0");
 
                         #region 傳入 Access Token
                         var fooSystemStatus = new SystemStatusRepository();
@@ -181,7 +180,7 @@ namespace EIPApp.Repositories
                         #endregion
 
                         #region  設定相關網址內容
-                        var fooFullUrl = $"{FooAPIUrl}";
+                        var fooFullUrl = $"{FooAPIUrl}/{department.DepartmentID}/Department";
                         #endregion
 
                         response = await client.GetAsync(fooFullUrl);

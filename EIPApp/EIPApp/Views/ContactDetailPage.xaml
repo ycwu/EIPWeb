@@ -1,11 +1,10 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <ContentPage
-    x:Class="EIPApp.Views.ContactPage"
+    x:Class="EIPApp.Views.ContactDetailPage"
     xmlns="http://xamarin.com/schemas/2014/forms"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
     xmlns:behavior="clr-namespace:Prism.Behaviors;assembly=Prism.Forms"
     xmlns:prism="clr-namespace:Prism.Mvvm;assembly=Prism.Forms"
-    Title="通訊錄"
     prism:ViewModelLocator.AutowireViewModel="True">
 
     <ContentPage.ToolbarItems>
@@ -34,9 +33,9 @@
             HasUnevenRows="True"
             IsPullToRefreshEnabled="True"
             IsRefreshing="{Binding IsRefreshing}"
-            ItemsSource="{Binding DepartmentList}"
+            ItemsSource="{Binding EmployeeList}"
             RefreshCommand="{Binding DoRefreshCommand}"
-            SelectedItem="{Binding DepartmentSelectedItem}"
+            SelectedItem="{Binding EmployeeSelectedItem}"
             SeparatorVisibility="None">
             <ListView.Behaviors>
                 <behavior:EventToCommandBehavior Command="{Binding ItemTappedCommand}" EventName="ItemTapped" />
@@ -63,7 +62,7 @@
                                 Grid.Column="0"
                                 Margin="5,0"
                                 FontSize="20"
-                                Text="{Binding DepartmentID}"
+                                Text="{Binding Name}"
                                 TextColor="Black" />
 
                             <StackLayout
@@ -77,13 +76,12 @@
                                     Text="{Binding DepartmentName}"
                                     TextColor="DarkGray" />
                             </StackLayout>
-
                             <Label
                                 Grid.Row="0"
                                 Grid.Column="1"
                                 Margin="5,0"
                                 FontSize="20"
-                                Text="{Binding DepartmentID}"
+                                Text="{Binding EmployeeID}"
                                 TextColor="Brown" />
 
                             <Label

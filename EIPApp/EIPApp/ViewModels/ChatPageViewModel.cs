@@ -78,6 +78,8 @@ namespace EIPApp.ViewModels
                 if (username != UserName)//MainHelper.UserLoginService.Item.MyUser.UserName)
                     ChatContentCollection.Add(new ChatContent
                     {
+                        姓名= username,
+                        姓名文字顏色 = Color.Blue,
                         對話人圖片 = Girl,
                         對話內容 = message,
                         對話類型 = 對話類型.他人,

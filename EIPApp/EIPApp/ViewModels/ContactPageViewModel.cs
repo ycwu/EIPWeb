@@ -1,4 +1,7 @@
-﻿using EIPApp.Repositories;
+﻿using Acr.UserDialogs;
+using EIPApp.Helpers;
+using EIPApp.Models;
+using EIPApp.Repositories;
 using Prism.Commands;
 using Prism.Mvvm;
 using Prism.Navigation;
@@ -7,39 +10,49 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Linq;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace EIPApp.ViewModels
 {
-    public class ContactPageViewModel : INotifyPropertyChanged, INavigatedAware  
+    public class ContactPageViewModel : INotifyPropertyChanged, INavigationAware
     {
         public event PropertyChangedEventHandler PropertyChanged;
-
+        public Department DepartmentSelectedItem { get; set; }
+        public ObservableCollection<Department> DepartmentList { get; set; } = new ObservableCollection<Department>();
+        public bool IsRefreshing { get; set; } = false;
         private DepartmentRepository repoDepartment = new DepartmentRepository();
-        private EmployeeRepository repoEmployee = new EmployeeRepository();
-        public ObservableCollection<string> DepartmentSource { get; set; } = new ObservableCollection<string>();
-        public ObservableCollection<string> EmployeeSource { get; set; } = new ObservableCollection<string>();
-        public string DepartmentSelectedItem { get; set; }
-        public string EmployeeSelectedItem { get; set; }
-        public string Title { get; set; }
-
-        public DelegateCommand DepartmentSelectedCommand { get; set; }
+        public DelegateCommand DoRefreshCommand { get; set; }
+        public DelegateCommand AddCommand { get; set; }
+        public DelegateCommand ItemTappedCommand { get; set; }
         private readonly INavigationService _navigationService;
 
         public ContactPageViewModel(INavigationService navigationService)
         {
             _navigationService = navigationService;
-
-            DepartmentSelectedCommand = new DelegateCommand(async () =>
+            AddCommand = new DelegateCommand(async () =>
             {
-                var fooBackup = DepartmentSelectedItem;
-                // 變更到最新的 Picker2 的可選取清單
-                EmployeeSource = repoEmployee.GetAsync(DepartmentSelectedItem);
-                if (EmployeeSource.Contains(fooBackup))
-                {
-                    await Task.Delay(100);
-                    EmployeeSelectedItem = EmployeeSource.FirstOrDefault(x => x == fooBackup);
-                }
+                //var fooItem = new LeaveAppForm()
+                //{
+                //    BeginDate = DateTime.Now.Date.AddDays(1),
+                //    CompleteDate = DateTime.Now.Date.AddDays(2),
+                //    FormDate = DateTime.Now
+                //};
+                NavigationParameters fooPara = new NavigationParameters();
+                //fooPara.Add(MainHelper.CRUDItemKeyName, fooItem);
+                //fooPara.Add(MainHelper.CRUDKeyName, MainHelper.CRUD_Create);
+
+                await _navigationService.NavigateAsync("ChatPage", fooPara);
+            });
+            ItemTappedCommand = new DelegateCommand(async () =>
+            {
+                NavigationParameters fooPara = new NavigationParameters();
+                fooPara.Add("DepartmentID", DepartmentSelectedItem);
+                await _navigationService.NavigateAsync("ContactDetailPage", fooPara);
+            });
+            DoRefreshCommand = new DelegateCommand(async () =>
+            {
+                //await RetriveRecords();
             });
         }
 
@@ -55,46 +68,250 @@ namespace EIPApp.ViewModels
 
         public async void OnNavigatedTo(NavigationParameters parameters)
         {
-            //DepartmentSource = PickerSource.GetPicker1Source();
-            //EmployeeSource = PickerSource.GetPicker1Source();
-            await LoadDepartmentPickerSource();
-            await LoadEmployeePickerSource();
-        }
-
-        private async Task LoadDepartmentPickerSource()
-        {
-            await repoDepartment.ReadAsync();
-            DepartmentSource.Clear();
-            foreach (var item in repoDepartment.Items)
-                DepartmentSource.Add(item.DepartmentName);
-        }
-
-        private async Task LoadEmployeePickerSource()
-        {
-            await repoEmployee.ReadAsync();
-            EmployeeSource.Clear();
-            foreach (var item in repoEmployee.Items)
-                EmployeeSource.Add(item.Name);
-        }
-    }
-
-    public static class PickerSource
-    {
-        public static ObservableCollection<string> GetPicker1Source()
-        {
-            return new ObservableCollection<string>() { "A", "B" };
-        }
-
-        public static ObservableCollection<string> GetPickr2Source(string dependby)
-        {
-            if (dependby == "A")
+            await GetDepartmentList();
+            /*
+            #region 檢查與確認，該頁面是第一次顯示，還是由上一頁面返回到這個頁面
+            if (parameters.InternalParameters.ContainsKey(MainHelper.Prism__NavigationMode) == true)
             {
-                return new ObservableCollection<string> { "1", "2", "3" };
+                var fooNaviModeValue = parameters.InternalParameters[MainHelper.Prism__NavigationMode].ToString();
+                NavigationMode fooNaviMode = (NavigationMode)Enum.Parse(typeof(NavigationMode), fooNaviModeValue);
+                if (fooNaviMode == NavigationMode.New)
+                {
+                    #region 第一次顯示這個頁面
+                    await RefreshCache();
+                    #endregion
+                }
+                else
+                {
+                    #region 從別的頁面回報這個頁面
+                    if (parameters.ContainsKey(MainHelper.CRUDFromDetailKeyName))
+                    {
+                        var fooItem = parameters[MainHelper.CRUDItemKeyName] as LeaveAppForm;
+                        var fooAction = parameters[MainHelper.CRUDFromDetailKeyName] as string;
+                        if (fooAction == MainHelper.CRUD_Create)
+                        {
+                            await CreateRecord(fooItem);
+                        }
+                        else if (fooAction == MainHelper.CRUD_Delete)
+                        {
+                            await DeleteRecord(fooItem);
+                        }
+                        else if (fooAction == MainHelper.CRUD_Update)
+                        {
+                            await UpdateRecord(fooItem);
+                        }
+                    }
+                    #endregion
+                }
             }
             else
             {
-                return new ObservableCollection<string> { "1", "2", "4" };
+            }
+            #endregion
+            */
+        }
+
+        private async Task GetDepartmentList()
+        {
+            var repoDepartmentRepository = new DepartmentRepository();
+            await repoDepartmentRepository.ReadAsync();
+            DepartmentList.Clear();
+            foreach (var item in repoDepartmentRepository.Items)
+            {
+                DepartmentList.Add(item);
             }
         }
+
+        /*
+        public async Task RetriveRecords()
+        {
+            #region 進行請假單清單更新
+            APIResult fooResult;
+            IsRefreshing = true;
+            var fooProgressDialogConfig = new ProgressDialogConfig()
+            {
+                Title = "請稍後，正在進行請假單清單更新中...",
+                IsDeterministic = false,
+            };
+            using (Acr.UserDialogs.UserDialogs.Instance.Progress(fooProgressDialogConfig))
+            {
+                var fooLoginRepository = new LoginRepository();
+                await fooLoginRepository.ReadAsync();
+                var fooLeaveAppFormRepository = new LeaveAppFormRepository();
+                fooResult = await fooLeaveAppFormRepository.PostByUserIDAsync(new LeaveAppFormByUserModel()
+                {
+                    Account = fooLoginRepository.Item.MyUser.EmployeeID,
+                    Mode = MainHelper.LeaveAppFormUserMode
+                });
+
+                if (fooResult.Success == false)
+                {
+                    if (await MainHelper.CheckAccessToken(fooResult) == false)
+                    {
+                        IsRefreshing = false;
+                        return;
+                    }
+
+                    try
+                    {
+                        var fooAlertConfig = new AlertConfig()
+                        {
+                            Title = "警告",
+                            Message = $"更新資料發生了錯誤 {Environment.NewLine}{fooResult.Message}",
+                            OkText = "確定"
+                        };
+                        CancellationTokenSource fooCancelSrc = new CancellationTokenSource(10000);
+                        await Acr.UserDialogs.UserDialogs.Instance.AlertAsync(fooAlertConfig, fooCancelSrc.Token);
+                    }
+                    catch (OperationCanceledException)
+                    {
+                    }
+                }
+            }
+            if (fooResult.Success == true)
+            {
+                await RefreshCache();
+            }
+            IsRefreshing = false;
+            #endregion
+        }
+        */
+
+        /*
+        public async Task CreateRecord(LeaveAppForm leaveAppForm)
+        {
+            #region 進行請假單新增
+            APIResult fooResult;
+            IsRefreshing = true;
+            var fooProgressDialogConfig = new ProgressDialogConfig()
+            {
+                Title = "請稍後，正在進行請假單清單新增中...",
+                IsDeterministic = false,
+            };
+            using (Acr.UserDialogs.UserDialogs.Instance.Progress(fooProgressDialogConfig))
+            {
+                var fooLeaveAppFormRepository = new LeaveAppFormRepository();
+                fooResult = await fooLeaveAppFormRepository.PostAsync(leaveAppForm);
+                if (fooResult.Success == false)
+                {
+                    if (await MainHelper.CheckAccessToken(fooResult) == false)
+                    {
+                        return;
+                    }
+
+                    try
+                    {
+                        var fooAlertConfig = new AlertConfig()
+                        {
+                            Title = "警告",
+                            Message = $"新增資料發生了錯誤 {Environment.NewLine}{fooResult.Message}",
+                            OkText = "確定"
+                        };
+                        CancellationTokenSource fooCancelSrc = new CancellationTokenSource(10000);
+                        await Acr.UserDialogs.UserDialogs.Instance.AlertAsync(fooAlertConfig, fooCancelSrc.Token);
+                    }
+                    catch (OperationCanceledException)
+                    {
+                    }
+                }
+            }
+            if (fooResult.Success == true)
+            {
+                await RetriveRecords();
+            }
+            IsRefreshing = false;
+            #endregion
+        }
+
+        public async Task DeleteRecord(LeaveAppForm leaveAppForm)
+        {
+            #region 進行請假單刪除
+            APIResult fooResult;
+            IsRefreshing = true;
+            var fooProgressDialogConfig = new ProgressDialogConfig()
+            {
+                Title = "請稍後，正在進行請假單清單刪除中...",
+                IsDeterministic = false,
+            };
+            using (Acr.UserDialogs.UserDialogs.Instance.Progress(fooProgressDialogConfig))
+            {
+                var fooLeaveAppFormRepository = new LeaveAppFormRepository();
+                fooResult = await fooLeaveAppFormRepository.DeleteAsync(leaveAppForm);
+                if (fooResult.Success == false)
+                {
+                    if (await MainHelper.CheckAccessToken(fooResult) == false)
+                    {
+                        return;
+                    }
+
+                    try
+                    {
+                        var fooAlertConfig = new AlertConfig()
+                        {
+                            Title = "警告",
+                            Message = $"刪除資料發生了錯誤 {Environment.NewLine}{fooResult.Message}",
+                            OkText = "確定"
+                        };
+                        CancellationTokenSource fooCancelSrc = new CancellationTokenSource(10000);
+                        await Acr.UserDialogs.UserDialogs.Instance.AlertAsync(fooAlertConfig, fooCancelSrc.Token);
+                    }
+                    catch (OperationCanceledException)
+                    {
+                    }
+                }
+            }
+            if (fooResult.Success == true)
+            {
+                await RetriveRecords();
+            }
+            IsRefreshing = false;
+            #endregion
+        }
+
+        public async Task UpdateRecord(LeaveAppForm leaveAppForm)
+        {
+            #region 進行請假單清單更新
+            APIResult fooResult;
+            IsRefreshing = true;
+            var fooProgressDialogConfig = new ProgressDialogConfig()
+            {
+                Title = "請稍後，正在進行請假單清單更新中...",
+                IsDeterministic = false,
+            };
+            using (Acr.UserDialogs.UserDialogs.Instance.Progress(fooProgressDialogConfig))
+            {
+                var fooLeaveAppFormRepository = new LeaveAppFormRepository();
+                fooResult = await fooLeaveAppFormRepository.PutAsync(leaveAppForm);
+                if (fooResult.Success == false)
+                {
+                    if (await MainHelper.CheckAccessToken(fooResult) == false)
+                    {
+                        return;
+                    }
+
+                    try
+                    {
+                        var fooAlertConfig = new AlertConfig()
+                        {
+                            Title = "警告",
+                            Message = $"更新資料發生了錯誤 {Environment.NewLine}{fooResult.Message}",
+                            OkText = "確定"
+                        };
+                        CancellationTokenSource fooCancelSrc = new CancellationTokenSource(10000);
+                        await Acr.UserDialogs.UserDialogs.Instance.AlertAsync(fooAlertConfig, fooCancelSrc.Token);
+                    }
+                    catch (OperationCanceledException)
+                    {
+                    }
+                }
+            }
+            if (fooResult.Success == true)
+            {
+                await RetriveRecords();
+            }
+            IsRefreshing = false;
+            #endregion
+        }
+        */
     }
 }
