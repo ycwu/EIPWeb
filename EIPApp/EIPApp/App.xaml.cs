@@ -41,6 +41,7 @@ namespace EIPApp
             containerRegistry.RegisterForNavigation<ContactPage>();
             containerRegistry.RegisterForNavigation<ContactPage>();
             containerRegistry.RegisterForNavigation<ContactDetailPage>();
+            containerRegistry.RegisterForNavigation<ChatGroupPage>();
         }
     }
 }

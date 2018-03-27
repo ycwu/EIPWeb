@@ -10,7 +10,7 @@ using System.Web;
 
 namespace EIPWeb.Models.Chat
 {
-    [HubName("chatRoomHub")]
+    [HubName("GroupsHub")]
     public class GroupsHub : Hub
     {
         public static ChatContext DbContext = new ChatContext();
@@ -163,13 +163,14 @@ namespace EIPWeb.Models.Chat
         /// </summary>
         /// <param name="room">房间名</param>
         /// <param name="message">信息</param>
-        public void SendMessage(string room, string message)
+        public void SendMessage(string room, string username, string message)
         {
             // 调用房间内所有客户端的sendMessage方法
             // 因为在加入房间的时候，已经将客户端的ConnectionId添加到Groups对象中了，所有可以根据房间名找到房间内的所有连接Id
             // 其实我们也可以自己实现Group方法，我们只需要用List记录所有加入房间的ConnectionId
             // 然后调用Clients.Clients(connectionIdList),参数为我们记录的连接Id数组。
-            Clients.Group(room, new string[0]).sendMessage(room, message + " " + DateTime.Now);
+            //Clients.Group(room, new string[0]).sendMessage(room, username, message);// + " " + DateTime.Now);       
+            Clients.All.MessageReceived(username, message);
         }
         #endregion 
     }

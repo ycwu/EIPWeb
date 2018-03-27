@@ -18,6 +18,7 @@ namespace EIPApp.Helpers
 
         #region XX
         //public static string SignalRURL = "http://59.120.185.68:8080/XamarinSignalRExample/";
+        //public static string SignalRURL = "http://169.254.80.80/EIPWeb/";
         public static string SignalRURL = "http://169.254.80.80/EIPWeb/";
         #endregion
 

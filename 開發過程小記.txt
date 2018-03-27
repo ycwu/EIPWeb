@@ -3,3 +3,8 @@
 2018/03/08
 1.新增專案首頁SplashPage
 2.新增使用者登入頁面LoginPage
+
+
+2018/03/27
+Signalr=>https://components.xamarin.com/gettingstarted/signalr
+Signalr group=>https://docs.microsoft.com/zh-tw/aspnet/signalr/overview/guide-to-the-api/working-with-groups
