@@ -165,14 +165,26 @@ namespace EIPWeb.Hubs
         /// </summary>
         /// <param name="room">房间名</param>
         /// <param name="message">信息</param>
-        public void SendMessage(string roomName, string userName, string message)
+        /// 
+        public void SendMessage(string roomID, string userName, string messageText) //Call from JS
+        {
+            Message message = new Message();
+            message.MessageID = Guid.NewGuid();
+            message.MessageTime = DateTime.Now;
+            message.RoomID = roomID;
+            message.UserName = userName;
+            message.MessageText = messageText;
+            SendMessage(message);
+        }
+
+        public void SendMessage(Message message)    //Call from XamarinForms
         {
             // 调用房间内所有客户端的sendMessage方法
             // 因为在加入房间的时候，已经将客户端的ConnectionId添加到Groups对象中了，所有可以根据房间名找到房间内的所有连接Id
             // 其实我们也可以自己实现Group方法，我们只需要用List记录所有加入房间的ConnectionId
             // 然后调用Clients.Clients(connectionIdList),参数为我们记录的连接Id数组。
-            Clients.Group(roomName, new string[0]).sendMessage(roomName, message);  //for WebPage
-            Clients.Group(roomName).MessageReceived(userName, message);  //for XamarinForms
+            Clients.Group(message.RoomID, new string[0]).sendMessage(message.RoomID, message.MessageText);  //for WebPage
+            Clients.Group(message.RoomID).MessageReceived(message);  //for XamarinForms
 
         }
         #endregion 

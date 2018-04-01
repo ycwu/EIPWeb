@@ -72,14 +72,14 @@ namespace EIPApp.ViewModels
             #endregion
 
             #region 頁面中綁定的命令
-            SignalRGroupClient.OnMessageReceived += (username, message) => {
-                if (username != UserName)//MainHelper.UserLoginService.Item.MyUser.UserName)
+            SignalRGroupClient.OnMessageReceived += (message) => {
+                if (message.UserName != UserName)//MainHelper.UserLoginService.Item.MyUser.UserName)
                     ChatContentCollection.Add(new ChatContent
                     {                        
-                        姓名 = username,
+                        姓名 = message.UserName,
                         姓名文字顏色 = Color.Blue,
                         對話人圖片 = Girl,
-                        對話內容 = message,
+                        對話內容 = message.MessageText,
                         對話類型 = 對話類型.他人,
                         對話文字顏色 = Color.Green
                     });

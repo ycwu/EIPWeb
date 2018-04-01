@@ -254,6 +254,7 @@
     <Compile Include="Models\Chat\ChatContext.cs" />
     <Compile Include="Models\Chat\ChatRoom.cs" />
     <Compile Include="Models\Chat\Connection.cs" />
+    <Compile Include="Models\Chat\Message.cs" />
     <Compile Include="Models\Chat\User.cs" />
     <Compile Include="Models\Department.cs">
       <DependentUpon>EIPDB.tt</DependentUpon>
