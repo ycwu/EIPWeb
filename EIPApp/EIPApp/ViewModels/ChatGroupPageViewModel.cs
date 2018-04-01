@@ -75,7 +75,7 @@ namespace EIPApp.ViewModels
             SignalRGroupClient.OnMessageReceived += (username, message) => {
                 if (username != UserName)//MainHelper.UserLoginService.Item.MyUser.UserName)
                     ChatContentCollection.Add(new ChatContent
-                    {
+                    {                        
                         姓名 = username,
                         姓名文字顏色 = Color.Blue,
                         對話人圖片 = Girl,
@@ -109,7 +109,7 @@ namespace EIPApp.ViewModels
                 if (task.IsFaulted)
                     //MainPage.DisplayAlert("Error", "An error occurred when trying to connect to SignalR: " + task.Exception.InnerExceptions[0].Message, "OK");
                     Acr.UserDialogs.UserDialogs.Instance.Alert(task.Exception.InnerExceptions[0].Message, "警告", "確定");
-
+                SignalRGroupClient.JoinRoom("聊天室1");
             });
 
 

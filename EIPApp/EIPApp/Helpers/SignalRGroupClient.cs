@@ -3,26 +3,26 @@ using Microsoft.AspNet.SignalR.Client;
 using System.Threading.Tasks;
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
+using EIPApp.Models.Chat;
 
 namespace EIPApp.Helpers
 {
     public class SignalRGroupClient : INotifyPropertyChanged
     {
-        private HubConnection Connection;
+        private HubConnection connection;
         private IHubProxy ChatHubProxy;
-
         public delegate void MessageReceived(string username, string message);
         public event MessageReceived OnMessageReceived;
 
         public SignalRGroupClient(string url)
         {
-            Connection = new HubConnection(url);
+            connection = new HubConnection(url);
 
-            Connection.StateChanged += (StateChange obj) => {
+            connection.StateChanged += (StateChange obj) => {
                 OnPropertyChanged("ConnectionState");
             };
 
-            ChatHubProxy = Connection.CreateHubProxy("GroupsHub");
+            ChatHubProxy = connection.CreateHubProxy("GroupsHub");
             ChatHubProxy.On<string, string>("MessageReceived", (username, text) => {
                 OnMessageReceived?.Invoke(username, text);
             });
@@ -33,25 +33,31 @@ namespace EIPApp.Helpers
             ChatHubProxy.Invoke("CreateRoom", room);
         }
 
+        public void JoinRoom(string room)
+        {
+            ChatHubProxy.Invoke("JoinRoom", room);
+        }
+
         public void SendMessage(string room,string username, string text)
         {
             ChatHubProxy.Invoke("SendMessage", room, username, text);
+            //ChatHubProxy.Invoke("SendMessage", username, text);
         }
 
         public Task Start()
         {
-            return Connection.Start();
+            return connection.Start();
         }
 
         public bool IsConnectedOrConnecting
         {
             get
             {
-                return Connection.State != ConnectionState.Disconnected;
+                return connection.State != ConnectionState.Disconnected;
             }
         }
 
-        public ConnectionState ConnectionState { get { return Connection.State; } }
+        public ConnectionState ConnectionState { get { return connection.State; } }
 
         public static async Task<SignalRGroupClient> CreateAndStart(string url)
         {

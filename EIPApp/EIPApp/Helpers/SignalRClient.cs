@@ -8,45 +8,45 @@ namespace EIPApp.Helpers
 {
     public class SignalRClient : INotifyPropertyChanged
     {
-        private HubConnection Connection;
-        private IHubProxy ChatHubProxy;
+        private HubConnection connection;
+        private IHubProxy hubProxy;
 
         public delegate void MessageReceived(string username, string message);
         public event MessageReceived OnMessageReceived;
 
         public SignalRClient(string url)
         {
-            Connection = new HubConnection(url);
+            connection = new HubConnection(url);
 
-            Connection.StateChanged += (StateChange obj) => {
+            connection.StateChanged += (StateChange obj) => {
                 OnPropertyChanged("ConnectionState");
             };
 
-            ChatHubProxy = Connection.CreateHubProxy("Chat");//chatRoomHub
-            ChatHubProxy.On<string, string>("MessageReceived", (username, text) => {
+            hubProxy = connection.CreateHubProxy("Chat");
+            hubProxy.On<string, string>("MessageReceived", (username, text) => {
                 OnMessageReceived?.Invoke(username, text);
             });
         }
 
         public void SendMessage(string username, string text)
         {
-            ChatHubProxy.Invoke("SendMessage", username, text);
+            hubProxy.Invoke("SendMessage", username, text);
         }
 
         public Task Start()
         {
-            return Connection.Start();
+            return connection.Start();
         }
 
         public bool IsConnectedOrConnecting
         {
             get
             {
-                return Connection.State != ConnectionState.Disconnected;
+                return connection.State != ConnectionState.Disconnected;
             }
         }
 
-        public ConnectionState ConnectionState { get { return Connection.State; } }
+        public ConnectionState ConnectionState { get { return connection.State; } }
 
         public static async Task<SignalRClient> CreateAndStart(string url)
         {
@@ -56,7 +56,6 @@ namespace EIPApp.Helpers
         }
 
         public event PropertyChangedEventHandler PropertyChanged;
-
         protected virtual void OnPropertyChanged([CallerMemberName] string propertyName = null)
         {
             var handler = PropertyChanged;

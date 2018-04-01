@@ -13,8 +13,8 @@ namespace EIPWeb.Controllers
         public ActionResult Index()
         {
             GroupChatViewModel model = new GroupChatViewModel();
+            ViewBag.Department = GetDepartmentSelectList(null);
             ViewBag.Employee = GetEmployeeSelectList(null);
-            ViewBag.Department = GetEmployeeSelectList(null);
             return View(model);
         }
     }

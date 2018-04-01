@@ -8,7 +8,7 @@
             userName = prompt("Please enter a username.");
         }, 0);
 
-        var chat = $.connection.chat;
+        var chat = $.connection.Chat;
         var chatWindow = $("#chat-window");
 
         //this is the function that's run when the "messageReceived" function is called from the server

@@ -7,4 +7,6 @@
 
 2018/03/27
 Signalr=>https://components.xamarin.com/gettingstarted/signalr
-Signalr group=>https://docs.microsoft.com/zh-tw/aspnet/signalr/overview/guide-to-the-api/working-with-groups
+Signalr group
+=>https://docs.microsoft.com/zh-tw/aspnet/signalr/overview/guide-to-the-api/working-with-groups
+=>https://blog.csdn.net/kebi007/article/details/54866672

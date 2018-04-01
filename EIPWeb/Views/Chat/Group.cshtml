@@ -13,22 +13,22 @@
     <script src="~/Scripts1/jquery.signalR-2.2.0.min.js"></script>
     <script src="~/Scripts1/layer/layer.min.js"></script>
     <!--这里要注意,这是虚拟目录,也就是你在OWIN Startup中注册的地址-->
-    <script src="/signalr/hubs"></script>
+    <script src="~/signalr/hubs"></script>
 
     <script type="text/javascript">
         var chat;
         var roomcount = 0;
 
-        $(function () {          
+        $(function () {
             chat = $.connection.GroupsHub;//EIPWeb Project=>/Hubs/GroupsHub.cs;
             chat.client.showMessage = function (message) {
-                alert(message);
+                //alert(message);
             };
-            chat.client.sendMessage = function (roomname,username, message) {
+            chat.client.sendMessage = function (roomname, username, message) {
                 $("#" + roomname).find("ul").each(function () {
-                    alert(roomname + "," + username + "," + message);
+                    //alert(roomname + "," + username + "," + message);
                     var Today = new Date();
-                    var Now = Today.getFullYear() + "/" + (Today.getMonth() + 1 < 10 ? "0" : "") + (Today.getMonth() + 1) + "/" + (Today.getDate() < 10 ? "0" : "") + Today.getDate() + " " + (Today.getHours() < 10 ? "0" : "") + Today.getHours() + ":"+ (Today.getMinutes() < 10 ? "0" : "") + Today.getMinutes() + ":" + (Today.getSeconds() < 10 ? "0" : "") + Today.getSeconds();
+                    var Now = Today.getFullYear() + "/" + (Today.getMonth() + 1 < 10 ? "0" : "") + (Today.getMonth() + 1) + "/" + (Today.getDate() < 10 ? "0" : "") + Today.getDate() + " " + (Today.getHours() < 10 ? "0" : "") + Today.getHours() + ":" + (Today.getMinutes() < 10 ? "0" : "") + Today.getMinutes() + ":" + (Today.getSeconds() < 10 ? "0" : "") + Today.getSeconds();
 
                     $(this).append('<li>' + username + ":" + message + "," + Now + '</li>');
                 });
@@ -38,11 +38,11 @@
             };
             chat.client.joinRoom = function (roomname) {
                 var html = '<div style="float:left; margin-left:360px; border:double; height:528px;width:493px" id="' + roomname + '" roomname="' + roomname + '"><button onclick="RemoveRoom(this)">退出</button>\
-                                        ' + roomname + '房间\
-                                                    聊天记录如下:<ul>\
-                                                    </ul>\
-                                        <textarea class="ChatCore_write" id="ChatCore_write" style="width:400px"></textarea> <button onclick="SendMessage(this)">发送</button>\
-                                        </div>';
+                                            ' + roomname + '房间\
+                                                        聊天记录如下:<ul>\
+                                                        </ul>\
+                                            <textarea class="ChatCore_write" id="ChatCore_write" style="width:400px"></textarea> <button onclick="SendMessage(this)">发送</button>\
+                                            </div>';
                 $("#RoomList").append(html);
             };
 
@@ -59,7 +59,7 @@
             };
             // 获取用户名称。
             $('#username').html(prompt('请输入您的名称:', ''));
-           
+
             $.connection.hub.start().done(function () {
                 $('#CreatRoom').click(function () {
                     //alert($("#Roomname").val());
