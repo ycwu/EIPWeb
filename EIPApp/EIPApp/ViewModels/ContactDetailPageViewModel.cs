@@ -21,7 +21,7 @@ namespace EIPApp.ViewModels
         public ObservableCollection<Employee> EmployeeList { get; set; } = new ObservableCollection<Employee>();
         //public bool IsRefreshing { get; set; } = false;
         //public DelegateCommand DoRefreshCommand { get; set; }
-        //public DelegateCommand AddCommand { get; set; }
+        public DelegateCommand AddCommand { get; set; }
         public DelegateCommand ItemTappedCommand { get; set; }
 
         private readonly INavigationService _navigationService;
@@ -30,11 +30,17 @@ namespace EIPApp.ViewModels
         {
             _navigationService = navigationService;
 
-            ItemTappedCommand = new DelegateCommand(async () =>
+            AddCommand = new DelegateCommand(async () => 
             {
                 NavigationParameters fooPara = new NavigationParameters();
-                fooPara.Add("Users", EmployeeSelectedItem);
-                await _navigationService.NavigateAsync("ChatPage", fooPara);
+                foreach (var item in EmployeeList)
+                    if (item.IsSelected == true)
+                        fooPara.Add("Users", item.ADLoginID);
+                await _navigationService.NavigateAsync("ChatGroupPage", fooPara);
+            });
+            ItemTappedCommand = new DelegateCommand(() =>
+            {
+                EmployeeSelectedItem.IsSelected = !EmployeeSelectedItem.IsSelected;
             });
         }
 
@@ -50,13 +56,17 @@ namespace EIPApp.ViewModels
 
         public async void OnNavigatedTo(NavigationParameters parameters)
         {
-            var department = parameters["DepartmentID"] as Department;
-            await LoadEmployee(department);            
+            string sDepartmentID = "";
+            foreach (string departmentID in parameters.GetValues<string>("DepartmentID"))
+            {
+                sDepartmentID += departmentID + ",";
+            }
+            await LoadEmployee(sDepartmentID);            
         }
 
-        private async Task LoadEmployee(Department department)
+        private async Task LoadEmployee(string departmentIDList)
         {
-            await repoEmployeeRepository.GetAsync(department);
+            await repoEmployeeRepository.GetAsync(departmentIDList);
             EmployeeList.Clear();
             foreach (var item in repoEmployeeRepository.Items)
             {

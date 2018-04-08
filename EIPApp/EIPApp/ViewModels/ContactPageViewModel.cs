@@ -22,7 +22,7 @@ namespace EIPApp.ViewModels
         public ObservableCollection<Department> DepartmentList { get; set; } = new ObservableCollection<Department>();
         public bool IsRefreshing { get; set; } = false;
         private DepartmentRepository repoDepartment = new DepartmentRepository();
-        public DelegateCommand DoRefreshCommand { get; set; }
+        //public DelegateCommand DoRefreshCommand { get; set; }
         public DelegateCommand AddCommand { get; set; }
         public DelegateCommand ItemTappedCommand { get; set; }
         private readonly INavigationService _navigationService;
@@ -32,28 +32,23 @@ namespace EIPApp.ViewModels
             _navigationService = navigationService;
             AddCommand = new DelegateCommand(async () =>
             {
-                //var fooItem = new LeaveAppForm()
-                //{
-                //    BeginDate = DateTime.Now.Date.AddDays(1),
-                //    CompleteDate = DateTime.Now.Date.AddDays(2),
-                //    FormDate = DateTime.Now
-                //};
                 NavigationParameters fooPara = new NavigationParameters();
-                //fooPara.Add(MainHelper.CRUDItemKeyName, fooItem);
-                //fooPara.Add(MainHelper.CRUDKeyName, MainHelper.CRUD_Create);
-
-                await _navigationService.NavigateAsync("ChatPage", fooPara);
-            });
-            ItemTappedCommand = new DelegateCommand(async () =>
-            {
-                NavigationParameters fooPara = new NavigationParameters();
-                fooPara.Add("DepartmentID", DepartmentSelectedItem);
+                foreach (var item in DepartmentList)
+                    if (item.IsSelected == true)
+                        fooPara.Add("DepartmentID", item.DepartmentID);                
                 await _navigationService.NavigateAsync("ContactDetailPage", fooPara);
             });
-            DoRefreshCommand = new DelegateCommand(async () =>
+            ItemTappedCommand = new DelegateCommand(() =>
             {
-                //await RetriveRecords();
+                //NavigationParameters fooPara = new NavigationParameters();
+                //fooPara.Add("DepartmentID", DepartmentSelectedItem);
+                //await _navigationService.NavigateAsync("ContactDetailPage", fooPara);
+                DepartmentSelectedItem.IsSelected = !DepartmentSelectedItem.IsSelected;
             });
+            //DoRefreshCommand = new DelegateCommand(async () =>
+            //{
+                //await RetriveRecords();
+            //});
         }
 
         public void OnNavigatedFrom(NavigationParameters parameters)

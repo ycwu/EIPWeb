@@ -1,11 +1,14 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Text;
 
 namespace EIPApp.Models
 {
-    public class Employee
+    public class Employee : INotifyPropertyChanged
     {
+        public event PropertyChangedEventHandler PropertyChanged;
+
         public int ID { get; set; }
         public string EmployeeID { get; set; }
         public string Name { get; set; }
@@ -26,5 +29,6 @@ namespace EIPApp.Models
         public string Gender { get; set; }
         public Nullable<System.DateTime> ModifyTime { get; set; }
         public string ModifyUserID { get; set; }
+        public bool IsSelected { get; set; }
     }
 }

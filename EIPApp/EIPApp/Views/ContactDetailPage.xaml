@@ -56,6 +56,11 @@
                                 Grid.RowSpan="2"
                                 Grid.ColumnSpan="2"
                                 Color="White" />
+                            <BoxView
+                                Grid.RowSpan="2"
+                                Grid.ColumnSpan="2"
+                                IsVisible="{Binding IsSelected}"
+                                Color="LightGreen" />
 
                             <Label
                                 Grid.Row="0"

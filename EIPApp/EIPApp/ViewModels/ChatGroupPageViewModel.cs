@@ -165,7 +165,6 @@ namespace EIPApp.ViewModels
             await fooMyUser.ReadAsync();
             UserName = fooMyUser.Item.MyUser.UserName;
             await Task.Delay(100);
-
         }
         #endregion
 

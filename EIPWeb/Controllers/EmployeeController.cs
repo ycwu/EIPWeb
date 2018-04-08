@@ -86,7 +86,7 @@ namespace EIPWeb.Controllers
             fooResult.Success = true;
             fooResult.Message = $"";
             fooResult.TokenFail = false;
-            fooResult.Payload = db.Employee.Where(m => m.DepartmentID == departmentID).ToList();
+            fooResult.Payload = db.Employee.Where(m => departmentID.Contains(m.DepartmentID)).ToList();
             return fooResult;
         }
 

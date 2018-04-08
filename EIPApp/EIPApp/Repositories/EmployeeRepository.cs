@@ -152,7 +152,7 @@ namespace EIPApp.Repositories
         /// </summary>
         /// <param name="departmentID"></param>
         /// <returns></returns>        
-        public async Task<APIResult> GetAsync(Department department)
+        public async Task<APIResult> GetAsync(string departmentID)
         {
             using (HttpClientHandler handler = new HttpClientHandler())
             {
@@ -180,7 +180,7 @@ namespace EIPApp.Repositories
                         #endregion
 
                         #region  設定相關網址內容
-                        var fooFullUrl = $"{FooAPIUrl}/{department.DepartmentID}/Department";
+                        var fooFullUrl = $"{FooAPIUrl}/{departmentID}/Department";
                         #endregion
 
                         response = await client.GetAsync(fooFullUrl);
@@ -267,7 +267,6 @@ namespace EIPApp.Repositories
                     }
                 }
             }
-
             return fooAPIResult;
         }
 
