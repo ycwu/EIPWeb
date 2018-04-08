@@ -125,10 +125,13 @@ namespace EIPWeb.Hubs
                 // 本人加入聊天室
                 JoinRoom(roomName);
                 UpdateRoomList();
+                //Clients.All.MessageReceived(roomName, $"新增聊天室成功:{roomName}");
             }
             else
             {
                 Clients.Client(Context.ConnectionId).showMessage("房间名重复!");
+                // 本人加入聊天室
+                JoinRoom(roomName);
             }
         }
 
@@ -185,7 +188,6 @@ namespace EIPWeb.Hubs
             // 然后调用Clients.Clients(connectionIdList),参数为我们记录的连接Id数组。
             Clients.Group(message.RoomID, new string[0]).sendMessage(message.RoomID, message.MessageText);  //for WebPage
             Clients.Group(message.RoomID).MessageReceived(message);  //for XamarinForms
-
         }
         #endregion 
     }

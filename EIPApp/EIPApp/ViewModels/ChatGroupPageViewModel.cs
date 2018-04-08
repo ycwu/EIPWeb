@@ -65,7 +65,6 @@ namespace EIPApp.ViewModels
         {
 
             #region 相依性服務注入的物件
-
             _dialogService = dialogService;
             _eventAggregator = eventAggregator;
             _navigationService = navigationService;
@@ -103,13 +102,12 @@ namespace EIPApp.ViewModels
 
             #endregion
 
-
             //show an error if the connection doesn't succeed for some reason
             SignalRGroupClient.Start().ContinueWith(task => {
                 if (task.IsFaulted)
                     //MainPage.DisplayAlert("Error", "An error occurred when trying to connect to SignalR: " + task.Exception.InnerExceptions[0].Message, "OK");
                     Acr.UserDialogs.UserDialogs.Instance.Alert(task.Exception.InnerExceptions[0].Message, "警告", "確定");
-                SignalRGroupClient.JoinRoom("聊天室1");
+                SignalRGroupClient.CreateRoom("聊天室1");
             });
 
 
@@ -117,7 +115,6 @@ namespace EIPApp.ViewModels
             Device.StartTimer(TimeSpan.FromSeconds(10), () => {
                 if (!SignalRGroupClient.IsConnectedOrConnecting)
                     SignalRGroupClient.Start();
-
                 return true;
             });
 
@@ -138,7 +135,6 @@ namespace EIPApp.ViewModels
 
         public async void OnNavigatedTo(NavigationParameters parameters)
         {
-            //SignalRGroupClient.CreateRoom("room1");
             await ViewModelInit();
         }
         #endregion
