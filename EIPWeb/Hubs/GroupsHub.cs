@@ -1,4 +1,5 @@
 ﻿using EIPWeb.Helpers;
+using EIPWeb.Models;
 using EIPWeb.Models.Chat;
 using Microsoft.AspNet.SignalR;
 using Microsoft.AspNet.SignalR.Hubs;
@@ -18,27 +19,57 @@ namespace EIPWeb.Hubs
         public static ChatContext DbContext = new ChatContext();
 
         #region IHub Members
-        // 重写Hub连接事件
+        // 重写Hub连接事件  
+        
+        /*
+        public override Task OnConnected()
+        {
+            using (var db = new UserContext())
+            {
+                // Retrieve user.
+                var user = db.Users.SingleOrDefault(u => u.UserName == Context.User.Identity.Name);
+
+                // If user does not exist in database, must add.
+                if (user == null)
+                {
+                    user = new Models.User()
+                    {
+                        UserName = Context.User.Identity.Name
+                    };
+                    db.Users.Add(user);
+                    db.SaveChanges();
+                }
+                else
+                {
+                    // Add to each assigned group.
+                    foreach (var item in user.Rooms)
+                    {
+                        Groups.Add(Context.ConnectionId, item.RoomName);
+                    }
+                }
+            }
+            return base.OnConnected();
+        }
+        */
+        
         public override Task OnConnected()
         {
             // 查询用户
             var user = DbContext.Users.FirstOrDefault(u => u.UserId == Context.ConnectionId);
-
             if (user == null)
             {
-                user = new User
+                user = new Models.Chat.User
                 {
                     UserId = Context.ConnectionId
                 };
-
-                 DbContext.Users.Add(user);
+                DbContext.Users.Add(user);
             }
 
             // 发送房间列表
             var items = DbContext.Rooms.Select(p => new { p.RoomName });
             Clients.Client(this.Context.ConnectionId).getRoomList(JsonHelper.ToJsonString(items.ToList()));
             return base.OnConnected();
-        }
+        }        
 
         // 重写Hub连接断开的事件
         public override Task OnDisconnected(bool stopCalled)

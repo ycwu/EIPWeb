@@ -12,3 +12,5 @@ Signalr group
 =>https://blog.csdn.net/kebi007/article/details/54866672
 
 2018/04/08 群組聊天,部門員工多選功能,從手機創建聊天室1無法成功=>已解決
+
+2018/04/09 聊天室代號為隨機產生Guid

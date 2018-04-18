@@ -30,5 +30,8 @@ namespace EIPWeb.Models
         public virtual DbSet<ChatMessage> ChatMessage { get; set; }
         public virtual DbSet<Chatroom> Chatroom { get; set; }
         public virtual DbSet<ChatroomDetail> ChatroomDetail { get; set; }
+        public virtual DbSet<Connection> Connection { get; set; }
+        public virtual DbSet<ConversationRoom> ConversationRoom { get; set; }
+        public virtual DbSet<User> User { get; set; }
     }
 }

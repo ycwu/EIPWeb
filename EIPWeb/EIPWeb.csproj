@@ -240,6 +240,7 @@
     <Compile Include="Helpers\JsonHelper.cs" />
     <Compile Include="Helpers\MainHelper.cs" />
     <Compile Include="Hubs\Chat.cs" />
+    <Compile Include="Hubs\ChatHub.cs" />
     <Compile Include="Hubs\GroupsHub.cs" />
     <Compile Include="Models\APIResult.cs" />
     <Compile Include="Models\ChatMessage.cs">
@@ -252,10 +253,7 @@
       <DependentUpon>EIPDB.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\Chat\ChatContext.cs" />
-    <Compile Include="Models\Chat\ChatRoom.cs" />
-    <Compile Include="Models\Chat\Connection.cs" />
     <Compile Include="Models\Chat\Message.cs" />
-    <Compile Include="Models\Chat\User.cs" />
     <Compile Include="Models\Department.cs">
       <DependentUpon>EIPDB.tt</DependentUpon>
     </Compile>
@@ -312,6 +310,7 @@
     <Compile Include="Models\RepositoryHelper.cs">
       <DependentUpon>IRepository.EF6.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\UserContext.cs" />
     <Compile Include="Models\UserLoginModel.cs" />
     <Compile Include="Models\UserLoginResultModel.cs" />
     <Compile Include="Models\ViewModel\AccountViewModel.cs" />

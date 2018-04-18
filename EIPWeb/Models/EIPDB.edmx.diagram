@@ -11,7 +11,13 @@
         <EntityTypeShape EntityType="EIPDBModel.Chatroom" Width="1.5" PointX="6.875" PointY="0.75" />
         <EntityTypeShape EntityType="EIPDBModel.ChatroomDetail" Width="1.5" PointX="8.875" PointY="0.75" />
         <AssociationConnector Association="EIPDBModel.FK_Employee_Department" />
-      </Diagram>
+        <AssociationConnector Association="EIPDBModel.FK_ChatroomDetail_Chatroom" />
+        <EntityTypeShape EntityType="EIPDBModel.Connection" Width="1.5" PointX="4.875" PointY="3.875" />
+        <EntityTypeShape EntityType="EIPDBModel.ConversationRoom" Width="1.5" PointX="9.375" PointY="4" />
+        <EntityTypeShape EntityType="EIPDBModel.User" Width="1.5" PointX="7.125" PointY="3.875" />
+        <AssociationConnector Association="EIPDBModel.FK_User_Connection" />
+        <AssociationConnector Association="EIPDBModel.FK_ConversationRoom_User" />
+        </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>
 </edmx:Edmx>

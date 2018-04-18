@@ -14,6 +14,12 @@ namespace EIPWeb.Models
     
     public partial class Chatroom
     {
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
+        public Chatroom()
+        {
+            this.ChatroomDetail = new HashSet<ChatroomDetail>();
+        }
+    
         public System.Guid ChatroomID { get; set; }
         public string ChatroomName { get; set; }
         public string ChatroomType { get; set; }
@@ -21,5 +27,8 @@ namespace EIPWeb.Models
         public Nullable<System.DateTime> CreateTime { get; set; }
         public string CreateUser { get; set; }
         public string CreateDevice { get; set; }
+    
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<ChatroomDetail> ChatroomDetail { get; set; }
     }
 }

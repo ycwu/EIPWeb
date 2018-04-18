@@ -22,7 +22,7 @@ namespace EIPApp.Helpers
                 OnPropertyChanged("ConnectionState");
             };
 
-            hubProxy = connection.CreateHubProxy("GroupsHub");
+            hubProxy = connection.CreateHubProxy("GroupsHub");//ChatHub
             hubProxy.On<Message>("MessageReceived", (message) => {
                 OnMessageReceived?.Invoke(message);
             });

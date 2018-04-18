@@ -21,5 +21,7 @@ namespace EIPWeb.Models
         public Nullable<System.DateTime> CreateTime { get; set; }
         public string CreateUser { get; set; }
         public string CreateDevice { get; set; }
+    
+        public virtual Chatroom Chatroom { get; set; }
     }
 }
