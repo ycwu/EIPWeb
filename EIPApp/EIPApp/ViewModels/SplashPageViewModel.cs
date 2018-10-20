@@ -11,7 +11,7 @@ using System.Threading.Tasks;
 
 namespace EIPApp.ViewModels
 {
-    public class SplashPageViewModel : INotifyPropertyChanged, INavigationAware
+    public class SplashPageViewModel : INotifyPropertyChanged, INavigatedAware
     {
         public event PropertyChangedEventHandler PropertyChanged;
         public string LoadingMessage { get; set; } = "";
@@ -24,17 +24,17 @@ namespace EIPApp.ViewModels
 
         }
 
-        public void OnNavigatedFrom(NavigationParameters parameters)
+        public void OnNavigatingTo(INavigationParameters parameters)
         {
-
+            throw new NotImplementedException();
         }
 
-        public void OnNavigatingTo(NavigationParameters parameters)
+        public void OnNavigatedFrom(INavigationParameters parameters)
         {
-
+            throw new NotImplementedException();
         }
 
-        public async void OnNavigatedTo(NavigationParameters parameters)
+        public async void OnNavigatedTo(INavigationParameters parameters)
         {
             var fooAllSuccess = true;
 
@@ -66,7 +66,7 @@ namespace EIPApp.ViewModels
                             await Task.Delay(2000);
                         }
                         fooAllSuccess = false;
-                    }                    
+                    }
                 }
             }
 
@@ -107,7 +107,6 @@ namespace EIPApp.ViewModels
                     LoadingMessage = "強制繼續執行 App";
                 }
             }
-
             // 切換到首頁或者登入頁面
 
         }

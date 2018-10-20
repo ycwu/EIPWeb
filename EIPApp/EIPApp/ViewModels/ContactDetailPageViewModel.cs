@@ -13,7 +13,7 @@ using EIPApp.Helpers;
 
 namespace EIPApp.ViewModels
 {
-    public class ContactDetailPageViewModel : INotifyPropertyChanged, INavigationAware
+    public class ContactDetailPageViewModel : INotifyPropertyChanged, INavigatedAware
     {
         public event PropertyChangedEventHandler PropertyChanged;
         public Employee EmployeeSelectedItem { get; set; }
@@ -44,17 +44,17 @@ namespace EIPApp.ViewModels
             });
         }
 
-        public void OnNavigatedFrom(NavigationParameters parameters)
+        public void OnNavigatedFrom(INavigationParameters parameters)
         {
 
         }
 
-        public void OnNavigatingTo(NavigationParameters parameters)
+        public void OnNavigatingTo(INavigationParameters parameters)
         {
 
         }
 
-        public async void OnNavigatedTo(NavigationParameters parameters)
+        public async void OnNavigatedTo(INavigationParameters parameters)
         {
             string sDepartmentID = "";
             foreach (string departmentID in parameters.GetValues<string>("DepartmentID"))

@@ -12,7 +12,7 @@ using System.ComponentModel;
 
 namespace EIPApp.ViewModels
 {
-    public class MDPageViewModel : INotifyPropertyChanged, INavigationAware
+    public class MDPageViewModel : INotifyPropertyChanged, INavigatedAware
     {
         public event PropertyChangedEventHandler PropertyChanged;
         public string UserName { get; set; }
@@ -81,17 +81,17 @@ namespace EIPApp.ViewModels
         }
 
 
-        public void OnNavigatedFrom(NavigationParameters parameters)
+        public void OnNavigatedFrom(INavigationParameters parameters)
         {
 
         }
 
-        public void OnNavigatingTo(NavigationParameters parameters)
+        public void OnNavigatingTo(INavigationParameters parameters)
         {
 
         }
 
-        public async void OnNavigatedTo(NavigationParameters parameters)
+        public async void OnNavigatedTo(INavigationParameters parameters)
         {
             var fooMyUser = new LoginRepository();
             await fooMyUser.ReadAsync();

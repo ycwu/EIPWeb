@@ -6,7 +6,7 @@
     xmlns:prism="clr-namespace:Prism.Mvvm;assembly=Prism.Forms"
     Title="關於"
     prism:ViewModelLocator.AutowireViewModel="True"
-    BackgroundColor="#FFA861">
+    BackgroundColor="AliceBlue">
 
     <Grid ColumnSpacing="0" RowSpacing="0">
         <Grid.RowDefinitions>
@@ -25,8 +25,8 @@
                 <OnPlatform
                     x:TypeArguments="ImageSource"
                     Android="Logo.png"
-                    WinPhone="Assets/Images/Logo.png"
                     iOS="Logo.png" />
+                <!--  UWP="Assets/Images/Logo.png"  -->
             </Image.Source>
         </Image>
 
@@ -36,11 +36,11 @@
             RowSpacing="0">
             <Label
                 Margin="20,0"
-                FontSize="48"
+                FontSize="Large"
                 HorizontalOptions="Center"
                 HorizontalTextAlignment="Center"
                 Opacity="0.5"
-                Text="Xamarin.Forms 跨平台行動開發一日實戰營"
+                Text="Xamarin.Forms 跨平台行動開發一日實戰營1"
                 TextColor="White"
                 VerticalOptions="Center" />
         </Grid>

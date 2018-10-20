@@ -18,7 +18,7 @@ using Xamarin.Forms;
 
 namespace EIPApp.ViewModels
 {
-    public class ChatPageViewModel : BindableBase, INavigationAware
+    public class ChatPageViewModel : BindableBase, INavigatedAware
     {
         #region Repositories (遠端或本地資料存取)
         public SignalRClient SignalRClient = new SignalRClient(MainHelper.SignalRURL);
@@ -176,17 +176,17 @@ namespace EIPApp.ViewModels
         #endregion
 
         #region Navigation Events (頁面導航事件)
-        public void OnNavigatingTo(NavigationParameters parameters)
+        public void OnNavigatingTo(INavigationParameters parameters)
         {
 
         }
 
-        public void OnNavigatedFrom(NavigationParameters parameters)
+        public void OnNavigatedFrom(INavigationParameters parameters)
         {
 
         }
 
-        public async void OnNavigatedTo(NavigationParameters parameters)
+        public async void OnNavigatedTo(INavigationParameters parameters)
         {
             await ViewModelInit();
         }

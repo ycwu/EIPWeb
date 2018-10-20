@@ -15,7 +15,7 @@ using System.Threading.Tasks;
 
 namespace EIPApp.ViewModels
 {
-    public class ContactPageViewModel : INotifyPropertyChanged, INavigationAware
+    public class ContactPageViewModel : INotifyPropertyChanged, INavigatedAware
     {
         public event PropertyChangedEventHandler PropertyChanged;
         public Department DepartmentSelectedItem { get; set; }
@@ -51,17 +51,17 @@ namespace EIPApp.ViewModels
             //});
         }
 
-        public void OnNavigatedFrom(NavigationParameters parameters)
+        public void OnNavigatedFrom(INavigationParameters parameters)
         {
 
         }
 
-        public void OnNavigatingTo(NavigationParameters parameters)
+        public void OnNavigatingTo(INavigationParameters parameters)
         {
 
         }
 
-        public async void OnNavigatedTo(NavigationParameters parameters)
+        public async void OnNavigatedTo(INavigationParameters parameters)
         {
             await GetDepartmentList();
             /*

@@ -1,0 +1,5 @@
+Unhandled Exception:
+
+System.TypeLoadException: Could not load type of field 'EIPApp.App+<OnInitialized>d__2:<>u__1' (3) due to: Could not resolve type with token 010000a0 (from typeref, class/assembly Prism.Navigation.INavigationResult, Prism, Version=7.1.0.431, Culture=neutral, PublicKeyToken=40ee6c3a2184dc59) assembly:Prism, Version=7.1.0.431, Culture=neutral, PublicKeyToken=40ee6c3a2184dc59 type:Prism.Navigation.INavigationResult member:(null) signature:<none> 發生 
+解決方法=>Xamarin.Forms版本一致
+解決方法=>Prism.Unity.Forms v7.1.0.431

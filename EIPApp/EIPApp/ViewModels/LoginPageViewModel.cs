@@ -11,7 +11,7 @@ using System.Linq;
 
 namespace EIPApp.ViewModels
 {
-    public class LoginPageViewModel : INotifyPropertyChanged, INavigationAware
+    public class LoginPageViewModel : INotifyPropertyChanged, INavigatedAware
     {
         public event PropertyChangedEventHandler PropertyChanged;
 
@@ -71,17 +71,17 @@ namespace EIPApp.ViewModels
 #endif
         }
 
-        public void OnNavigatedFrom(NavigationParameters parameters)
+        public void OnNavigatedFrom(INavigationParameters parameters)
         {
 
         }
 
-        public void OnNavigatingTo(NavigationParameters parameters)
+        public void OnNavigatingTo(INavigationParameters parameters)
         {
 
         }
 
-        public async void OnNavigatedTo(NavigationParameters parameters)
+        public async void OnNavigatedTo(INavigationParameters parameters)
         {
             var repoSystemStatus = new SystemStatusRepository();
             await repoSystemStatus.ReadAsync();
