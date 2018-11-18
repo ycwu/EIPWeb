@@ -13,11 +13,11 @@ namespace EIPApp.Helpers
         private IHubProxy hubProxy;
         public delegate void MessageReceived(Message message);
         public event MessageReceived OnMessageReceived;
-
-        public SignalRGroupClient(string url)
+        public string UserID;
+        public SignalRGroupClient(string url,string userID)
         {
             connection = new HubConnection(url);
-
+            UserID = userID;
             connection.StateChanged += (StateChange obj) => {
                 OnPropertyChanged("ConnectionState");
             };
@@ -64,9 +64,9 @@ namespace EIPApp.Helpers
 
         public ConnectionState ConnectionState { get { return connection.State; } }
 
-        public static async Task<SignalRGroupClient> CreateAndStart(string url)
+        public static async Task<SignalRGroupClient> CreateAndStart(string url, string userID)
         {
-            var client = new SignalRGroupClient(url);
+            var client = new SignalRGroupClient(url, userID);
             await client.Start();
             return client;
         }

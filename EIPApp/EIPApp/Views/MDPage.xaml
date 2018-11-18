@@ -16,10 +16,10 @@
                     每個屬性的 x:TypeArguments 引用型別皆不同，這裡請參考這個連結
                     https://developer.xamarin.com/api/type/Xamarin.Forms.Page/
                 -->
+                <!--  UWP="Assets/Images/hamburger.png"  -->
                 <OnPlatform
                     x:TypeArguments="FileImageSource"
                     Android="hamburger.png"
-                    WinPhone="Assets/Images/hamburger.png"
                     iOS="hamburger.png" />
             </ContentPage.Icon>
 
@@ -63,6 +63,19 @@
                             Margin="10,20"
                             Orientation="Vertical"
                             Spacing="0">
+
+                            <Label
+                                Margin="20,20"
+                                FontSize="24"
+                                HorizontalOptions="Start"
+                                Opacity="0.7"
+                                Text="群組即時訊息Tab"
+                                TextColor="Black"
+                                VerticalOptions="Center">
+                                <Label.GestureRecognizers>
+                                    <TapGestureRecognizer Command="{Binding MenuCommand}" CommandParameter="群組即時訊息Tab" />
+                                </Label.GestureRecognizers>
+                            </Label>
 
                             <Label
                                 Margin="20,20"

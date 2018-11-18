@@ -24,7 +24,7 @@
             <Image.Source>
                 <OnPlatform
                     x:TypeArguments="ImageSource"
-                    Android="Logo.png"
+                    Android="20180608.jpg"
                     iOS="Logo.png" />
                 <!--  UWP="Assets/Images/Logo.png"  -->
             </Image.Source>

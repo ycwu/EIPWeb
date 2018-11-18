@@ -5,59 +5,61 @@
     <!-- SSDL content -->
     <edmx:StorageModels>
     <Schema Namespace="EIPDBModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
-        <EntityType Name="ChatMessage">
+        <EntityType Name="ChatClient">
           <Key>
             <PropertyRef Name="ConnectionID" />
           </Key>
+          <Property Name="ChatClientID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="ConnectionID" Type="uniqueidentifier" Nullable="false" />
           <Property Name="UserID" Type="nvarchar" MaxLength="50" />
-          <Property Name="ChatroomID" Type="uniqueidentifier" />
-          <Property Name="Message" Type="nvarchar" MaxLength="4000" />
-          <Property Name="MessageType" Type="char" MaxLength="1" />
+          <Property Name="CreateTime" Type="datetime" Nullable="false" />
+          <Property Name="CreateUser" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="ModifyTime" Type="datetime" />
+          <Property Name="ModifyUser" Type="nvarchar" MaxLength="50" />
+          <Property Name="IsEnable" Type="bit" Nullable="false" />
+        </EntityType>
+        <EntityType Name="ChatMessage">
+          <Key>
+            <PropertyRef Name="MessageID" />
+          </Key>
+          <Property Name="MessageID" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="ConnectionID" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="ChatroomID" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="Message" Type="nvarchar" MaxLength="4000" Nullable="false" />
+          <Property Name="MessageType" Type="char" MaxLength="1" Nullable="false" />
           <Property Name="FileID" Type="uniqueidentifier" />
-          <Property Name="CreateTime" Type="datetime" />
-          <Property Name="CreateUser" Type="nvarchar" MaxLength="50" />
-          <Property Name="CreateDevice" Type="nvarchar" MaxLength="50" />
+          <Property Name="CreateTime" Type="datetime" Nullable="false" />
+          <Property Name="CreateUser" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="ModifyTime" Type="datetime" />
+          <Property Name="ModifyUser" Type="nvarchar" MaxLength="50" />
+          <Property Name="IsEnable" Type="bit" Nullable="false" />
         </EntityType>
         <EntityType Name="Chatroom">
           <Key>
             <PropertyRef Name="ChatroomID" />
           </Key>
           <Property Name="ChatroomID" Type="uniqueidentifier" Nullable="false" />
-          <Property Name="ChatroomName" Type="nvarchar" MaxLength="50" />
-          <Property Name="ChatroomType" Type="char" MaxLength="1" />
-          <Property Name="IsEnable" Type="bit" />
-          <Property Name="CreateTime" Type="datetime" />
-          <Property Name="CreateUser" Type="nvarchar" MaxLength="50" />
-          <Property Name="CreateDevice" Type="nchar" MaxLength="10" />
+          <Property Name="ChatroomName" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="ChatroomType" Type="char" MaxLength="1" Nullable="false" />
+          <Property Name="CreateTime" Type="datetime" Nullable="false" />
+          <Property Name="CreateUser" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="ModifyTime" Type="datetime" />
+          <Property Name="ModifyUser" Type="nvarchar" MaxLength="50" />
+          <Property Name="IsEnable" Type="bit" Nullable="false" />
         </EntityType>
         <EntityType Name="ChatroomDetail">
           <Key>
             <PropertyRef Name="ChatroomID" />
-            <PropertyRef Name="UserID" />
-          </Key>
-          <Property Name="ChatroomID" Type="uniqueidentifier" Nullable="false" />
-          <Property Name="UserID" Type="nvarchar" MaxLength="50" Nullable="false" />
-          <Property Name="IsEnable" Type="bit" />
-          <Property Name="DisconnectTime" Type="datetime" />
-          <Property Name="CreateTime" Type="datetime" />
-          <Property Name="CreateUser" Type="nvarchar" MaxLength="50" />
-          <Property Name="CreateDevice" Type="nvarchar" MaxLength="50" />
-        </EntityType>
-        <EntityType Name="Connection">
-          <Key>
             <PropertyRef Name="ConnectionID" />
           </Key>
-          <Property Name="ConnectionID" Type="nvarchar" MaxLength="50" Nullable="false" />
-          <Property Name="UserAgent" Type="nvarchar" MaxLength="50" />
-          <Property Name="Connected" Type="bit" Nullable="false" />
-        </EntityType>
-        <EntityType Name="ConversationRoom">
-          <Key>
-            <PropertyRef Name="RoomName" />
-          </Key>
-          <Property Name="RoomName" Type="nvarchar" MaxLength="50" Nullable="false" />
-          <Property Name="UserName" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="ChatroomID" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="ConnectionID" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="DisconnectTime" Type="datetime" />
+          <Property Name="CreateTime" Type="datetime" Nullable="false" />
+          <Property Name="CreateUser" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="ModifyTime" Type="datetime" />
+          <Property Name="ModifyUser" Type="nvarchar" MaxLength="50" />
+          <Property Name="IsEnable" Type="bit" Nullable="false" />
         </EntityType>
         <EntityType Name="Department">
           <Key>
@@ -95,13 +97,30 @@
           <Property Name="ModifyTime" Type="datetime" />
           <Property Name="ModifyUserID" Type="varchar" MaxLength="10" />
         </EntityType>
-        <EntityType Name="User">
-          <Key>
-            <PropertyRef Name="UserName" />
-          </Key>
-          <Property Name="UserName" Type="nvarchar" MaxLength="50" Nullable="false" />
-          <Property Name="UserID" Type="nvarchar" MaxLength="50" Nullable="false" />
-        </EntityType>
+        <Association Name="FK_ChatMessage_ChatClient">
+          <End Role="ChatClient" Type="Self.ChatClient" Multiplicity="1" />
+          <End Role="ChatMessage" Type="Self.ChatMessage" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ChatClient">
+              <PropertyRef Name="ConnectionID" />
+            </Principal>
+            <Dependent Role="ChatMessage">
+              <PropertyRef Name="ConnectionID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ChatMessage_Chatroom">
+          <End Role="Chatroom" Type="Self.Chatroom" Multiplicity="1" />
+          <End Role="ChatMessage" Type="Self.ChatMessage" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Chatroom">
+              <PropertyRef Name="ChatroomID" />
+            </Principal>
+            <Dependent Role="ChatMessage">
+              <PropertyRef Name="ChatroomID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_ChatroomDetail_Chatroom">
           <End Role="Chatroom" Type="Self.Chatroom" Multiplicity="1" />
           <End Role="ChatroomDetail" Type="Self.ChatroomDetail" Multiplicity="*" />
@@ -111,18 +130,6 @@
             </Principal>
             <Dependent Role="ChatroomDetail">
               <PropertyRef Name="ChatroomID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_ConversationRoom_User">
-          <End Role="User" Type="Self.User" Multiplicity="1" />
-          <End Role="ConversationRoom" Type="Self.ConversationRoom" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="User">
-              <PropertyRef Name="UserName" />
-            </Principal>
-            <Dependent Role="ConversationRoom">
-              <PropertyRef Name="UserName" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -138,42 +145,28 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_User_Connection">
-          <End Role="Connection" Type="Self.Connection" Multiplicity="1" />
-          <End Role="User" Type="Self.User" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Connection">
-              <PropertyRef Name="ConnectionID" />
-            </Principal>
-            <Dependent Role="User">
-              <PropertyRef Name="UserID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <EntityContainer Name="EIPDBModelStoreContainer">
+          <EntitySet Name="ChatClient" EntityType="Self.ChatClient" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="ChatMessage" EntityType="Self.ChatMessage" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Chatroom" EntityType="Self.Chatroom" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="ChatroomDetail" EntityType="Self.ChatroomDetail" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="Connection" EntityType="Self.Connection" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="ConversationRoom" EntityType="Self.ConversationRoom" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Department" EntityType="Self.Department" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Employee" EntityType="Self.Employee" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="User" EntityType="Self.User" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK_ChatMessage_ChatClient" Association="Self.FK_ChatMessage_ChatClient">
+            <End Role="ChatClient" EntitySet="ChatClient" />
+            <End Role="ChatMessage" EntitySet="ChatMessage" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ChatMessage_Chatroom" Association="Self.FK_ChatMessage_Chatroom">
+            <End Role="Chatroom" EntitySet="Chatroom" />
+            <End Role="ChatMessage" EntitySet="ChatMessage" />
+          </AssociationSet>
           <AssociationSet Name="FK_ChatroomDetail_Chatroom" Association="Self.FK_ChatroomDetail_Chatroom">
             <End Role="Chatroom" EntitySet="Chatroom" />
             <End Role="ChatroomDetail" EntitySet="ChatroomDetail" />
           </AssociationSet>
-          <AssociationSet Name="FK_ConversationRoom_User" Association="Self.FK_ConversationRoom_User">
-            <End Role="User" EntitySet="User" />
-            <End Role="ConversationRoom" EntitySet="ConversationRoom" />
-          </AssociationSet>
           <AssociationSet Name="FK_Employee_Department" Association="Self.FK_Employee_Department">
             <End Role="Department" EntitySet="Department" />
             <End Role="Employee" EntitySet="Employee" />
-          </AssociationSet>
-          <AssociationSet Name="FK_User_Connection" Association="Self.FK_User_Connection">
-            <End Role="Connection" EntitySet="Connection" />
-            <End Role="User" EntitySet="User" />
           </AssociationSet>
         </EntityContainer>
       </Schema></edmx:StorageModels>
@@ -183,27 +176,25 @@
         <EntityContainer Name="EIPWebEntities" annotation:LazyLoadingEnabled="true">
           <EntitySet Name="Department" EntityType="EIPDBModel.Department" />
           <EntitySet Name="Employee" EntityType="EIPDBModel.Employee" />
-          <EntitySet Name="ChatMessage" EntityType="EIPDBModel.ChatMessage" />
-          <EntitySet Name="Chatroom" EntityType="EIPDBModel.Chatroom" />
-          <EntitySet Name="ChatroomDetail" EntityType="EIPDBModel.ChatroomDetail" />
           <AssociationSet Name="FK_Employee_Department" Association="EIPDBModel.FK_Employee_Department">
             <End Role="Department" EntitySet="Department" />
             <End Role="Employee" EntitySet="Employee" />
           </AssociationSet>
+          <EntitySet Name="ChatClient" EntityType="EIPDBModel.ChatClient" />
+          <EntitySet Name="ChatMessage" EntityType="EIPDBModel.ChatMessage" />
+          <EntitySet Name="Chatroom" EntityType="EIPDBModel.Chatroom" />
+          <EntitySet Name="ChatroomDetail" EntityType="EIPDBModel.ChatroomDetail" />
+          <AssociationSet Name="FK_ChatMessage_ChatClient" Association="EIPDBModel.FK_ChatMessage_ChatClient">
+            <End Role="ChatClient" EntitySet="ChatClient" />
+            <End Role="ChatMessage" EntitySet="ChatMessage" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ChatMessage_Chatroom" Association="EIPDBModel.FK_ChatMessage_Chatroom">
+            <End Role="Chatroom" EntitySet="Chatroom" />
+            <End Role="ChatMessage" EntitySet="ChatMessage" />
+          </AssociationSet>
           <AssociationSet Name="FK_ChatroomDetail_Chatroom" Association="EIPDBModel.FK_ChatroomDetail_Chatroom">
             <End Role="Chatroom" EntitySet="Chatroom" />
             <End Role="ChatroomDetail" EntitySet="ChatroomDetail" />
-          </AssociationSet>
-          <EntitySet Name="Connection" EntityType="EIPDBModel.Connection" />
-          <EntitySet Name="ConversationRoom" EntityType="EIPDBModel.ConversationRoom" />
-          <EntitySet Name="User" EntityType="EIPDBModel.User" />
-          <AssociationSet Name="FK_User_Connection" Association="EIPDBModel.FK_User_Connection">
-            <End Role="Connection" EntitySet="Connection" />
-            <End Role="User" EntitySet="User" />
-          </AssociationSet>
-          <AssociationSet Name="FK_ConversationRoom_User" Association="EIPDBModel.FK_ConversationRoom_User">
-            <End Role="User" EntitySet="User" />
-            <End Role="ConversationRoom" EntitySet="ConversationRoom" />
           </AssociationSet>
           </EntityContainer>
         <EntityType Name="Department">
@@ -244,47 +235,6 @@
           <Property Name="ModifyUserID" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
           <NavigationProperty Name="Department" Relationship="EIPDBModel.FK_Employee_Department" FromRole="Employee" ToRole="Department" />
         </EntityType>
-        <EntityType Name="ChatMessage">
-          <Key>
-            <PropertyRef Name="ConnectionID" />
-          </Key>
-          <Property Name="ConnectionID" Type="Guid" Nullable="false" />
-          <Property Name="UserID" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="ChatroomID" Type="Guid" />
-          <Property Name="Message" Type="String" MaxLength="4000" FixedLength="false" Unicode="true" />
-          <Property Name="MessageType" Type="String" MaxLength="1" FixedLength="true" Unicode="false" />
-          <Property Name="FileID" Type="Guid" />
-          <Property Name="CreateTime" Type="DateTime" Precision="3" />
-          <Property Name="CreateUser" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="CreateDevice" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-        </EntityType>
-        <EntityType Name="Chatroom">
-          <Key>
-            <PropertyRef Name="ChatroomID" />
-          </Key>
-          <Property Name="ChatroomID" Type="Guid" Nullable="false" />
-          <Property Name="ChatroomName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="ChatroomType" Type="String" MaxLength="1" FixedLength="true" Unicode="false" />
-          <Property Name="IsEnable" Type="Boolean" />
-          <Property Name="CreateTime" Type="DateTime" Precision="3" />
-          <Property Name="CreateUser" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="CreateDevice" Type="String" MaxLength="10" FixedLength="true" Unicode="true" />
-          <NavigationProperty Name="ChatroomDetail" Relationship="EIPDBModel.FK_ChatroomDetail_Chatroom" FromRole="Chatroom" ToRole="ChatroomDetail" />
-        </EntityType>
-        <EntityType Name="ChatroomDetail">
-          <Key>
-            <PropertyRef Name="ChatroomID" />
-            <PropertyRef Name="UserID" />
-          </Key>
-          <Property Name="ChatroomID" Type="Guid" Nullable="false" />
-          <Property Name="UserID" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="IsEnable" Type="Boolean" />
-          <Property Name="DisconnectTime" Type="DateTime" Precision="3" />
-          <Property Name="CreateTime" Type="DateTime" Precision="3" />
-          <Property Name="CreateUser" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="CreateDevice" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-          <NavigationProperty Name="Chatroom" Relationship="EIPDBModel.FK_ChatroomDetail_Chatroom" FromRole="ChatroomDetail" ToRole="Chatroom" />
-        </EntityType>
         <Association Name="FK_Employee_Department">
           <End Type="EIPDBModel.Department" Role="Department" Multiplicity="0..1" />
           <End Type="EIPDBModel.Employee" Role="Employee" Multiplicity="*" />
@@ -297,6 +247,92 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <EntityType Name="ChatClient">
+          <Key>
+            <PropertyRef Name="ConnectionID" />
+          </Key>
+          <Property Name="ChatClientID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="ConnectionID" Type="Guid" Nullable="false" />
+          <Property Name="UserID" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="CreateTime" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="CreateUser" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="ModifyTime" Type="DateTime" Precision="3" />
+          <Property Name="ModifyUser" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="IsEnable" Type="Boolean" Nullable="false" />
+          <NavigationProperty Name="ChatMessage" Relationship="EIPDBModel.FK_ChatMessage_ChatClient" FromRole="ChatClient" ToRole="ChatMessage" />
+        </EntityType>
+        <EntityType Name="ChatMessage">
+          <Key>
+            <PropertyRef Name="MessageID" />
+          </Key>
+          <Property Name="MessageID" Type="Guid" Nullable="false" />
+          <Property Name="ConnectionID" Type="Guid" Nullable="false" />
+          <Property Name="ChatroomID" Type="Guid" Nullable="false" />
+          <Property Name="Message" Type="String" Nullable="false" MaxLength="4000" FixedLength="false" Unicode="true" />
+          <Property Name="MessageType" Type="String" Nullable="false" MaxLength="1" FixedLength="true" Unicode="false" />
+          <Property Name="FileID" Type="Guid" />
+          <Property Name="CreateTime" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="CreateUser" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="ModifyTime" Type="DateTime" Precision="3" />
+          <Property Name="ModifyUser" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="IsEnable" Type="Boolean" Nullable="false" />
+          <NavigationProperty Name="ChatClient" Relationship="EIPDBModel.FK_ChatMessage_ChatClient" FromRole="ChatMessage" ToRole="ChatClient" />
+          <NavigationProperty Name="Chatroom" Relationship="EIPDBModel.FK_ChatMessage_Chatroom" FromRole="ChatMessage" ToRole="Chatroom" />
+        </EntityType>
+        <EntityType Name="Chatroom">
+          <Key>
+            <PropertyRef Name="ChatroomID" />
+          </Key>
+          <Property Name="ChatroomID" Type="Guid" Nullable="false" />
+          <Property Name="ChatroomName" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="ChatroomType" Type="String" Nullable="false" MaxLength="1" FixedLength="true" Unicode="false" />
+          <Property Name="CreateTime" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="CreateUser" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="ModifyTime" Type="DateTime" Precision="3" />
+          <Property Name="ModifyUser" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="IsEnable" Type="Boolean" Nullable="false" />
+          <NavigationProperty Name="ChatMessage" Relationship="EIPDBModel.FK_ChatMessage_Chatroom" FromRole="Chatroom" ToRole="ChatMessage" />
+          <NavigationProperty Name="ChatroomDetail" Relationship="EIPDBModel.FK_ChatroomDetail_Chatroom" FromRole="Chatroom" ToRole="ChatroomDetail" />
+        </EntityType>
+        <EntityType Name="ChatroomDetail">
+          <Key>
+            <PropertyRef Name="ChatroomID" />
+            <PropertyRef Name="ConnectionID" />
+          </Key>
+          <Property Name="ChatroomID" Type="Guid" Nullable="false" />
+          <Property Name="ConnectionID" Type="Guid" Nullable="false" />
+          <Property Name="DisconnectTime" Type="DateTime" Precision="3" />
+          <Property Name="CreateTime" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="CreateUser" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="ModifyTime" Type="DateTime" Precision="3" />
+          <Property Name="ModifyUser" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="IsEnable" Type="Boolean" Nullable="false" />
+          <NavigationProperty Name="Chatroom" Relationship="EIPDBModel.FK_ChatroomDetail_Chatroom" FromRole="ChatroomDetail" ToRole="Chatroom" />
+        </EntityType>
+        <Association Name="FK_ChatMessage_ChatClient">
+          <End Type="EIPDBModel.ChatClient" Role="ChatClient" Multiplicity="1" />
+          <End Type="EIPDBModel.ChatMessage" Role="ChatMessage" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ChatClient">
+              <PropertyRef Name="ConnectionID" />
+            </Principal>
+            <Dependent Role="ChatMessage">
+              <PropertyRef Name="ConnectionID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ChatMessage_Chatroom">
+          <End Type="EIPDBModel.Chatroom" Role="Chatroom" Multiplicity="1" />
+          <End Type="EIPDBModel.ChatMessage" Role="ChatMessage" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Chatroom">
+              <PropertyRef Name="ChatroomID" />
+            </Principal>
+            <Dependent Role="ChatMessage">
+              <PropertyRef Name="ChatroomID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_ChatroomDetail_Chatroom">
           <End Type="EIPDBModel.Chatroom" Role="Chatroom" Multiplicity="1" />
           <End Type="EIPDBModel.ChatroomDetail" Role="ChatroomDetail" Multiplicity="*" />
@@ -306,56 +342,6 @@
             </Principal>
             <Dependent Role="ChatroomDetail">
               <PropertyRef Name="ChatroomID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <EntityType Name="Connection">
-          <Key>
-            <PropertyRef Name="ConnectionID" />
-          </Key>
-          <Property Name="ConnectionID" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="UserAgent" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="Connected" Type="Boolean" Nullable="false" />
-          <NavigationProperty Name="User" Relationship="EIPDBModel.FK_User_Connection" FromRole="Connection" ToRole="User" />
-        </EntityType>
-        <EntityType Name="ConversationRoom">
-          <Key>
-            <PropertyRef Name="RoomName" />
-          </Key>
-          <Property Name="RoomName" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="UserName" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
-          <NavigationProperty Name="User" Relationship="EIPDBModel.FK_ConversationRoom_User" FromRole="ConversationRoom" ToRole="User" />
-        </EntityType>
-        <EntityType Name="User">
-          <Key>
-            <PropertyRef Name="UserName" />
-          </Key>
-          <Property Name="UserName" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="UserID" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
-          <NavigationProperty Name="Connection" Relationship="EIPDBModel.FK_User_Connection" FromRole="User" ToRole="Connection" />
-          <NavigationProperty Name="ConversationRoom" Relationship="EIPDBModel.FK_ConversationRoom_User" FromRole="User" ToRole="ConversationRoom" />
-        </EntityType>
-        <Association Name="FK_User_Connection">
-          <End Type="EIPDBModel.Connection" Role="Connection" Multiplicity="1" />
-          <End Type="EIPDBModel.User" Role="User" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Connection">
-              <PropertyRef Name="ConnectionID" />
-            </Principal>
-            <Dependent Role="User">
-              <PropertyRef Name="UserID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_ConversationRoom_User">
-          <End Type="EIPDBModel.User" Role="User" Multiplicity="1" />
-          <End Type="EIPDBModel.ConversationRoom" Role="ConversationRoom" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="User">
-              <PropertyRef Name="UserName" />
-            </Principal>
-            <Dependent Role="ConversationRoom">
-              <PropertyRef Name="UserName" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -403,28 +389,45 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
+          <EntitySetMapping Name="ChatClient">
+            <EntityTypeMapping TypeName="EIPDBModel.ChatClient">
+              <MappingFragment StoreEntitySet="ChatClient">
+                <ScalarProperty Name="IsEnable" ColumnName="IsEnable" />
+                <ScalarProperty Name="ModifyUser" ColumnName="ModifyUser" />
+                <ScalarProperty Name="ModifyTime" ColumnName="ModifyTime" />
+                <ScalarProperty Name="CreateUser" ColumnName="CreateUser" />
+                <ScalarProperty Name="CreateTime" ColumnName="CreateTime" />
+                <ScalarProperty Name="UserID" ColumnName="UserID" />
+                <ScalarProperty Name="ConnectionID" ColumnName="ConnectionID" />
+                <ScalarProperty Name="ChatClientID" ColumnName="ChatClientID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
           <EntitySetMapping Name="ChatMessage">
             <EntityTypeMapping TypeName="EIPDBModel.ChatMessage">
               <MappingFragment StoreEntitySet="ChatMessage">
-                <ScalarProperty Name="CreateDevice" ColumnName="CreateDevice" />
+                <ScalarProperty Name="IsEnable" ColumnName="IsEnable" />
+                <ScalarProperty Name="ModifyUser" ColumnName="ModifyUser" />
+                <ScalarProperty Name="ModifyTime" ColumnName="ModifyTime" />
                 <ScalarProperty Name="CreateUser" ColumnName="CreateUser" />
                 <ScalarProperty Name="CreateTime" ColumnName="CreateTime" />
                 <ScalarProperty Name="FileID" ColumnName="FileID" />
                 <ScalarProperty Name="MessageType" ColumnName="MessageType" />
                 <ScalarProperty Name="Message" ColumnName="Message" />
                 <ScalarProperty Name="ChatroomID" ColumnName="ChatroomID" />
-                <ScalarProperty Name="UserID" ColumnName="UserID" />
                 <ScalarProperty Name="ConnectionID" ColumnName="ConnectionID" />
+                <ScalarProperty Name="MessageID" ColumnName="MessageID" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="Chatroom">
             <EntityTypeMapping TypeName="EIPDBModel.Chatroom">
               <MappingFragment StoreEntitySet="Chatroom">
-                <ScalarProperty Name="CreateDevice" ColumnName="CreateDevice" />
+                <ScalarProperty Name="IsEnable" ColumnName="IsEnable" />
+                <ScalarProperty Name="ModifyUser" ColumnName="ModifyUser" />
+                <ScalarProperty Name="ModifyTime" ColumnName="ModifyTime" />
                 <ScalarProperty Name="CreateUser" ColumnName="CreateUser" />
                 <ScalarProperty Name="CreateTime" ColumnName="CreateTime" />
-                <ScalarProperty Name="IsEnable" ColumnName="IsEnable" />
                 <ScalarProperty Name="ChatroomType" ColumnName="ChatroomType" />
                 <ScalarProperty Name="ChatroomName" ColumnName="ChatroomName" />
                 <ScalarProperty Name="ChatroomID" ColumnName="ChatroomID" />
@@ -434,38 +437,14 @@
           <EntitySetMapping Name="ChatroomDetail">
             <EntityTypeMapping TypeName="EIPDBModel.ChatroomDetail">
               <MappingFragment StoreEntitySet="ChatroomDetail">
-                <ScalarProperty Name="CreateDevice" ColumnName="CreateDevice" />
+                <ScalarProperty Name="IsEnable" ColumnName="IsEnable" />
+                <ScalarProperty Name="ModifyUser" ColumnName="ModifyUser" />
+                <ScalarProperty Name="ModifyTime" ColumnName="ModifyTime" />
                 <ScalarProperty Name="CreateUser" ColumnName="CreateUser" />
                 <ScalarProperty Name="CreateTime" ColumnName="CreateTime" />
                 <ScalarProperty Name="DisconnectTime" ColumnName="DisconnectTime" />
-                <ScalarProperty Name="IsEnable" ColumnName="IsEnable" />
-                <ScalarProperty Name="UserID" ColumnName="UserID" />
-                <ScalarProperty Name="ChatroomID" ColumnName="ChatroomID" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="Connection">
-            <EntityTypeMapping TypeName="EIPDBModel.Connection">
-              <MappingFragment StoreEntitySet="Connection">
-                <ScalarProperty Name="Connected" ColumnName="Connected" />
-                <ScalarProperty Name="UserAgent" ColumnName="UserAgent" />
                 <ScalarProperty Name="ConnectionID" ColumnName="ConnectionID" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="ConversationRoom">
-            <EntityTypeMapping TypeName="EIPDBModel.ConversationRoom">
-              <MappingFragment StoreEntitySet="ConversationRoom">
-                <ScalarProperty Name="UserName" ColumnName="UserName" />
-                <ScalarProperty Name="RoomName" ColumnName="RoomName" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="User">
-            <EntityTypeMapping TypeName="EIPDBModel.User">
-              <MappingFragment StoreEntitySet="User">
-                <ScalarProperty Name="UserID" ColumnName="UserID" />
-                <ScalarProperty Name="UserName" ColumnName="UserName" />
+                <ScalarProperty Name="ChatroomID" ColumnName="ChatroomID" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

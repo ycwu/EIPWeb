@@ -14,20 +14,20 @@
                 <OnPlatform
                     x:TypeArguments="FileImageSource"
                     Android="add.png"
-                    WinPhone="Assets/Images/add.png"
                     iOS="add.png" />
             </ToolbarItem.Icon>
         </ToolbarItem>
+        <!--  WinPhone="Assets/Images/tbrefresh.png"  -->
         <ToolbarItem Command="{Binding DoRefreshCommand}" Text="更新">
             <ToolbarItem.Icon>
                 <OnPlatform
                     x:TypeArguments="FileImageSource"
                     Android="tbrefresh.png"
-                    WinPhone="Assets/Images/tbrefresh.png"
                     iOS="tbrefresh.png" />
             </ToolbarItem.Icon>
         </ToolbarItem>
     </ContentPage.ToolbarItems>
+    <!--  WinPhone="Assets/Images/tbrefresh.png"  -->
 
     <Grid ColumnSpacing="0" RowSpacing="0">
         <ListView

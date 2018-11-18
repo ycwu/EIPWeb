@@ -1,0 +1,27 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<TabbedPage
+    x:Class="EIPApp.Views.ChatTabPage"
+    xmlns="http://xamarin.com/schemas/2014/forms"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:android="clr-namespace:Xamarin.Forms.PlatformConfiguration.AndroidSpecific;assembly=Xamarin.Forms.Core"
+    xmlns:prism="clr-namespace:Prism.Mvvm;assembly=Prism.Forms"
+    xmlns:views="clr-namespace:EIPApp.Views"
+    Title="群組即時訊息Tab"
+    android:TabbedPage.BarItemColor="#999999"
+    android:TabbedPage.BarSelectedItemColor="Black"
+    android:TabbedPage.ToolbarPlacement="Bottom"
+    prism:ViewModelLocator.AutowireViewModel="True">
+
+    <TabbedPage.Children>
+        <NavigationPage Title="3.1.0" Icon="{OnPlatform UWP=Assets/iconXamagon.png, Default=tab_threeone.png}">
+            <x:Arguments>
+                <views:ContactPage />
+            </x:Arguments>
+        </NavigationPage>
+        <NavigationPage Title="3.2.0" Icon="{OnPlatform UWP=Assets/iconXamagon.png, Default=tab_threeone.png}">
+            <x:Arguments>
+                <views:ChatGroupPage />
+            </x:Arguments>
+        </NavigationPage>
+    </TabbedPage.Children>
+</TabbedPage>    

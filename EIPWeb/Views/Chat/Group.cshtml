@@ -49,6 +49,7 @@
             //注册查询房间列表的方法
             chat.client.getRoomlist = function (data) {
                 if (data) {
+                    //alert(data);
                     var jsondata = $.parseJSON(data);
                     $("#roomlist").html(" ");
                     for (var i = 0; i < jsondata.length; i++) {
@@ -61,9 +62,14 @@
             $('#username').html(prompt('请输入您的名称:', ''));
 
             $.connection.hub.start().done(function () {
+                document.cookie = "username=" + $('#username').html();
+                //alert("document.cookie:"+document.cookie);
                 $('#CreatRoom').click(function () {
-                    //alert($("#Roomname").val());
-                    chat.server.createRoom($("#Roomname").val());
+                    GetRoomID($("#Roomname").val());
+                    var roomID = $('#Roomid').val();
+                    var roomName = $("#Roomname").val();
+                    alert(roomID + "," + roomName);
+                    chat.server.createRoom(roomID,roomName);
                 });
             });
         });
@@ -75,7 +81,8 @@
             //message = username + ":" + message;
             message = message;
             var roomname = $(room).attr("roomname");
-            chat.server.sendMessage(roomname, username, message);
+            var roomid = $('#Roomid').val();
+            chat.server.sendMessage(roomid, username, message);
             $(btn).prev().val('').focus();
         }
 
@@ -90,6 +97,30 @@
             chat.server.joinRoom(data);
         }
 
+        function GetRoomID(roomName) {
+            var roomID = "";
+            try {
+                $.ajax({
+                    url: 'http://localhost:57721/api/Chatroom',
+                    method: 'GET',
+                    dataType: 'json',
+                    data: "roomName=" + roomName,
+                    async: false,
+                    cache: false,
+                    success: function (response) {
+                        if (response.Success) {
+                            $('#Roomid').val(response.Payload.ChatroomID);
+                        }
+                    },
+                    error: function (xhr, status, error) {
+                        alert(error);
+                    }                   
+                });
+            } catch (error) {
+                alert(error);
+            }
+            return roomID;
+        }
     </script>
 </head>
 <body>
@@ -97,7 +128,9 @@
         <div>名称:<p id="username"></p></div>
         输入房间名:
         <input type="text" value="聊天室1" id="Roomname" />
-        <button id="CreatRoom">创建聊天室</button>
+        <button id="CreatRoom">创建聊天室</button><br/>
+        取得房间號:
+        <input type="text" value="" id="Roomid" />
     </div>
     <div style="float:left;border:double">
         <div>房间列表</div>

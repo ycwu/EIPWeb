@@ -70,6 +70,7 @@
     <Reference Include="System.Drawing" />
     <Reference Include="System.Runtime.Serialization" />
     <Reference Include="System.Security" />
+    <Reference Include="System.Transactions" />
     <Reference Include="System.Web.DynamicData" />
     <Reference Include="System.Web.Entity" />
     <Reference Include="System.Web.ApplicationServices" />
@@ -213,6 +214,7 @@
     <Compile Include="Controllers\BaseApiController.cs" />
     <Compile Include="Controllers\BaseController.cs" />
     <Compile Include="Controllers\ChatController.cs" />
+    <Compile Include="Controllers\ChatroomController.cs" />
     <Compile Include="Controllers\DepartmentController.cs" />
     <Compile Include="Controllers\EmployeeController.cs" />
     <Compile Include="Controllers\FeatureController.cs" />
@@ -240,17 +242,43 @@
     <Compile Include="Helpers\JsonHelper.cs" />
     <Compile Include="Helpers\MainHelper.cs" />
     <Compile Include="Hubs\Chat.cs" />
-    <Compile Include="Hubs\ChatHub.cs" />
     <Compile Include="Hubs\GroupsHub.cs" />
     <Compile Include="Models\APIResult.cs" />
+    <Compile Include="Models\ChatClient.cs">
+      <DependentUpon>EIPDB.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\ChatClient.Partial.cs">
+      <DependentUpon>EFGeneratePartialClass.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\ChatClientRepository.cs">
+      <DependentUpon>IRepository.EF6.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\ChatMessage.cs">
       <DependentUpon>EIPDB.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\ChatMessage.Partial.cs">
+      <DependentUpon>EFGeneratePartialClass.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\ChatMessageRepository.cs">
+      <DependentUpon>IRepository.EF6.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\Chatroom.cs">
       <DependentUpon>EIPDB.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\Chatroom.Partial.cs">
+      <DependentUpon>EFGeneratePartialClass.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\ChatroomDetail.cs">
       <DependentUpon>EIPDB.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\ChatroomDetail.Partial.cs">
+      <DependentUpon>EFGeneratePartialClass.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\ChatroomDetailRepository.cs">
+      <DependentUpon>IRepository.EF6.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\ChatroomRepository.cs">
+      <DependentUpon>IRepository.EF6.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\Chat\ChatContext.cs" />
     <Compile Include="Models\Chat\Message.cs" />

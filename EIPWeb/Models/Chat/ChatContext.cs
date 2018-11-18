@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 
 namespace EIPWeb.Models.Chat
 {
@@ -32,6 +33,11 @@ namespace EIPWeb.Models.Chat
         public string UserId { get; set; }
 
         /// <summary>
+        /// 用户連接Id
+        /// </summary>
+        public Guid ConnectionId { get; set; }
+
+        /// <summary>
         /// 用户的连接集合
         /// </summary>
         public List<Connection> Connections { get; set; }
@@ -55,6 +61,7 @@ namespace EIPWeb.Models.Chat
 
         //用户代理
         public string UserAgent { get; set; }
+
         //是否连接
         public bool Connected { get; set; }
     }
@@ -65,7 +72,7 @@ namespace EIPWeb.Models.Chat
     public class ChatRoom
     {
         // 房間代號
-        //public string RoomID { get; set; }
+        public Guid RoomID { get; set; }
 
         // 房间名称
         public string RoomName { get; set; }

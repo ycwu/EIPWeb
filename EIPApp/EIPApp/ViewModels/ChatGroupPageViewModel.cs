@@ -19,7 +19,7 @@ namespace EIPApp.ViewModels
     public class ChatGroupPageViewModel : BindableBase, INavigatedAware
     {
         #region Repositories (遠端或本地資料存取)
-        public SignalRGroupClient SignalRGroupClient = new SignalRGroupClient(MainHelper.SignalRURL);
+        public SignalRGroupClient SignalRGroupClient = new SignalRGroupClient(MainHelper.SignalRURL, UserID);
         #endregion
 
         #region ViewModel Property (用於在 View 中作為綁定之用)
@@ -53,6 +53,7 @@ namespace EIPApp.ViewModels
         public string Boy { get; set; } = "boy.png";
         public string Girl { get; set; } = "girl.png";
         public string UserName { get; set; } = "";
+        public static string UserID { get; set; } = "";
         public readonly IPageDialogService _dialogService;
         private readonly INavigationService _navigationService;
         private readonly IEventAggregator _eventAggregator;
@@ -72,7 +73,7 @@ namespace EIPApp.ViewModels
 
             #region 頁面中綁定的命令
             SignalRGroupClient.OnMessageReceived += (message) => {
-                if (message.UserName != UserName)//MainHelper.UserLoginService.Item.MyUser.UserName)
+                if (message.UserID != UserID)//MainHelper.UserLoginService.Item.MyUser.UserName)
                     ChatContentCollection.Add(new ChatContent
                     {                        
                         姓名 = message.UserName,
@@ -93,7 +94,7 @@ namespace EIPApp.ViewModels
                     對話類型 = 對話類型.自己,
                     對話文字顏色 = Color.Purple
                 });
-                SignalRGroupClient.SendMessage("聊天室1", UserName, 送出對話內容);//MainHelper.UserLoginService.Item.MyUser.UserName
+                SignalRGroupClient.SendMessage("聊天室1", UserID, 送出對話內容);//MainHelper.UserLoginService.Item.MyUser.UserName
                 送出對話內容 = "";
             });
             #endregion
@@ -160,6 +161,7 @@ namespace EIPApp.ViewModels
             var fooMyUser = new LoginRepository();
             await fooMyUser.ReadAsync();
             UserName = fooMyUser.Item.MyUser.UserName;
+            UserID = fooMyUser.Item.MyUser.UserID;
             await Task.Delay(100);
         }
         #endregion

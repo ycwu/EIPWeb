@@ -29,6 +29,9 @@ namespace EIPApp.ViewModels
             {
                 switch (x)
                 {
+                    case "群組即時訊息Tab":
+                        await _navigationService.NavigateAsync("xf:///MDPage/NaviPage/ChatTabPage");
+                        break;
                     case "群組即時訊息":
                         await _navigationService.NavigateAsync("xf:///MDPage/NaviPage/ChatGroupPage");
                         break;
