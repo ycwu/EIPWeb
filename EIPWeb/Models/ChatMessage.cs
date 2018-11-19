@@ -14,9 +14,9 @@ namespace EIPWeb.Models
     
     public partial class ChatMessage
     {
-        public System.Guid MessageID { get; set; }
+        public int MessageID { get; set; }
         public System.Guid ConnectionID { get; set; }
-        public System.Guid ChatroomID { get; set; }
+        public int ChatroomID { get; set; }
         public string Message { get; set; }
         public string MessageType { get; set; }
         public Nullable<System.Guid> FileID { get; set; }

@@ -22,9 +22,9 @@
           <Key>
             <PropertyRef Name="MessageID" />
           </Key>
-          <Property Name="MessageID" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="MessageID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="ConnectionID" Type="uniqueidentifier" Nullable="false" />
-          <Property Name="ChatroomID" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="ChatroomID" Type="int" Nullable="false" />
           <Property Name="Message" Type="nvarchar" MaxLength="4000" Nullable="false" />
           <Property Name="MessageType" Type="char" MaxLength="1" Nullable="false" />
           <Property Name="FileID" Type="uniqueidentifier" />
@@ -38,7 +38,7 @@
           <Key>
             <PropertyRef Name="ChatroomID" />
           </Key>
-          <Property Name="ChatroomID" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="ChatroomID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="ChatroomName" Type="nvarchar" MaxLength="50" Nullable="false" />
           <Property Name="ChatroomType" Type="char" MaxLength="1" Nullable="false" />
           <Property Name="CreateTime" Type="datetime" Nullable="false" />
@@ -52,7 +52,7 @@
             <PropertyRef Name="ChatroomID" />
             <PropertyRef Name="ConnectionID" />
           </Key>
-          <Property Name="ChatroomID" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="ChatroomID" Type="int" Nullable="false" />
           <Property Name="ConnectionID" Type="uniqueidentifier" Nullable="false" />
           <Property Name="DisconnectTime" Type="datetime" />
           <Property Name="CreateTime" Type="datetime" Nullable="false" />
@@ -265,9 +265,9 @@
           <Key>
             <PropertyRef Name="MessageID" />
           </Key>
-          <Property Name="MessageID" Type="Guid" Nullable="false" />
+          <Property Name="MessageID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="ConnectionID" Type="Guid" Nullable="false" />
-          <Property Name="ChatroomID" Type="Guid" Nullable="false" />
+          <Property Name="ChatroomID" Type="Int32" Nullable="false" />
           <Property Name="Message" Type="String" Nullable="false" MaxLength="4000" FixedLength="false" Unicode="true" />
           <Property Name="MessageType" Type="String" Nullable="false" MaxLength="1" FixedLength="true" Unicode="false" />
           <Property Name="FileID" Type="Guid" />
@@ -283,7 +283,7 @@
           <Key>
             <PropertyRef Name="ChatroomID" />
           </Key>
-          <Property Name="ChatroomID" Type="Guid" Nullable="false" />
+          <Property Name="ChatroomID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="ChatroomName" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="ChatroomType" Type="String" Nullable="false" MaxLength="1" FixedLength="true" Unicode="false" />
           <Property Name="CreateTime" Type="DateTime" Nullable="false" Precision="3" />
@@ -299,7 +299,7 @@
             <PropertyRef Name="ChatroomID" />
             <PropertyRef Name="ConnectionID" />
           </Key>
-          <Property Name="ChatroomID" Type="Guid" Nullable="false" />
+          <Property Name="ChatroomID" Type="Int32" Nullable="false" />
           <Property Name="ConnectionID" Type="Guid" Nullable="false" />
           <Property Name="DisconnectTime" Type="DateTime" Precision="3" />
           <Property Name="CreateTime" Type="DateTime" Nullable="false" Precision="3" />

@@ -10,7 +10,7 @@ namespace EIPWeb.Models
 {   
 	public  class ChatroomDetailRepository : EFRepository<ChatroomDetail>, IChatroomDetailRepository
 	{
-        public ChatroomDetail Find(Guid chatroomID, Guid connectionID)
+        public ChatroomDetail Find(int chatroomID, Guid connectionID)
         {
             return base.All().FirstOrDefault(p => p.ChatroomID == chatroomID && p.ConnectionID == connectionID);
         }

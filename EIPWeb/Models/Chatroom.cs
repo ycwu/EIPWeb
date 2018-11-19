@@ -21,7 +21,7 @@ namespace EIPWeb.Models
             this.ChatroomDetail = new HashSet<ChatroomDetail>();
         }
     
-        public System.Guid ChatroomID { get; set; }
+        public int ChatroomID { get; set; }
         public string ChatroomName { get; set; }
         public string ChatroomType { get; set; }
         public System.DateTime CreateTime { get; set; }

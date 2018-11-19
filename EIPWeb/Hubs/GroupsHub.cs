@@ -20,6 +20,7 @@ namespace EIPWeb.Hubs
         // 重写Hub连接事件  
         public override Task OnConnected()
         {
+
             // 查询用户
             var user = DbContext.Users.FirstOrDefault(u => u.UserId == Context.ConnectionId);
             if (user == null)
@@ -112,18 +113,10 @@ namespace EIPWeb.Hubs
         /// 创建聊天室
         /// </summary>
         /// <param name="roomName"></param>
-        public void CreateRoom(Guid roomID,string roomName)
+        public void CreateRoom(int roomID,string roomName)
         {
-            //Guid roomID;
-            //依名稱聊天室名稱取得代號
-            //Guid tryParse=new Guid();
-            //if (!Guid.TryParse(roomName, out tryParse))
-            //{
-            //Chatroom chatroom = repoChatroom.Find(roomName);
-            //roomID = chatroom.ChatroomID;
-            //}
+            string userID = Clients.CallerState.userID;
 
-            //var room = DbContext.Rooms.Find(a => a.RoomName == roomID.ToString());
             var room = DbContext.Rooms.Find(a => a.RoomID == roomID);
             if (room == null)
             {
@@ -142,7 +135,7 @@ namespace EIPWeb.Hubs
                 //Clients.All.MessageReceived(roomName, $"新增聊天室成功:{roomName}");
 
                 //儲存記錄-新增聊天室
-                NewChatroom(roomID);
+                NewChatroom(roomID, userID);
             }
             else
             {
@@ -205,13 +198,12 @@ namespace EIPWeb.Hubs
         /// <param name="room">房间名</param>
         /// <param name="message">信息</param>
         /// 
-        public void SendMessage(string roomID, string userName, string messageText) //Call from JS
+        public void SendMessage(int roomID, string userName, string messageText) //Call from JS
         {
             Message message = new Message();
-            message.MessageID = Guid.NewGuid();
             message.ConnectionID = Guid.Parse(Context.ConnectionId);
             message.MessageTime = DateTime.Now;
-            message.RoomID = Guid.Parse(roomID);
+            message.RoomID = roomID;
             message.UserName = userName;
             message.MessageText = messageText;
             SendMessage(message);
@@ -228,7 +220,7 @@ namespace EIPWeb.Hubs
             // 因为在加入房间的时候，已经将客户端的ConnectionId添加到Groups对象中了，所有可以根据房间名找到房间内的所有连接Id
             // 其实我们也可以自己实现Group方法，我们只需要用List记录所有加入房间的ConnectionId
             // 然后调用Clients.Clients(connectionIdList),参数为我们记录的连接Id数组。
-            Clients.Group(message.RoomID.ToString(), new string[0]).sendMessage(message.RoomID, message.MessageText);  //for WebPage
+            Clients.Group(message.RoomID.ToString(), new string[0]).sendMessage(message.RoomID, message.MessageText, message.UserID);  //for WebPage
             Clients.Group(message.RoomID.ToString()).MessageReceived(message);  //for XamarinForms
 
             //儲存記錄-訊息檔
@@ -275,20 +267,27 @@ namespace EIPWeb.Hubs
         }
 
         //新增聊天室+成員
-        public void NewChatroom(string roomName)
+        public void NewChatroom(string roomName, string userID)
         {
             using (TransactionScope scope = new TransactionScope())
             {
+                //更新使用者代號
+                ChatClient chatClient = repoChatClient.Find(Guid.Parse(Context.ConnectionId));
+                if (string.IsNullOrEmpty(chatClient.UserID))
+                {
+                    chatClient.UserID = userID;
+                    repoChatClient.SaveChanges(chatClient);
+                }
+                //新增聊天室
                 Chatroom chatroom = repoChatroom.Find(roomName);
                 if (chatroom == null)
                 {
                     chatroom = new Chatroom();
-                    chatroom.ChatroomID = Guid.NewGuid();
                     chatroom.ChatroomName = roomName;
                     chatroom.ChatroomType = "S";
                     repoChatroom.SaveChanges(chatroom);
                 }
-
+                //新增聊天室成員
                 ChatroomDetail chatroomDetail = repoChatroomDetail.Find(chatroom.ChatroomID, Guid.Parse(Context.ConnectionId));
                 if (chatroomDetail == null)
                 {
@@ -300,10 +299,18 @@ namespace EIPWeb.Hubs
                 scope.Complete();
             }
         }
-        public void NewChatroom(Guid roomID)
+        public void NewChatroom(int roomID, string userID)
         {
             using (TransactionScope scope = new TransactionScope())
             {
+                //更新使用者代號
+                ChatClient chatClient = repoChatClient.Find(Guid.Parse(Context.ConnectionId));
+                if (string.IsNullOrEmpty(chatClient.UserID))
+                {
+                    chatClient.UserID = userID;
+                    repoChatClient.SaveChanges(chatClient);
+                }
+                //新增聊天室
                 Chatroom chatroom = repoChatroom.Find(roomID);
                 ChatroomDetail chatroomDetail = repoChatroomDetail.Find(chatroom.ChatroomID, Guid.Parse(Context.ConnectionId));
                 if (chatroomDetail == null)
@@ -343,7 +350,6 @@ namespace EIPWeb.Hubs
         public void NewChatMessage(Message message)
         {
             ChatMessage chatMessage = new ChatMessage();
-            chatMessage.MessageID = message.MessageID;
             chatMessage.ConnectionID = message.ConnectionID;
             chatMessage.ChatroomID = message.RoomID;
             chatMessage.Message = message.MessageText;

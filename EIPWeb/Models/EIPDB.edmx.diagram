@@ -8,10 +8,10 @@
         <EntityTypeShape EntityType="EIPDBModel.Department" Width="1.5" PointX="0.75" PointY="0.75" />
         <EntityTypeShape EntityType="EIPDBModel.Employee" Width="1.5" PointX="2.75" PointY="0.75" />
         <AssociationConnector Association="EIPDBModel.FK_Employee_Department" />
-        <EntityTypeShape EntityType="EIPDBModel.ChatClient" Width="1.5" PointX="4.75" PointY="0.75" />
-        <EntityTypeShape EntityType="EIPDBModel.ChatMessage" Width="1.5" PointX="6.75" PointY="0.75" />
-        <EntityTypeShape EntityType="EIPDBModel.Chatroom" Width="1.5" PointX="8.75" PointY="0.75" />
-        <EntityTypeShape EntityType="EIPDBModel.ChatroomDetail" Width="1.5" PointX="10.75" PointY="0.75" />
+        <EntityTypeShape EntityType="EIPDBModel.ChatClient" Width="1.5" PointX="4.875" PointY="0.75" />
+        <EntityTypeShape EntityType="EIPDBModel.ChatMessage" Width="1.5" PointX="7" PointY="0.75" />
+        <EntityTypeShape EntityType="EIPDBModel.Chatroom" Width="1.5" PointX="9.125" PointY="0.75" />
+        <EntityTypeShape EntityType="EIPDBModel.ChatroomDetail" Width="1.5" PointX="11.25" PointY="0.75" />
         <AssociationConnector Association="EIPDBModel.FK_ChatMessage_ChatClient" />
         <AssociationConnector Association="EIPDBModel.FK_ChatMessage_Chatroom" />
         <AssociationConnector Association="EIPDBModel.FK_ChatroomDetail_Chatroom" />

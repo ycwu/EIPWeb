@@ -24,13 +24,13 @@
             chat.client.showMessage = function (message) {
                 //alert(message);
             };
-            chat.client.sendMessage = function (roomname, username, message) {
-                $("#" + roomname).find("ul").each(function () {
-                    //alert(roomname + "," + username + "," + message);
+            chat.client.sendMessage = function (roomId, message) {
+                //alert("roomId:" + roomId + ",message:" + message);
+                $("#" + roomId).find("ul").each(function () {
                     var Today = new Date();
                     var Now = Today.getFullYear() + "/" + (Today.getMonth() + 1 < 10 ? "0" : "") + (Today.getMonth() + 1) + "/" + (Today.getDate() < 10 ? "0" : "") + Today.getDate() + " " + (Today.getHours() < 10 ? "0" : "") + Today.getHours() + ":" + (Today.getMinutes() < 10 ? "0" : "") + Today.getMinutes() + ":" + (Today.getSeconds() < 10 ? "0" : "") + Today.getSeconds();
 
-                    $(this).append('<li>' + username + ":" + message + "," + Now + '</li>');
+                    $(this).append('<li>' + message + "," + Now + '</li>');
                 });
             };
             chat.client.removeRoom = function (data) {
@@ -62,14 +62,13 @@
             $('#username').html(prompt('请输入您的名称:', ''));
 
             $.connection.hub.start().done(function () {
-                document.cookie = "username=" + $('#username').html();
-                //alert("document.cookie:"+document.cookie);
+                chat.state.userID = $('#username').html();
                 $('#CreatRoom').click(function () {
                     GetRoomID($("#Roomname").val());
                     var roomID = $('#Roomid').val();
                     var roomName = $("#Roomname").val();
                     alert(roomID + "," + roomName);
-                    chat.server.createRoom(roomID,roomName);
+                    chat.server.createRoom(roomID, roomName);
                 });
             });
         });
@@ -78,8 +77,6 @@
             var message = $(btn).prev().val();
             var room = $(btn).parent();
             var username = $("#username").html();
-            //message = username + ":" + message;
-            message = message;
             var roomname = $(room).attr("roomname");
             var roomid = $('#Roomid').val();
             chat.server.sendMessage(roomid, username, message);
@@ -93,8 +90,10 @@
         }
 
         function AddRoom(roomname) {
-            var data = $(roomname).attr("roomname");
-            chat.server.joinRoom(data);
+            var roomName = $(roomname).attr("roomname");
+            GetRoomID($("#Roomname").val());
+            var roomID = $('#Roomid').val();
+            chat.server.joinRoom(roomID);
         }
 
         function GetRoomID(roomName) {

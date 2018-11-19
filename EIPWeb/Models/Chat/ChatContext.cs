@@ -72,7 +72,7 @@ namespace EIPWeb.Models.Chat
     public class ChatRoom
     {
         // 房間代號
-        public Guid RoomID { get; set; }
+        public int RoomID { get; set; }
 
         // 房间名称
         public string RoomName { get; set; }

@@ -14,7 +14,7 @@ namespace EIPWeb.Models
     
     public partial class ChatroomDetail
     {
-        public System.Guid ChatroomID { get; set; }
+        public int ChatroomID { get; set; }
         public System.Guid ConnectionID { get; set; }
         public Nullable<System.DateTime> DisconnectTime { get; set; }
         public System.DateTime CreateTime { get; set; }

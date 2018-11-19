@@ -14,7 +14,7 @@ namespace EIPWeb.Models
         {
             return base.All().FirstOrDefault(p => p.ChatroomName == roomName.Trim());
         }
-        public Chatroom Find(Guid roomID)
+        public Chatroom Find(int roomID)
         {
             return base.All().FirstOrDefault(p => p.ChatroomID == roomID);
         }

@@ -36,7 +36,6 @@ namespace EIPWeb.Controllers
             else
             {
                 chatroom = new Chatroom();
-                chatroom.ChatroomID = Guid.NewGuid();
                 chatroom.ChatroomName = roomName;
                 chatroom.ChatroomType = "S";
                 ChatroomRepository repoChatroom = RepositoryHelper.GetChatroomRepository();
