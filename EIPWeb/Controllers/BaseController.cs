@@ -10,7 +10,7 @@ namespace EIPWeb.Controllers
     public class BaseController : Controller
     {
         #region AD驗證
-        public bool IsAuthenticated(LoginViewModel user)
+        public bool IsAuthenticated(Models.ViewModel.LoginViewModel user)
         {
             bool bResult = false;
             string domainAndUsername = @"office\" + user.UserID;
@@ -32,7 +32,7 @@ namespace EIPWeb.Controllers
                     bResult = true;            
 #endif
             }
-            catch //(Exception ex)
+            catch (Exception ex)
             {
                 bResult = false;
             }

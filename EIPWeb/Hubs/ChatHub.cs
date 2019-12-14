@@ -1,6 +1,7 @@
 ﻿using EIPWeb.Models;
 using EIPWeb.Models.Chat;
 using Microsoft.AspNet.SignalR;
+using Microsoft.AspNet.SignalR.Hubs;
 using System;
 using System.Collections.Generic;
 using System.Data.Entity;
@@ -9,8 +10,9 @@ using System.Threading.Tasks;
 
 namespace EIPWeb.Hubs
 {
-    [Authorize]
-    public class ChatHub : Hub
+    //[Authorize]
+    [HubName("ChatHub")]
+    public class Chat : Hub
     {
         public override Task OnConnected()
         {
@@ -46,7 +48,7 @@ namespace EIPWeb.Hubs
                     UserAgent = Context.Request.Headers["User-Agent"],
                     Connected = true
                 });
-                db.SaveChanges();
+                //db.SaveChanges();
             }
             return base.OnConnected();
         }
@@ -122,9 +124,9 @@ namespace EIPWeb.Hubs
         public void SendMessage(string roomID, string userName, string messageText) //Call from JS
         {
             Message message = new Message();
-            message.MessageID = Guid.NewGuid();
+            //message.MessageID = Guid.NewGuid();
             message.MessageTime = DateTime.Now;
-            message.RoomID = roomID;
+            message.RoomID = int.Parse(roomID);
             message.UserName = userName;
             message.MessageText = messageText;
             SendMessage(message);
@@ -136,8 +138,8 @@ namespace EIPWeb.Hubs
             // 因为在加入房间的时候，已经将客户端的ConnectionId添加到Groups对象中了，所有可以根据房间名找到房间内的所有连接Id
             // 其实我们也可以自己实现Group方法，我们只需要用List记录所有加入房间的ConnectionId
             // 然后调用Clients.Clients(connectionIdList),参数为我们记录的连接Id数组。
-            Clients.Group(message.RoomID, new string[0]).sendMessage(message.RoomID, message.MessageText);  //for WebPage
-            Clients.Group(message.RoomID).MessageReceived(message);  //for XamarinForms
+            Clients.Group(message.RoomID.ToString(), new string[0]).sendMessage(message.RoomID, message.MessageText);  //for WebPage
+            Clients.Group(message.RoomID.ToString()).MessageReceived(message);  //for XamarinForms
         }
     }
 }

@@ -11,8 +11,8 @@ using System.Transactions;
 
 namespace EIPWeb.Hubs
 {
-    [HubName("GroupsHub")]
-    public class GroupsHub : Hub
+    [HubName("Group")]
+    public class Group : Hub
     {
         public static ChatContext DbContext = new ChatContext();
 
@@ -20,7 +20,6 @@ namespace EIPWeb.Hubs
         // 重写Hub连接事件  
         public override Task OnConnected()
         {
-
             // 查询用户
             var user = DbContext.Users.FirstOrDefault(u => u.UserId == Context.ConnectionId);
             if (user == null)
@@ -220,9 +219,15 @@ namespace EIPWeb.Hubs
             // 因为在加入房间的时候，已经将客户端的ConnectionId添加到Groups对象中了，所有可以根据房间名找到房间内的所有连接Id
             // 其实我们也可以自己实现Group方法，我们只需要用List记录所有加入房间的ConnectionId
             // 然后调用Clients.Clients(connectionIdList),参数为我们记录的连接Id数组。
-            Clients.Group(message.RoomID.ToString(), new string[0]).sendMessage(message.RoomID, message.MessageText, message.UserID);  //for WebPage
-            Clients.Group(message.RoomID.ToString()).MessageReceived(message);  //for XamarinForms
 
+            //Clients.All.MessageReceived(message.UserName, message.MessageText);
+            //Clients.All.MessageReceived(message);
+            Clients.Group(message.RoomID.ToString(), new string[0]).sendMessage(message.RoomID, message.MessageText, message.UserID);  //for WebPage
+            //Clients.Group(message.RoomID.ToString(), new string[0]).MessageReceived(message);  //for XamarinForms
+            Clients.Group(message.RoomID.ToString(), new string[0]).MessageReceived(message.UserID,message.MessageText);  //for XamarinForms
+                                                                                               //Clients.Group("聊天室1").MessageReceived(message);
+
+            message.ConnectionID= Guid.Parse(Context.ConnectionId);
             //儲存記錄-訊息檔
             NewChatMessage(message);
         }
@@ -234,7 +239,8 @@ namespace EIPWeb.Hubs
         {
             ChatClient chatClient = new ChatClient();
             chatClient.ConnectionID = Guid.Parse(Context.ConnectionId);
-            chatClient.UserID = string.IsNullOrEmpty(HttpContext.Current.User.Identity.Name) ? "" : HttpContext.Current.User.Identity.Name;
+            //chatClient.UserID = string.IsNullOrEmpty(HttpContext.Current.User.Identity.Name) ? "" : HttpContext.Current.User.Identity.Name;
+            chatClient.UserID = Clients.Caller.userName;
             repoChatClient.SaveChanges(chatClient);
         }
 

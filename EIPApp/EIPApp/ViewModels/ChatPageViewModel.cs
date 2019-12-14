@@ -14,8 +14,6 @@ using System.Linq;
 using System.Threading.Tasks;
 using Xamarin.Forms;
 
-
-
 namespace EIPApp.ViewModels
 {
     public class ChatPageViewModel : BindableBase, INavigatedAware
@@ -36,7 +34,6 @@ namespace EIPApp.ViewModels
             set { SetProperty(ref _ChatContentCollection, value); }
         }
         #endregion
-
         #region 送出對話內容
         private string _送出對話內容;
         /// <summary>
@@ -48,7 +45,6 @@ namespace EIPApp.ViewModels
             set { this.SetProperty(ref this._送出對話內容, value); }
         }
         #endregion
-
         #endregion
 
         #region Field 欄位
@@ -65,20 +61,45 @@ namespace EIPApp.ViewModels
         #region Constructor 建構式
         public ChatPageViewModel(INavigationService navigationService, IEventAggregator eventAggregator, IPageDialogService dialogService)
         {
-
             #region 相依性服務注入的物件
-
             _dialogService = dialogService;
             _eventAggregator = eventAggregator;
             _navigationService = navigationService;
             #endregion
 
             #region 頁面中綁定的命令
-            SignalRClient.OnMessageReceived += (username, message) => {
+            //SignalRClient.OnMessageReceived += _OnMessageReceived;
+            //void _OnMessageReceived(object sender,Message e)
+            //{
+            //    ChatContentCollection.Add(new ChatContent
+            //    {
+            //        姓名 = e.UserName,
+            //        姓名文字顏色 = Color.Blue,
+            //        對話人圖片 = Girl,
+            //        對話內容 = e.MessageText,
+            //        對話類型 = 對話類型.他人,
+            //        對話文字顏色 = Color.Green
+            //    });
+            //}
+            //SignalRClient.OnMessageReceived += (Message message) => {
+            //    if (message.UserName != UserName)//MainHelper.UserLoginService.Item.MyUser.UserName)
+            //        ChatContentCollection.Add(new ChatContent
+            //        {
+            //            姓名= message.UserName,
+            //            姓名文字顏色 = Color.Blue,
+            //            對話人圖片 = Girl,
+            //            對話內容 = message.MessageText,
+            //            對話類型 = 對話類型.他人,
+            //            對話文字顏色 = Color.Green
+            //        });
+            //};
+
+            SignalRClient.OnMessageReceived += (username, message) =>
+            {
                 if (username != UserName)//MainHelper.UserLoginService.Item.MyUser.UserName)
                     ChatContentCollection.Add(new ChatContent
                     {
-                        姓名= username,
+                        姓名 = username,
                         姓名文字顏色 = Color.Blue,
                         對話人圖片 = Girl,
                         對話內容 = message,
@@ -96,8 +117,8 @@ namespace EIPApp.ViewModels
                     對話類型 = 對話類型.自己,
                     對話文字顏色 = Color.Purple
                 });
-                SignalRClient.SendMessage(UserName, 送出對話內容);//MainHelper.UserLoginService.Item.MyUser.UserName
-
+                //SignalRClient.SendMessage(UserName, 送出對話內容);//MainHelper.UserLoginService.Item.MyUser.UserName
+                SignalRClient.SendMessage(new Message { UserName = UserName, MessageText = 送出對話內容 });
                 //if (送出對話內容 == "1")
                 //{
                 //    ChatContentCollection.Add(new ChatContent

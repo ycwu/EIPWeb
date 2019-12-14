@@ -37,13 +37,16 @@ namespace EIPApp.ViewModels
                     Title = "請稍後，正在身分驗證中..."
                 };
                 using (Acr.UserDialogs.UserDialogs.Instance.Progress(pdcMessage))
-                {
+                { 
                     APIResult apiResult;
                     if (UsingHttpGet == true)
                         apiResult = await repoLogin.GetAsync(Account, Password);
                     else
                         apiResult = await repoLogin.PostAsync(Account, Password);
-                    if (apiResult.Success == false)
+
+                    apiResult = new APIResult() { Success = true};//跳過驗證debug
+
+                if (apiResult.Success == false)
                     {
                         var config = new Acr.UserDialogs.AlertConfig()
                         {

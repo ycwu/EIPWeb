@@ -25,8 +25,8 @@ namespace EIPApp
             InitializeComponent();
 
             //await NavigationService.NavigateAsync("NavigationPage/MainPage");
-            //await NavigationService.NavigateAsync("SplashPage");
-            await NavigationService.NavigateAsync("ChatTabPage");
+            await NavigationService.NavigateAsync("SplashPage");
+            //await NavigationService.NavigateAsync("ChatTabPage");
         }
 
         protected override void RegisterTypes(IContainerRegistry containerRegistry)
@@ -39,7 +39,6 @@ namespace EIPApp
             containerRegistry.RegisterForNavigation<LoginPage>();
             containerRegistry.RegisterForNavigation<AboutPage>();
             containerRegistry.RegisterForNavigation<ChatPage>();
-            containerRegistry.RegisterForNavigation<ContactPage>();
             containerRegistry.RegisterForNavigation<ContactPage>();
             containerRegistry.RegisterForNavigation<ContactDetailPage>();
             containerRegistry.RegisterForNavigation<ChatGroupPage>();

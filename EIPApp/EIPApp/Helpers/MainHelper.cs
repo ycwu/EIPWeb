@@ -17,14 +17,20 @@ namespace EIPApp.Helpers
         #region 常用的變數字串
 
         #region XX
-        //public static string SignalRURL = "http://59.120.185.68:8080/EIPWeb";///XamarinSignalRExample/";
-        public static string SignalRURL = "http://169.254.80.80/EIPWeb/";
+        public static string SignalRURL = "http://59.120.185.68:8080/EIPWeb/";///XamarinSignalRExample/";
+        //public static string SignalRURL = "http://169.254.80.80/EIPWeb/";
+        //public static string SignalRURL = "http://192.168.3.7:57721/";
+        //public static string SignalRURL = "http://10.0.2.2/EIPWeb/";
+        //public static string SignalRURL = "http://192.168.3.7/EIPWeb/";//VisualStudio_android-25_x86_phone
         #endregion
 
         #region 向 Azure Mobile App 服務的主要網址
-        //public const string MainURL = "http://xamarinlobform.azurewebsites.net/";
-        public const string MainURL = "http://169.254.80.80/EIPWeb/";
+        public const string MainURL = "http://59.120.185.68:8080/EIPWeb/";
+        //public const string MainURL = "http://169.254.80.80/EIPWeb/";
+        //public const string MainURL = "http://192.168.3.7:57721/";
+        //public const string MainURL = "http://10.0.2.2/EIPWeb/";
         //public const string MainURL = "http://59.120.185.68:8080/EIPWeb/";
+        //public const string MainURL = "http://192.168.3.7/EIPWeb/";//VisualStudio_android-25_x86_phone
         #endregion
 
         #region 呼叫 API 的最上層名稱

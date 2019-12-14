@@ -8,7 +8,16 @@ namespace EIPWeb.Controllers
 {
     public class ChatController : Controller
     {
-        // GET: Chat
+        public ActionResult Sample1()
+        {
+            return View();
+        }
+
+        public ActionResult Sample2()
+        {
+            return View();
+        }
+
         public ActionResult Simple()
         {
             return View();
@@ -16,6 +25,16 @@ namespace EIPWeb.Controllers
 
         // GET: Chat
         public ActionResult Group()
+        {
+            return View();
+        }
+
+        public ActionResult GroupTest()
+        {
+            return View();
+        }
+
+        public ActionResult Chat1()
         {
             return View();
         }

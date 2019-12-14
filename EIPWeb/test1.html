@@ -1,0 +1,35 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <title></title>
+    <!-- from    http://www.dribs-drabs.com/blog/post/374276588-%E6%95%99%E5%AD%B8-%7C-html-%2B-css-%E5%8A%A0%E5%85%A5%E6%B5%AE%E5%8B%95%E5%BC%8F%E8%87%AA%E8%A8%82%E9%80%A3%E7%B5%90%E5%8D%80%E5%A1%8A-->
+</head>
+<body>
+    <div id="MyBlog">
+        <a target="_blank" href="http://www.dribs-drabs.com/blog">
+            <img src="Images/Chat.png" alt="Chat" width="50" height="50" />
+        </a>
+    </div>
+    <style>
+        #MyBlog {
+            position: fixed; /*固定在網頁上不隨卷軸移動，若要隨卷軸移動用absolute*/
+            top: 92%; /*設置垂直位置*/
+            right: 0px; /*設置水平位置，依所放的內容多寡需要自行手動調整*/
+            background: #ffffff; /*背景顏色*/
+            padding: 10px 20px;
+            border-radius: 10px; /*圓角*/
+            -moz-border-radius: 10px;
+            -webkit-border-radius: 10px;
+        }
+
+            #MyBlog:hover { /*當滑鼠移至此區塊時，伸縮區塊*/
+                right: -10px;
+            }
+
+            #MyBlog #title {
+                padding-right: 5px; /*讓標題與連結中間有空隙*/
+            }
+    </style>
+</body>
+</html>

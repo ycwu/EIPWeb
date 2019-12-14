@@ -7,9 +7,6 @@
     xmlns:prism="clr-namespace:Prism.Mvvm;assembly=Prism.Forms"
     xmlns:views="clr-namespace:EIPApp.Views"
     Title="群組即時訊息Tab"
-    android:TabbedPage.BarItemColor="#999999"
-    android:TabbedPage.BarSelectedItemColor="Black"
-    android:TabbedPage.ToolbarPlacement="Bottom"
     prism:ViewModelLocator.AutowireViewModel="True">
 
     <TabbedPage.Children>

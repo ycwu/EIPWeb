@@ -84,7 +84,20 @@ namespace EIPApp.ViewModels
                         對話文字顏色 = Color.Green
                     });
             };
-
+            /*
+            SignalRGroupClient.OnMessageReceived += (username, message) => {
+                if (username != UserName)//MainHelper.UserLoginService.Item.MyUser.UserName)
+                    ChatContentCollection.Add(new ChatContent
+                    {
+                        姓名 = username,
+                        姓名文字顏色 = Color.Blue,
+                        對話人圖片 = Girl,
+                        對話內容 = message,
+                        對話類型 = 對話類型.他人,
+                        對話文字顏色 = Color.Green
+                    });
+            };
+            */
             送出Command = new DelegateCommand(() =>
             {
                 ChatContentCollection.Add(new ChatContent
@@ -94,7 +107,7 @@ namespace EIPApp.ViewModels
                     對話類型 = 對話類型.自己,
                     對話文字顏色 = Color.Purple
                 });
-                SignalRGroupClient.SendMessage("聊天室1", UserID, 送出對話內容);//MainHelper.UserLoginService.Item.MyUser.UserName
+                SignalRGroupClient.SendMessage(1004, UserID, 送出對話內容);//MainHelper.UserLoginService.Item.MyUser.UserName
                 送出對話內容 = "";
             });
             #endregion
@@ -108,7 +121,7 @@ namespace EIPApp.ViewModels
                 if (task.IsFaulted)
                     //MainPage.DisplayAlert("Error", "An error occurred when trying to connect to SignalR: " + task.Exception.InnerExceptions[0].Message, "OK");
                     Acr.UserDialogs.UserDialogs.Instance.Alert(task.Exception.InnerExceptions[0].Message, "警告", "確定");
-                SignalRGroupClient.CreateRoom("聊天室1");
+                SignalRGroupClient.CreateRoom(1004, "聊天室1");
             });
 
 

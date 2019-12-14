@@ -17,8 +17,8 @@ namespace EIPWeb
             //GlobalHost.DependencyResolver.UseSqlServer(sqlConnectionString);            
             app.MapSignalR();
 
-            app.MapSignalR<DemoPersistentConnection>("/Connections/DemoPersistentConnection");
-            app.MapSignalR<AuthorizationPersistentConnection>("/Connections/AuthorizationPersistentConnection");
+            //app.MapSignalR<DemoPersistentConnection>("/Connections/DemoPersistentConnection");
+            //app.MapSignalR<AuthorizationPersistentConnection>("/Connections/AuthorizationPersistentConnection");
 
             app.Map("/EnableDetailedErrors", map =>
             {

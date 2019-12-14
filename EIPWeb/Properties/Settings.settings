@@ -5,5 +5,59 @@
     <Setting Name="DebugMode" Type="System.Boolean" Scope="Application">
       <Value Profile="(Default)">False</Value>
     </Setting>
+    <Setting Name="FaxHost" Type="System.String" Scope="Application">
+      <Value Profile="(Default)">{0}@faxadmin.machvision.com.tw</Value>
+    </Setting>
+    <Setting Name="FaxAdminMail" Type="System.String" Scope="Application">
+      <Value Profile="(Default)">ycwu@machvision.com.tw</Value>
+    </Setting>
+    <Setting Name="TestSite" Type="System.String" Scope="Application">
+      <Value Profile="(Default)">False</Value>
+    </Setting>
+    <Setting Name="SCMBccMail" Type="System.String" Scope="Application">
+      <Value Profile="(Default)">ycwu@machvision.com.tw</Value>
+    </Setting>
+    <Setting Name="UploadPath" Type="System.String" Scope="Application">
+      <Value Profile="(Default)">D:\SCM\FileUpload</Value>
+    </Setting>
+    <Setting Name="DCMPath" Type="System.String" Scope="Application">
+      <Value Profile="(Default)">D:\SCM\DCM</Value>
+    </Setting>
+    <Setting Name="DecryptSecond" Type="System.String" Scope="Application">
+      <Value Profile="(Default)">10</Value>
+    </Setting>
+    <Setting Name="SCMAdminMail" Type="System.String" Scope="Application">
+      <Value Profile="(Default)" />
+    </Setting>
+    <Setting Name="ExportPath" Type="System.String" Scope="Application">
+      <Value Profile="(Default)">\\DCM\Download$</Value>
+    </Setting>
+    <Setting Name="DCMAdminMail" Type="System.String" Scope="Application">
+      <Value Profile="(Default)">libbylee@machvision.com.tw</Value>
+    </Setting>
+    <Setting Name="MVUser_LoginID" Type="System.String" Scope="Application">
+      <Value Profile="(Default)">LoginID</Value>
+    </Setting>
+    <Setting Name="MVUser_UserID" Type="System.String" Scope="Application">
+      <Value Profile="(Default)">UserID</Value>
+    </Setting>
+    <Setting Name="MVUser_UserGroup" Type="System.String" Scope="Application">
+      <Value Profile="(Default)">UserGroup</Value>
+    </Setting>
+    <Setting Name="MVUser" Type="System.String" Scope="Application">
+      <Value Profile="(Default)">MVUser</Value>
+    </Setting>
+    <Setting Name="MVUser_OUserID" Type="System.String" Scope="Application">
+      <Value Profile="(Default)">OUserID</Value>
+    </Setting>
+    <Setting Name="MVUser_RememberMe" Type="System.String" Scope="Application">
+      <Value Profile="(Default)">RememberMe</Value>
+    </Setting>
+    <Setting Name="AllowedFileExt" Type="System.String" Scope="Application">
+      <Value Profile="(Default)">zip,rar,7z,pdf,doc,docx,xls,xlsx</Value>
+    </Setting>
+    <Setting Name="IsSendMail" Type="System.Boolean" Scope="Application">
+      <Value Profile="(Default)">True</Value>
+    </Setting>
   </Settings>
 </SettingsFile>

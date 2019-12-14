@@ -210,6 +210,8 @@
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
+    <Compile Include="Common\CommonFunction.cs" />
+    <Compile Include="Common\DLLConfig.cs" />
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\BaseApiController.cs" />
     <Compile Include="Controllers\BaseController.cs" />
@@ -242,7 +244,10 @@
     <Compile Include="Helpers\JsonHelper.cs" />
     <Compile Include="Helpers\MainHelper.cs" />
     <Compile Include="Hubs\Chat.cs" />
-    <Compile Include="Hubs\GroupsHub.cs" />
+    <Compile Include="Hubs\Sample2.cs" />
+    <Compile Include="Hubs\Sample1.cs" />
+    <Compile Include="Hubs\Group.cs" />
+    <Compile Include="Hubs\GroupsHub2.cs" />
     <Compile Include="Models\APIResult.cs" />
     <Compile Include="Models\ChatClient.cs">
       <DependentUpon>EIPDB.tt</DependentUpon>
@@ -270,6 +275,7 @@
     </Compile>
     <Compile Include="Models\Chat\ChatContext.cs" />
     <Compile Include="Models\Chat\Message.cs" />
+    <Compile Include="Models\Chat\Sample2Message.cs" />
     <Compile Include="Models\Department.cs">
       <DependentUpon>EIPDB.tt</DependentUpon>
     </Compile>
@@ -323,6 +329,7 @@
       <DependentUpon>IRepository.EF6.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\MyUser.cs" />
+    <Compile Include="Models\LoginViewModel.cs" />
     <Compile Include="Models\RepositoryHelper.cs">
       <DependentUpon>IRepository.EF6.tt</DependentUpon>
     </Compile>
@@ -362,6 +369,7 @@
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
     <Content Include="Content\Site.css" />
+    <Content Include="Images\Chat.png" />
     <Content Include="Models\EFGeneratePartialClass.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
       <LastGenOutput>EFGeneratePartialClass.cs</LastGenOutput>
@@ -422,12 +430,13 @@
     </None>
     <Content Include="Scripts1\jquery-2.2.2.min.map" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
-    <Content Include="Scripts2\chat.js" />
+    <Content Include="Scripts\chat.js" />
+    <Content Include="Scripts\Chat1.js" />
+    <Content Include="Scripts\Sample2.js" />
+    <Content Include="Scripts\Sample1.js" />
     <Content Include="Scripts\jquery-1.10.2.js" />
     <Content Include="Scripts\jquery-1.10.2.min.js" />
     <None Include="Scripts\jquery.validate-vsdoc.js" />
-    <Content Include="Scripts2\jquery-1.9.1.min.js" />
-    <Content Include="Scripts2\jquery.signalR-2.2.0.min.js" />
     <Content Include="Scripts\jquery.signalR-2.2.2.js" />
     <Content Include="Scripts\jquery.signalR-2.2.2.min.js" />
     <Content Include="Scripts\jquery.validate.js" />
@@ -438,6 +447,7 @@
     <Content Include="Scripts\respond.js" />
     <Content Include="Scripts\respond.min.js" />
     <None Include="Scripts\_references.js" />
+    <Content Include="test1.html" />
     <Content Include="Web.config">
       <SubType>Designer</SubType>
     </Content>
@@ -473,6 +483,11 @@
     <Content Include="Views\Chat\Simple.cshtml" />
     <Content Include="Views\GroupChat\Index.cshtml" />
     <Content Include="Views\Chat\Group.cshtml" />
+    <Content Include="Views\Chat\GroupTest.cshtml" />
+    <Content Include="Views\Chat\Sample1.cshtml" />
+    <Content Include="Views\Chat\Chat1.cshtml" />
+    <Content Include="Views\Account\Login2.cshtml" />
+    <Content Include="Views\Chat\Sample2.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

@@ -29,7 +29,7 @@ namespace EIPWeb.Controllers
         // 詳細資訊，請參閱 http://go.microsoft.com/fwlink/?LinkId=317598。
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Login(LoginViewModel user)
+        public ActionResult Login(Models.ViewModel.LoginViewModel user)
         {
             //驗證資料庫登入
             //這邊請使用自行驗證摟
